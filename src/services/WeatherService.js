@@ -1,5 +1,5 @@
+import instance from "../instance/instance";
 import axios from "axios";
-
 // 날씨 API 키
 const WEATHER_API_KEY = "e2799674d5b13024688e4a3159a6829d";
 const WEATHER_API_URL =
@@ -27,12 +27,11 @@ export const getWeatherStatusCode = async (latitude, longitude) => {
 export const getWeatherIconFromBackend = async (weatherId) => {
   try {
     // 날씨 상태 코드로 백엔드에서 이모티콘을 가져옵니다.
-    const response = await axios.get(
-      `${process.env.REACT_APP_HOST}/weather/weatherIcon`,
-      {
-        params: { weatherId },
-      }
-    );
+    const response = await instance.get(`/weather/weatherIcon`, {
+      params: {
+        weatherId,
+      },
+    });
     // DB에서 가져온 날씨 이모티콘을 반환
     return response.data;
   } catch (error) {
