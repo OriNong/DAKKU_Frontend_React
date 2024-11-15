@@ -45,6 +45,7 @@ const Login = () => {
       .post(`${process.env.REACT_APP_HOST}/auth/login`, loginInfo)
       .then((res) => {
         console.log(res);
+        console.log(loginInfo);
         const { accessToken, refreshToken, tokenType, expiryDuration } =
           res.data;
         console.log(accessToken);
@@ -134,7 +135,7 @@ const Login = () => {
         </div>
         <div className="info">
           <p>
-            아직 DAKKU 회원이 아니신가요? <Link to="#">회원가입</Link>
+            아직 DAKKU 회원이 아니신가요? <Link to="/user/Join">회원가입</Link>
           </p>
         </div>
       </div>
