@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   getWeatherStatusCode,
   getWeatherIconFromBackend,
 } from "../services/WeatherService";
 import axios from "axios";
+import instance from "../instance/instance";
 
 const DiaryComponent = () => {
   const [latitude, setLatitude] = useState(37.5666791);
@@ -22,21 +23,26 @@ const DiaryComponent = () => {
       setWeatherIcon(icon); // 날씨 아이콘 상태 업데이트
 
       const diaryData = {
-        title,
-        content: diaryContent,
+        diaryTitle: title,
+        diaryContent: diaryContent,
+        weatherIcon: icon,
       };
 
-      // 일기 데이터와 날씨 아이콘을 서버에 전송
-      await axios.post(`${process.env.REACT_APP_HOST}/diary/save`, diaryData, {
-        params: { weatherIcon: icon }, // 날씨 아이콘 전달
-      });
+      console.log(diaryData);
 
-      alert("일기가 저장되었습니다!");
+      // 일기 데이터와 날씨 아이콘을 서버에 전송
+      const response = await instance.post(`/diary/save`, diaryData);
+
+      if (response.status === 200) {
+        alert("일기가 저장되었습니다!");
+      }
     } catch (error) {
       console.error("일기 저장 중 오류 발생:", error);
       alert("일기 저장에 실패했습니다.");
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <div>

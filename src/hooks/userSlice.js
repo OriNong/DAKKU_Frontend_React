@@ -8,6 +8,7 @@ const userSlice = createSlice({
       email: "",
       roles: [],
       username: "",
+      id: 0,
     },
   },
 
@@ -21,6 +22,7 @@ const userSlice = createSlice({
         email: "",
         roles: [],
         username: "",
+        id: 0,
       };
     },
   },
