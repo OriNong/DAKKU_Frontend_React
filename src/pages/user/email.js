@@ -9,13 +9,25 @@ const EmailVerification = ({ setMessage, setEmailError }) => {
   const [isEmailValid, setIsEmailValid] = useState(true); // 이메일 중복 여부 체크
   const [emailErrorMessage, setEmailErrorMessage] = useState(""); // 이메일 오류 메시지 상태
 
+  // 이메일 정규식 처리 (수정된 정규식)
+  const emailRegex =
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+
   // 이메일 입력값 처리
   const handleEmailChange = (e) => {
     const inputEmail = e.target.value;
     setEmail(inputEmail);
 
-    // 이메일이 변경될 때마다 중복 검사
-    checkEmailAvailability(inputEmail);
+    // 이메일 유효성 검사
+    if (!emailRegex.test(inputEmail)) {
+      setIsEmailValid(false);
+      setEmailErrorMessage("올바른 이메일 형식이 아닙니다.");
+    } else {
+      setIsEmailValid(true);
+      setEmailErrorMessage(""); // 유효한 이메일 형식이면 오류 메시지 제거
+      // 이메일 형식이 올바르면 중복 검사 시작
+      checkEmailAvailability(inputEmail);
+    }
   };
 
   // 이메일 중복 검사 함수
@@ -60,7 +72,7 @@ const EmailVerification = ({ setMessage, setEmailError }) => {
     }
 
     if (!isEmailValid) {
-      setMessage("중복된 이메일입니다. 다른 이메일을 사용해주세요.");
+      setMessage("유효하지 않은 이메일 형식이거나 중복된 이메일입니다.");
       return;
     }
 
@@ -120,9 +132,10 @@ const EmailVerification = ({ setMessage, setEmailError }) => {
       />
       {emailErrorMessage && <p style={{ color: "red" }}>{emailErrorMessage}</p>}
 
+      {/* 이메일 형식이 올바르고 중복이 없는 경우에만 인증번호 전송 버튼 활성화 */}
       <button
         onClick={sendVerificationCode}
-        disabled={isLoading || !isEmailValid} // 이메일 중복이면 비활성화
+        disabled={isLoading || !isEmailValid || emailErrorMessage} // 이메일 형식 오류 또는 중복 시 비활성화
       >
         {isLoading ? "로딩 중..." : "인증번호 전송"}
       </button>

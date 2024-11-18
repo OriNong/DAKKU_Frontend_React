@@ -72,6 +72,7 @@ const UsernameChk = () => {
       <input
         type="text"
         id="username"
+        placeholder="아이디를 입력하세요"
         value={username}
         onChange={handleUsernameChange} // 입력할 때마다 메시지 초기화
         onBlur={checkUsername} // 입력 후 포커스 아웃 시 중복 체크
