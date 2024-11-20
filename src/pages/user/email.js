@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const EmailVerification = ({ setMessage, setEmailError }) => {
-  const [email, setEmail] = useState(""); // 이메일 상태
+const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
   const [code, setCode] = useState(""); // 인증 코드 상태
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
   const [isCodeSent, setIsCodeSent] = useState(false); // 인증 코드 전송 여부

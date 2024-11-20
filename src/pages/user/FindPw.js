@@ -46,7 +46,7 @@ const FindPw = () => {
   return (
     <form className="findPwForm" onSubmit={handleSubmit}>
       <h2>비밀번호 찾기</h2>
-      <label htmlFor="username">아이디</label>
+      {/* <label htmlFor="username">아이디</label> */}
       <input
         type="text"
         name="username"
@@ -56,7 +56,7 @@ const FindPw = () => {
         onChange={(e) => setUsername(e.target.value)}
         required
       />
-      <label htmlFor="email">이메일</label>
+      {/* <label htmlFor="email">이메일</label> */}
       <input
         type="email"
         name="email"

@@ -91,7 +91,7 @@ const Login = () => {
     <div className="login-wrapper">
       {/* 로고 이미지 */}
       <div className="logo-container">
-        <img src="logo.png" alt="Logo" className="logo" />
+        <img src="/DAKKUimg.jpg" alt="Logo" className="logo" />
       </div>
 
       {/* 로그인 폼 제목 */}
@@ -124,22 +124,22 @@ const Login = () => {
         <input type="submit" id="btnlogin" value="Login" />
       </form>
 
-      {/* 소셜 로그인 버튼들 */}
+      {/* 소셜 로그인 버튼들
       <div className="social-login">
         <p>소셜로 로그인하기</p>
         <div className="social-buttons">
-          <button className="google-btn" /*onClick={googleLogin}*/>
+          <button className="google-btn" onClick={googleLogin}>
             <img src="google-logo.png" alt="Google" className="social-logo" />
             <span>구글로 로그인</span>
           </button>
-        </div>
-        <div className="info">
-          <p>
-            아직 DAKKU 회원이 아니신가요? <Link to="/user/Join">회원가입</Link>
-          </p>
-        </div>
+        </div> */}
+      <div className="info">
+        <p>
+          아직 DAKKU 회원이 아니신가요? <Link to="/user/Join">회원가입</Link>
+        </p>
       </div>
     </div>
+    // </div>
   );
 };
 

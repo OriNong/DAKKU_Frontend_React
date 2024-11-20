@@ -1,5 +1,5 @@
 .register-form-container {
-  max-width: 400px;
+  max-width: 600px;
   margin: 50px auto;
   padding: 20px;
   background-color: #f4f4f4;
@@ -16,6 +16,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 500px;
 }
 
 .form-group {

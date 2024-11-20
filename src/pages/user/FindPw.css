@@ -13,7 +13,8 @@ form {
   margin-right: auto;
   margin-top: 50px;
   padding: 30px;
-  width: 350px;
+  width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 form h2 {
@@ -56,7 +57,7 @@ button,
 }
 
 #findPW {
-  background-color: mediumseagreen;
+  background-color: #007bff;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -64,7 +65,7 @@ button,
 
 #login {
   color: white;
-  background-color: lightseagreen;
+  background-color: #6a24fe;
   margin-bottom: 20px;
 }
 
