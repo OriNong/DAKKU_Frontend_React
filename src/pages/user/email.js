@@ -122,7 +122,7 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
 
   return (
     <div>
-      <label htmlFor="email">이메일</label>
+      {/* <label htmlFor="email">이메일</label> */}
       <input
         type="email"
         value={email}
@@ -141,7 +141,7 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
 
       {isCodeSent && (
         <div>
-          <label htmlFor="code">인증 코드</label>
+          {/* <label htmlFor="code">인증 코드</label> */}
           <input
             type="text"
             value={code}

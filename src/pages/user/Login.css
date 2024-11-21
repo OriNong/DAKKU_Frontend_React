@@ -15,14 +15,14 @@ body {
 .login-wrapper {
   width: 500px;
   height: auto;
-  padding: 40px;
+  padding: 30px;
   box-sizing: border-box;
   text-align: center;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin: 100px auto;
+  margin: 50px auto;
 }
 
 /* 로고 */
@@ -38,7 +38,7 @@ body {
 }
 
 /* 제목 스타일 */
-.login-wrapper > h2 {
+.login-wrapper h2 {
   font-size: 24px;
   color: #6a24fe;
   margin-bottom: 20px;

@@ -66,6 +66,7 @@ const Join = () => {
     // 이름 유효성 검사
     if (name === "name") {
       setNameError(""); // 이름 오류 메시지 초기화
+      setError(""); // 이름 수정 시 전체 에러 메시지도 리셋
       if (!value) {
         setNameError(""); // 이름이 비어 있으면 오류 메시지 초기화
       } else if (!validateName(value)) {
@@ -130,10 +131,11 @@ const Join = () => {
       // 성공 시 메시지 표시
       setSuccessMessage("회원가입이 완료되었습니다.");
       // 입력 필드 초기화
+      setUsername("");
       setEmail("");
       setPassword("");
-      setName("");
       setPassword2("");
+      setName("");
     } catch (err) {
       if (err.response) {
         const errorMessage =
@@ -148,9 +150,12 @@ const Join = () => {
 
   return (
     <div className="register-form-container">
-      <h2>회원가입</h2>
-
       <form onSubmit={handleSubmit} className="register-form">
+        {/* 로고 이미지 */}
+        <div className="logo-container">
+          <img src="/DAKKUimg.jpg" alt="Logo" className="logo" />
+        </div>
+        <h2>회원가입</h2>
         {/* 아이디 중복 검사 컴포넌트 */}
         <UsernameChk
           setError={setError}
@@ -167,7 +172,7 @@ const Join = () => {
         />
 
         <div className="form-group">
-          <label htmlFor="password">비밀번호</label>
+          {/* <label htmlFor="password">비밀번호</label> */}
           <input
             type="password"
             id="password"
@@ -180,7 +185,7 @@ const Join = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="password2">비밀번호 확인</label>
+          {/* <label htmlFor="password2">비밀번호 확인</label> */}
           <input
             type="password"
             id="password2"
@@ -197,7 +202,7 @@ const Join = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="name">이름</label>
+          {/* <label htmlFor="name">이름</label> */}
           <input
             type="text"
             id="name"
