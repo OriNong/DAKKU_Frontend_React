@@ -4,6 +4,7 @@ import DiaryComponent from "./components/DiaryComponent";
 import FindPw from "./pages/user/FindPw";
 import Join from "./pages/user/Join";
 import Login from "./pages/user/Login";
+import Logout from "./pages/user/Logout";
 // import FileTest from "./pages/file/FileTest";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Route path="/user/FindPw" element={<FindPw />} />
       <Route path="/user/Join" element={<Join />} />
       <Route path="/user/login" element={<Login />} />
+      <Route path="/user/Logout" element={<Logout />} />
     </Routes>
   );
 }

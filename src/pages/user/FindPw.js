@@ -45,6 +45,10 @@ const FindPw = () => {
 
   return (
     <form className="findPwForm" onSubmit={handleSubmit}>
+      {/* 로고 이미지 */}
+      <div className="logo-container">
+        <img src="/DAKKUimg.jpg" alt="Logo" className="logo" />
+      </div>
       <h2>비밀번호 찾기</h2>
       {/* <label htmlFor="username">아이디</label> */}
       <input
