@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Join.css"; // CSS 파일을 임포트합니다.
-import EmailVerification from "./Email"; // 이메일 인증 컴포넌트
+import EmailVerification from "./email"; // 이메일 인증 컴포넌트
 import UsernameChk from "./UsernameChk"; // 아이디 중복 검사 컴포넌트
 
 const Join = () => {
