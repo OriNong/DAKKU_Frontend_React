@@ -72,14 +72,19 @@ const UsernameChk = ({ username, setUsername, setError }) => {
       {/* 유효성 검사 메시지 */}
       {idMessage && (
         <p
-          style={{ color: idMessage.includes("사용 가능한") ? "green" : "red" }}
+          style={{
+            color: idMessage.includes("사용 가능한") ? "green" : "red",
+            paddingLeft: "10px",
+          }}
         >
           {idMessage}
         </p>
       )}
 
       {/* 아이디 중복 에러 메시지 */}
-      {usernameError && <p style={{ color: "red" }}>{usernameError}</p>}
+      {usernameError && (
+        <p style={{ color: "red", paddingLeft: "10px" }}>{usernameError}</p>
+      )}
     </div>
   );
 };

@@ -63,10 +63,12 @@ button.submit-btn:hover {
   color: red;
   font-size: 14px;
   margin-bottom: 15px;
+  padding-left: 10px;
 }
 
 .success-message {
   color: green;
   font-size: 14px;
   margin-bottom: 15px;
+  padding-left: 10px;
 }

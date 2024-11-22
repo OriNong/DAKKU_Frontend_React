@@ -7,6 +7,7 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
   const [isCodeSent, setIsCodeSent] = useState(false); // 인증 코드 전송 여부
   const [isEmailValid, setIsEmailValid] = useState(true); // 이메일 중복 여부 체크
   const [emailErrorMessage, setEmailErrorMessage] = useState(""); // 이메일 오류 메시지 상태
+  const [isCodeValid, setIsCodeValid] = useState(false); // 인증 코드 유효 여부
 
   // 이메일 정규식 처리 (수정된 정규식)
   const emailRegex =
@@ -46,7 +47,7 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
 
       if (response.data.success) {
         setIsEmailValid(true); // 이메일이 사용 가능
-        setEmailErrorMessage(""); // 중복이 아니면 메시지 초기화
+        setEmailErrorMessage(""); // 중복이 아니면 가능 메시지
         setEmailError(""); // 이메일 중복 오류 메시지 초기화
         setMessage(""); // 이메일 중복 메시지 초기화
       } else {
@@ -111,8 +112,10 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
 
       if (response.data.success) {
         setMessage("이메일 인증이 완료되었습니다.");
+        setIsCodeValid(true); // 인증 코드가 유효하면 true로 설정
       } else {
         setMessage("인증번호가 맞지 않습니다.");
+        setIsCodeValid(false); // 인증 코드가 틀리면 false로 설정
       }
     } catch (error) {
       console.error("Error verifying code:", error);
@@ -122,33 +125,60 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
 
   return (
     <div>
-      {/* <label htmlFor="email">이메일</label> */}
+      {/* 이메일 입력 */}
       <input
         type="email"
         value={email}
         onChange={handleEmailChange}
         placeholder="이메일을 입력하세요"
       />
-      {emailErrorMessage && <p style={{ color: "red" }}>{emailErrorMessage}</p>}
+      {emailErrorMessage && (
+        <p
+          style={{
+            color:
+              emailErrorMessage === "사용 가능한 이메일입니다."
+                ? "green"
+                : "red",
+            paddingLeft: "10px",
+          }}
+        >
+          {emailErrorMessage}
+        </p>
+      )}
 
-      {/* 이메일 형식이 올바르고 중복이 없는 경우에만 인증번호 전송 버튼 활성화 */}
+      {/* 인증번호 전송 버튼 */}
       <button
         onClick={sendVerificationCode}
         disabled={isLoading || !isEmailValid || emailErrorMessage} // 이메일 형식 오류 또는 중복 시 비활성화
+        style={{
+          backgroundColor:
+            isEmailValid && !emailErrorMessage ? "#007bff" : "#ccc", // 조건에 따라 색상 변경
+          color: "white", // 글자 색을 흰색으로 설정
+          cursor:
+            isEmailValid && !emailErrorMessage ? "pointer" : "not-allowed", // 활성화 여부에 따라 커서 변경
+        }}
       >
         {isLoading ? "로딩 중..." : "인증번호 전송"}
       </button>
 
       {isCodeSent && (
         <div>
-          {/* <label htmlFor="code">인증 코드</label> */}
+          {/* 인증 코드 입력 */}
           <input
             type="text"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="인증 코드를 입력하세요"
           />
-          <button onClick={verifyCode} disabled={isLoading}>
+          <button
+            onClick={verifyCode}
+            disabled={isLoading || !code} // 코드가 없으면 비활성화
+            style={{
+              backgroundColor: code && isCodeValid ? "#28a745" : "#dc3545", // 코드 입력 후 유효한 경우 초록색, 틀린 경우 빨간색
+              color: "white",
+              cursor: code ? "pointer" : "not-allowed",
+            }}
+          >
             인증 코드 확인
           </button>
         </div>

@@ -16,6 +16,7 @@ const Join = () => {
   const [emailError, setEmailError] = useState(""); // 이메일 오류 메시지 상태
   const [passwordError, setPasswordError] = useState(""); // 비밀번호 오류 메시지 상태
   const [nameError, setNameError] = useState(""); // 이름 오류 메시지 상태
+  const [passwordConfirmError, setPasswordConfirmError] = useState(""); // 비밀번호 확인 오류 메시지 상태
 
   // 비밀번호 유효성 검사 함수
   const validatePassword = (password) => {
@@ -33,34 +34,36 @@ const Join = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // 비밀번호와 비밀번호 확인 필드에서 값을 동시에 업데이트하고 비교
+    // 비밀번호 유효성 검사 및 비밀번호 확인 일치 여부 검사
     if (name === "password" || name === "password2") {
+      // 비밀번호 유효성 검사
       if (name === "password") {
         setPassword(value);
-
-        // 비밀번호 확인 일치 여부 검사
-        if (password2 && value !== password2) {
-          setPasswordError("비밀번호가 일치하지 않습니다.");
+        if (value && !validatePassword(value)) {
+          setPasswordError(
+            "비밀번호는 8~25자, 숫자와 문자 모두 포함되어야 합니다."
+          );
         } else {
-          setPasswordError(""); // 일치하면 에러 메시지 초기화
+          setPasswordError(""); // 비밀번호가 유효하면 오류 메시지 제거
         }
-      } else if (name === "password2") {
-        setPassword2(value);
 
-        // 비밀번호 확인 일치 여부 검사
-        if (value && password !== value) {
-          setPasswordError("비밀번호가 일치하지 않습니다.");
+        // 비밀번호 확인 검사도 비밀번호 유효성 검사 후 다시 처리
+        if (password2 && value !== password2) {
+          setPasswordConfirmError("비밀번호가 일치하지 않습니다.");
         } else {
-          setPasswordError(""); // 일치하면 에러 메시지 초기화
+          setPasswordConfirmError(""); // 비밀번호 확인도 일치하면 오류 메시지 제거
         }
       }
-    }
 
-    // 비밀번호 유효성 검사
-    if (name === "password" && value && !validatePassword(value)) {
-      setPasswordError(
-        "비밀번호는 8~25자, 숫자와 문자 모두 포함되어야 합니다."
-      );
+      // 비밀번호 확인 일치 여부 검사
+      if (name === "password2") {
+        setPassword2(value);
+        if (value !== password) {
+          setPasswordConfirmError("비밀번호가 일치하지 않습니다.");
+        } else {
+          setPasswordConfirmError(""); // 일치하면 오류 메시지 제거
+        }
+      }
     }
 
     // 이름 유효성 검사
@@ -182,6 +185,10 @@ const Join = () => {
             required
             placeholder="비밀번호를 입력하세요"
           />
+          {/* 비밀번호 유효성 오류 메시지 표시 */}
+          {passwordError && (
+            <div className="error-message">{passwordError}</div>
+          )}
         </div>
 
         <div className="form-group">
@@ -196,8 +203,8 @@ const Join = () => {
             placeholder="비밀번호를 다시 입력하세요"
           />
           {/* 비밀번호 확인 오류 메시지 표시 */}
-          {passwordError && (
-            <div className="error-message">{passwordError}</div>
+          {passwordConfirmError && (
+            <div className="error-message">{passwordConfirmError}</div>
           )}
         </div>
 
