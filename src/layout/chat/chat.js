@@ -9,7 +9,8 @@ import {
 } from "react-chat-elements";
 import { Route } from "react-router-dom";
 import { SlActionRedo } from "react-icons/sl";
-import { IoMdClose } from 'react-icons/io';
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import { MdOutlineClose } from 'react-icons/md';
 import React, { useState } from "react";
 
 const Chat = () => {
@@ -52,26 +53,29 @@ const Chat = () => {
   };
 
   return (
-    <div className="chat_container">
+    <div className="chat_container active">
       <Navbar
         className="chat-header"
         left={
-          <Avatar
-            src="https://avatars.githubusercontent.com/u/15075759?v=4"
-            alt="avatar"
-            size="xlarge"
-            type="circle"
+          <Button
+            type='transparent'
+            color='rgba(0, 0, 0, 1)'
+            icon={{
+              float: 'left',
+              size: 20,
+              component: <IoMdArrowRoundBack />
+            }}
           />
         }
-        center={<p>center</p>}
+        center={<a className='chat-header-center' href='/'><p className='chat-header-center-title'>Kursat</p></a>}
         right={
           <Button
             type='transparent'
             color='rgba(0, 0, 0, 1)'
             icon={{
               float: 'right',
-              size: 20,
-              component: <IoMdClose />
+              size: 25,
+              component: <MdOutlineClose />
             }}
           />
         }
