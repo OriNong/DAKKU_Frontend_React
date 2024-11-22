@@ -1,40 +1,198 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../../hooks/AuthContext";
 import "../../css/ProfileImage.css";
+import instance from "../../instance/instance";
 
 const ProfileImage = () => {
-  // 상태 변수들
+  const { user } = useAuth(); // 로그인된 사용자 정보 가져오기
   const [profileImage, setProfileImage] = useState("/img/default-profile.png"); // 기본 프로필 이미지
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
   const [newImage, setNewImage] = useState(null); // 새로 업로드할 이미지 파일
-  // 프로필 이미지 변경 처리
+
+  // 기존 프로필 이미지를 가져오는 함수
+  const fetchProfileImage = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_HOST}/user-profile/profile-image`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Accept: "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      if (data.success) {
+        setProfileImage(data.message);
+      }
+    } catch (error) {
+      console.error("프로필 이미지 조회 실패", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchProfileImage();
+    }
+  }, [user]); // user가 바뀔 때마다 프로필 이미지 다시 가져오기
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setNewImage(reader.result); // 파일이 읽히면 미리보기용 이미지 설정
+        setNewImage(file);
       };
-      reader.readAsDataURL(file); // 이미지 파일을 읽기
+      reader.readAsDataURL(file);
     }
   };
 
-  // 프로필 이미지 업로드 처리
   const handleImageUpload = async () => {
     if (newImage) {
-      // 업로드된 이미지 파일을 서버에 전송하는 코드
-      setProfileImage(newImage); // 서버에 업로드 후, 새 프로필 이미지로 업데이트
-      setNewImage(null); // 새 이미지 상태 초기화
-      setIsModalOpen(false); // 모달 닫기
+      const formData = new FormData();
+      formData.append("file", newImage);
+
+      // 기존 이미지가 있는지 판단
+      instance
+        .get("/user-profile/profile-image")
+        .then((res) => {
+          console.log(res);
+          const { data } = res;
+          console.log(data);
+          if (data.success) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .then((res) => {
+          console.log(res);
+          // 이미지가 있으니까 삭제 먼저
+          if (res) {
+            instance
+              .delete("/user-profile/ProfileImage")
+              .then((res) => {
+                console.log(res);
+                const { data } = res;
+                console.log(data);
+              })
+              .finally(() => {
+                return true;
+              });
+          }
+          return true;
+        })
+        .then((res) => {
+          if (res) {
+            instance
+              .post("/user-profile/ProfileImage", formData, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              })
+              .then((res) => {
+                console.log(res);
+                const { data } = res;
+                if (data) {
+                  setIsModalOpen(false);
+                  setProfileImage(
+                    `${process.env.REACT_APP_HOST}/file/view/${data}`
+                  );
+                }
+              });
+          }
+        });
+
+      // try {
+      //   // 기존 이미지가 있으면 삭제
+      //   const response = await fetch(
+      //     `${process.env.REACT_APP_HOST}/user-profile/profile-image`,
+      //     {
+      //       method: "GET",
+      //       headers: {
+      //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //         Accept: "application/json",
+      //       },
+      //     }
+      //   );
+
+      //   const data = await response.json();
+
+      //   if (data.success) {
+      //     // 기존 이미지가 있을 경우 삭제
+      //     const deleteResponse = await fetch(
+      //       `${process.env.REACT_APP_HOST}/user-profile/ProfileImage`,
+      //       {
+      //         method: "DELETE",
+      //         headers: {
+      //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //           Accept: "application/json",
+      //         },
+      //       }
+      //     );
+
+      //     const deleteData = await deleteResponse.json();
+      //     if (deleteData.success) {
+      //       console.log("기존 이미지 삭제 성공");
+      //     } else {
+      //       console.error("기존 이미지 삭제 실패", deleteData.message);
+      //     }
+      //   }
+
+      //   // 새로운 이미지 업로드
+      //   const uploadResponse = await fetch(
+      //     `${process.env.REACT_APP_HOST}/user-profile/ProfileImage`,
+      //     {
+      //       method: "POST",
+      //       body: formData,
+      //       headers: {
+      //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //         Accept: "application/json",
+      //       },
+      //     }
+      //   );
+
+      //   const uploadData = await uploadResponse.json();
+      //   if (uploadData.success) {
+      //     setProfileImage(uploadData.message); // 서버에서 받은 이미지 URL로 프로필 이미지 변경
+      //     setNewImage(null);
+      //     setIsModalOpen(false);
+      //   } else {
+      //     alert(uploadData.message || "이미지 업로드 실패");
+      //   }
+      // } catch (error) {
+      //   console.error("프로필 이미지 업로드 실패", error);
+      //   alert("프로필 이미지 업로드 실패");
+      // }
     } else {
       alert("변경할 이미지를 선택하세요.");
     }
   };
 
-  // 프로필 이미지 삭제 처리
-  const handleImageDelete = () => {
-    // 서버에서 이미지를 삭제하는 코드 작성
-    setProfileImage("/img/default-profile.png"); // 기본 이미지로 초기화
-    setIsModalOpen(false); // 모달 닫기
+  const handleImageDelete = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_HOST}/user-profile/ProfileImage`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+      if (data.success) {
+        setProfileImage("/img/default-profile.png");
+        setIsModalOpen(false);
+      } else {
+        alert(data.message || "이미지 삭제 실패");
+      }
+    } catch (error) {
+      console.error("프로필 이미지 삭제 실패", error);
+      alert("프로필 이미지 삭제 실패");
+    }
   };
 
   return (
