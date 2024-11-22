@@ -9,11 +9,12 @@ const Logout = () => {
 
   // 로그아웃 함수
   const handleLogout = () => {
+    // redux 상태 초기화
     dispatch(removeTokenInfo());
     dispatch(removeUserInfo());
 
     console.log("로그아웃 완료");
-
+    // 로그아웃 후 이동 페이지
     navigate("/");
   };
 
