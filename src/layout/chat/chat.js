@@ -53,7 +53,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="chat_container active">
+    <div className="chat-container">
       <Navbar
         className="chat-header"
         left={

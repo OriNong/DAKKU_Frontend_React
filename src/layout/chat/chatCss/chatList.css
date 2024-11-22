@@ -1,0 +1,14 @@
+.chatList-container {
+  position: fixed;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+  right: 100px;
+  bottom: 0;
+  width: 500px;
+  height: 600px;
+  z-index: 1000;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
+}
