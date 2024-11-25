@@ -6,7 +6,7 @@ import Join from "./pages/user/Join";
 import Login from "./pages/user/Login";
 import ProfileImage from "./pages/mypage/ProfileImage";
 import Chat from "./layout/chat/chat";
-import ChatList from './layout/chat/chatList';
+import ChatListRoom from './layout/chat/chatList';
 // import FileTest from "./pages/file/FileTest";
 import { AuthProvider } from "./hooks/AuthContext";
 
@@ -22,7 +22,7 @@ function App() {
           <Route path="/ProfileImage" element={<ProfileImage />} />
         </Routes>
         <Chat />
-        {/* <ChatList />  */}
+        {/* <ChatListRoom />  */}
       </AuthProvider>
     </>
   );

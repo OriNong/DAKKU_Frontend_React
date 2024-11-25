@@ -5,12 +5,12 @@ import {
   MessageList,
   Button,
   Navbar,
-  Avatar,
+  Dropdown,
 } from "react-chat-elements";
-import { Route } from "react-router-dom";
 import { SlActionRedo } from "react-icons/sl";
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import { MdOutlineClose } from 'react-icons/md';
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import { MdMenu, MdDelete } from "react-icons/md";
 import React, { useState } from "react";
 
 const Chat = () => {
@@ -30,6 +30,7 @@ const Chat = () => {
       date: new Date(),
     },
   ]);
+  const [isChatOpen, setChatOpen] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   let inputClear = () => {};
   const inputReferance = React.useRef();
@@ -53,59 +54,90 @@ const Chat = () => {
   };
 
   return (
-    <div className="chat-container">
-      <Navbar
-        className="chat-header"
-        left={
-          <Button
-            type='transparent'
-            color='rgba(0, 0, 0, 1)'
-            icon={{
-              float: 'left',
-              size: 20,
-              component: <IoMdArrowRoundBack />
-            }}
-          />
-        }
-        center={<a className='chat-header-center' href='/'><p className='chat-header-center-title'>Kursat</p></a>}
-        right={
-          <Button
-            type='transparent'
-            color='rgba(0, 0, 0, 1)'
-            icon={{
-              float: 'right',
-              size: 25,
-              component: <MdOutlineClose />
-            }}
-          />
-        }
-      />
-      <MessageList
-        className="chat-message-list"
-        lockable={true}
-        toBottomHeight={"100%"}
-        dataSource={chatList}
-      />
-      <div className="chat-message-div-input">
-        <Input
-          className="chat-message-input"
-          placeholder="Type here..."
-          referance={inputReferance}
-          clear={(clear) => inputClear = clear}
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          rightButtons={
+    <div className={`${isChatOpen ? "chatWrapper active" : "chatWrapper"}`}>
+      <div className="chat-open-button-div">
+        <Button
+          className="chat-open-button"
+          backgroundColor="#333"
+          onClick={() => {
+            setChatOpen(!isChatOpen);
+          }}
+          icon={{
+            float: "left",
+            size: 20,
+            component: isChatOpen ? <FaChevronDown /> : <FaChevronUp />,
+          }}
+        />
+      </div>
+      <div className="chat-container">
+        <Navbar
+          className="chat-header"
+          left={
             <Button
-              title="send"
+              type="transparent"
+              color="rgba(0, 0, 0, 1)"
               icon={{
                 float: "left",
-                size: 15,
-                component: <SlActionRedo />,
+                size: 20,
+                component: <IoMdArrowRoundBack />,
               }}
-              onClick={sendMessage}
+            />
+          }
+          center={
+            <a className="chat-header-center" href="/">
+              <p className="chat-header-center-title">Kursat</p>
+            </a>
+          }
+          right={
+            <Dropdown
+              animationType='default'
+              animationPosition='norteast'
+              buttonProps={{
+                backgroundColor: "transparent",
+                text: <MdMenu style={{ fontSize: "25px" }} />,
+                color: "black",
+              }}
+              items={[
+                {
+                  text: "test1",
+                  icon: {
+                    float: 'right',
+                    size: 15,
+                    color: "black",
+                    component: <MdDelete />
+                  }
+                }
+              ]}
             />
           }
         />
+        <MessageList
+          className="chat-message-list"
+          lockable={true}
+          toBottomHeight={"100%"}
+          dataSource={chatList}
+        />
+        <div className="chat-message-div-input">
+          <Input
+            className="chat-message-input"
+            placeholder="Type here..."
+            referance={inputReferance}
+            clear={(clear) => (inputClear = clear)}
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            rightButtons={
+              <Button
+                title="send"
+                icon={{
+                  float: "left",
+                  size: 15,
+                  component: <SlActionRedo />,
+                }}
+                onClick={sendMessage}
+              />
+            }
+          />
+        </div>
       </div>
     </div>
   );
