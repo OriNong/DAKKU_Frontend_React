@@ -22,13 +22,6 @@ const Chat = () => {
       text: "Give me a message list example !",
       date: new Date(),
     },
-    {
-      position: "right",
-      type: "text",
-      title: "Emre",
-      text: "That's all.",
-      date: new Date(),
-    },
   ]);
   const [isChatOpen, setChatOpen] = useState(false);
   const [newMessage, setNewMessage] = useState("");
@@ -58,7 +51,8 @@ const Chat = () => {
       <div className="chat-open-button-div">
         <Button
           className="chat-open-button"
-          backgroundColor="#333"
+          backgroundColor="transparent"
+          color="rgba(0, 0, 0, 0.5)"
           onClick={() => {
             setChatOpen(!isChatOpen);
           }}
@@ -90,8 +84,8 @@ const Chat = () => {
           }
           right={
             <Dropdown
-              animationType='default'
-              animationPosition='norteast'
+              animationType="default"
+              animationPosition="norteast"
               buttonProps={{
                 backgroundColor: "transparent",
                 text: <MdMenu style={{ fontSize: "25px" }} />,
@@ -101,12 +95,12 @@ const Chat = () => {
                 {
                   text: "test1",
                   icon: {
-                    float: 'right',
+                    float: "right",
                     size: 15,
                     color: "black",
-                    component: <MdDelete />
-                  }
-                }
+                    component: <MdDelete />,
+                  },
+                },
               ]}
             />
           }
@@ -125,6 +119,11 @@ const Chat = () => {
             clear={(clear) => (inputClear = clear)}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                sendMessage(e.target.value);
+              }
+            }}
             rightButtons={
               <Button
                 title="send"
