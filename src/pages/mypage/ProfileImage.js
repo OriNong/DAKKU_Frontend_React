@@ -103,96 +103,21 @@ const ProfileImage = () => {
               });
           }
         });
-
-      // try {
-      //   // 기존 이미지가 있으면 삭제
-      //   const response = await fetch(
-      //     `${process.env.REACT_APP_HOST}/user-profile/profile-image`,
-      //     {
-      //       method: "GET",
-      //       headers: {
-      //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //         Accept: "application/json",
-      //       },
-      //     }
-      //   );
-
-      //   const data = await response.json();
-
-      //   if (data.success) {
-      //     // 기존 이미지가 있을 경우 삭제
-      //     const deleteResponse = await fetch(
-      //       `${process.env.REACT_APP_HOST}/user-profile/ProfileImage`,
-      //       {
-      //         method: "DELETE",
-      //         headers: {
-      //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //           Accept: "application/json",
-      //         },
-      //       }
-      //     );
-
-      //     const deleteData = await deleteResponse.json();
-      //     if (deleteData.success) {
-      //       console.log("기존 이미지 삭제 성공");
-      //     } else {
-      //       console.error("기존 이미지 삭제 실패", deleteData.message);
-      //     }
-      //   }
-
-      //   // 새로운 이미지 업로드
-      //   const uploadResponse = await fetch(
-      //     `${process.env.REACT_APP_HOST}/user-profile/ProfileImage`,
-      //     {
-      //       method: "POST",
-      //       body: formData,
-      //       headers: {
-      //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //         Accept: "application/json",
-      //       },
-      //     }
-      //   );
-
-      //   const uploadData = await uploadResponse.json();
-      //   if (uploadData.success) {
-      //     setProfileImage(uploadData.message); // 서버에서 받은 이미지 URL로 프로필 이미지 변경
-      //     setNewImage(null);
-      //     setIsModalOpen(false);
-      //   } else {
-      //     alert(uploadData.message || "이미지 업로드 실패");
-      //   }
-      // } catch (error) {
-      //   console.error("프로필 이미지 업로드 실패", error);
-      //   alert("프로필 이미지 업로드 실패");
-      // }
     } else {
       alert("변경할 이미지를 선택하세요.");
     }
   };
 
   const handleImageDelete = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_HOST}/user-profile/ProfileImage`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      const data = await response.json();
-      if (data.success) {
+    instance.delete("/user-profile/ProfileImage").then((res) => {
+      console.log(res);
+      if (res.data?.success) {
         setProfileImage("/img/default-profile.png");
         setIsModalOpen(false);
       } else {
-        alert(data.message || "이미지 삭제 실패");
+        alert(res.data?.data || "이미지 삭제 실패");
       }
-    } catch (error) {
-      console.error("프로필 이미지 삭제 실패", error);
-      alert("프로필 이미지 삭제 실패");
-    }
+    });
   };
 
   return (
@@ -203,21 +128,28 @@ const ProfileImage = () => {
       <div className="container">
         <aside className="sidebar-left"></aside>
         <main className="main-content">
-          <div className="diary-entries">{}</div>
+          <div className="diary-entries">
+            {}
+            <div className="profile-container">
+              <div className="profile">
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="profile-image"
+                />
+
+                {/* 연필 아이콘 */}
+                <img
+                  src="/img/pencil.png"
+                  alt="Edit"
+                  className="edit-icon"
+                  onClick={() => setIsModalOpen(true)} // 연필 아이콘 클릭시 모달 열기
+                />
+              </div>
+            </div>
+          </div>
         </main>
         <aside className="sidebar-right">
-          <div className="profile">
-            <img src={profileImage} alt="Profile" className="profile-image" />
-
-            {/* 연필 아이콘 */}
-            <img
-              src="/img/pencil.png"
-              alt="Edit"
-              className="edit-icon"
-              onClick={() => setIsModalOpen(true)} // 연필 아이콘 클릭시 모달 열기
-            />
-          </div>
-
           {/* 모달 창 */}
           {isModalOpen && (
             <div className="modal">
@@ -235,9 +167,6 @@ const ProfileImage = () => {
               </div>
             </div>
           )}
-
-          <button>Follow</button>
-          <button>Chatting</button>
         </aside>
       </div>
     </div>

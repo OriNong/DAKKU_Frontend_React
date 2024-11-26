@@ -1,7 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 
-const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
+const EmailVerification = ({
+  email,
+  setEmail,
+  setMessage,
+  setEmailError,
+  setIsCodeValidChk,
+}) => {
   const [code, setCode] = useState(""); // 인증 코드 상태
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
   const [isCodeSent, setIsCodeSent] = useState(false); // 인증 코드 전송 여부
@@ -113,6 +119,7 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
       if (response.data.success) {
         setMessage("이메일 인증이 완료되었습니다.");
         setIsCodeValid(true); // 인증 코드가 유효하면 true로 설정
+        setIsCodeValidChk(true); // Join 컴포넌트에 이메일 인증 완료 상태 전달
       } else {
         setMessage("인증번호가 맞지 않습니다.");
         setIsCodeValid(false); // 인증 코드가 틀리면 false로 설정
@@ -148,6 +155,7 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
 
       {/* 인증번호 전송 버튼 */}
       <button
+        type="button"
         onClick={sendVerificationCode}
         disabled={isLoading || !isEmailValid || emailErrorMessage} // 이메일 형식 오류 또는 중복 시 비활성화
         style={{
@@ -171,6 +179,7 @@ const EmailVerification = ({ email, setEmail, setMessage, setEmailError }) => {
             placeholder="인증 코드를 입력하세요"
           />
           <button
+            type="button"
             onClick={verifyCode}
             disabled={isLoading || !code} // 코드가 없으면 비활성화
             style={{
