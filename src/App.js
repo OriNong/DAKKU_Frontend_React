@@ -5,10 +5,9 @@ import FindPw from "./pages/user/FindPw";
 import Join from "./pages/user/Join";
 import Login from "./pages/user/Login";
 import ProfileImage from "./pages/mypage/ProfileImage";
-import Chat from "./layout/chat/chat";
-import ChatListRoom from './layout/chat/chatList';
 // import FileTest from "./pages/file/FileTest";
 import { AuthProvider } from "./hooks/AuthContext";
+import ChatApp from './layout/chat/ChatApp';
 
 function App() {
   return (
@@ -21,8 +20,8 @@ function App() {
           <Route path="/user/login" element={<Login />} />
           <Route path="/ProfileImage" element={<ProfileImage />} />
         </Routes>
-        <Chat />
-        {/* <ChatListRoom />  */}
+        {/* <Chat /> */}
+        <ChatApp />
       </AuthProvider>
     </>
   );
