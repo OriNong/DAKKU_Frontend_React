@@ -4,25 +4,25 @@ import "./chatCss/chatApp.css";
 import ChatListRoom from "./chatList";
 import { Button } from "react-chat-elements";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import instance from '../../api/api';
+import instance from "../../api/api";
 
 const ChatApp = () => {
   const [chatRoomActive, setChatRoomActive] = useState(false);
-  const [roomName, setRoomName] = useState(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [roomId, setRoomId] = useState(null);
 
   useEffect(() => {
     if (roomId === null) {
-      instance.get('/chat/userRoom')
+      instance
+        .get("/chat/userRoom")
         .then((res) => {
-          console.log(res);
+          setRoomId(res.data);
         })
         .catch((error) => {
-          console.log("해당 유저의 채팅방 목록을 가져올수 없습니다.")
-        })
+          console.log(error + "해당 유저의 채팅방 목록을 가져올수 없습니다.");
+        });
     }
-  }, [])
+  }, []);
 
   return (
     <>
@@ -43,11 +43,11 @@ const ChatApp = () => {
           />
         </div>
         {chatRoomActive ? (
-          <Chat setChatRoomActive={setChatRoomActive} roomName={roomName} />
+          <Chat setChatRoomActive={setChatRoomActive} roomId={roomId} />
         ) : (
           <ChatListRoom
             setChatRoomActive={setChatRoomActive}
-            setRoomName={setRoomName}
+            roomId={roomId}
           />
         )}
       </div>

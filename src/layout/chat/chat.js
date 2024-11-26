@@ -10,9 +10,9 @@ import {
 import { SlActionRedo } from "react-icons/sl";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdMenu, MdDelete } from "react-icons/md";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const Chat = ({ setChatRoomActive, roomName }) => {
+const Chat = ({ setChatRoomActive, roomId }) => {
   const [chatList, setChatList] = useState([
     {
       position: "left",
@@ -43,6 +43,10 @@ const Chat = ({ setChatRoomActive, roomName }) => {
     inputClear();
     setNewMessage("");
   };
+
+  useEffect(() => {
+    console.log(roomId);
+  }, [])
 
   return (
     <div className="chat-container">
