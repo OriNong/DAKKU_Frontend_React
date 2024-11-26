@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./Join.css"; // CSS 파일을 임포트합니다.
 import EmailVerification from "./email"; // 이메일 인증 컴포넌트
 import UsernameChk from "./UsernameChk"; // 아이디 중복 검사 컴포넌트
@@ -17,6 +18,9 @@ const Join = () => {
   const [passwordError, setPasswordError] = useState(""); // 비밀번호 오류 메시지 상태
   const [nameError, setNameError] = useState(""); // 이름 오류 메시지 상태
   const [passwordConfirmError, setPasswordConfirmError] = useState(""); // 비밀번호 확인 오류 메시지 상태
+  const [isCodeValidChk, setIsCodeValidChk] = useState(false);
+
+  const navigate = useNavigate();
 
   // 비밀번호 유효성 검사 함수
   const validatePassword = (password) => {
@@ -139,6 +143,7 @@ const Join = () => {
       setPassword("");
       setPassword2("");
       setName("");
+      navigate("/");
     } catch (err) {
       if (err.response) {
         const errorMessage =
@@ -172,6 +177,7 @@ const Join = () => {
           setEmailError={setEmailError}
           email={email}
           setEmail={setEmail}
+          setIsCodeValidChk={setIsCodeValidChk} //이메일 인증 코드 확인여부 전달
         />
 
         <div className="form-group">
@@ -184,6 +190,7 @@ const Join = () => {
             onChange={handleChange}
             required
             placeholder="비밀번호를 입력하세요"
+            disabled={!isCodeValidChk}
           />
           {/* 비밀번호 유효성 오류 메시지 표시 */}
           {passwordError && (
@@ -201,6 +208,7 @@ const Join = () => {
             onChange={handleChange}
             required
             placeholder="비밀번호를 다시 입력하세요"
+            disabled={!isCodeValidChk}
           />
           {/* 비밀번호 확인 오류 메시지 표시 */}
           {passwordConfirmError && (
@@ -218,15 +226,19 @@ const Join = () => {
             onChange={handleChange}
             required
             placeholder="이름을 입력하세요"
+            disabled={!isCodeValidChk}
           />
           {/* 이름 오류 메시지 표시 */}
           {nameError && <div className="error-message">{nameError}</div>}
         </div>
 
         <button
-          type="submit"
+          type="button"
           className="submit-btn"
-          disabled={!!error || !!passwordError || !!nameError} // error, passwordError, nameError가 있을 때 버튼 비활성화
+          onClick={handleSubmit}
+          disabled={
+            !!error || !!passwordError || !!nameError || !isCodeValidChk
+          } // error, passwordError, nameError가 있을 때 버튼 비활성화
         >
           회원가입
         </button>
