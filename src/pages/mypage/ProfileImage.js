@@ -128,21 +128,28 @@ const ProfileImage = () => {
       <div className="container">
         <aside className="sidebar-left"></aside>
         <main className="main-content">
-          <div className="diary-entries">{}</div>
+          <div className="diary-entries">
+            {}
+            <div className="profile-container">
+              <div className="profile">
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="profile-image"
+                />
+
+                {/* 연필 아이콘 */}
+                <img
+                  src="/img/pencil.png"
+                  alt="Edit"
+                  className="edit-icon"
+                  onClick={() => setIsModalOpen(true)} // 연필 아이콘 클릭시 모달 열기
+                />
+              </div>
+            </div>
+          </div>
         </main>
         <aside className="sidebar-right">
-          <div className="profile">
-            <img src={profileImage} alt="Profile" className="profile-image" />
-
-            {/* 연필 아이콘 */}
-            <img
-              src="/img/pencil.png"
-              alt="Edit"
-              className="edit-icon"
-              onClick={() => setIsModalOpen(true)} // 연필 아이콘 클릭시 모달 열기
-            />
-          </div>
-
           {/* 모달 창 */}
           {isModalOpen && (
             <div className="modal">
@@ -160,9 +167,6 @@ const ProfileImage = () => {
               </div>
             </div>
           )}
-
-          <button>Follow</button>
-          <button>Chatting</button>
         </aside>
       </div>
     </div>
