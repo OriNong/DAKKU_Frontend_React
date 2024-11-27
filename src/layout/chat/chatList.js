@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./chatCss/chatList.css";
 import { Navbar, Button, ChatItem } from "react-chat-elements";
 
-const ChatListRoom = ({ setChatRoomActive, chatInfo, chatConnect }) => {
+const ChatListRoom = ({ chatInfo, chatConnect }) => {
   const [tabNum, setTabNum] = useState(0);
   const [fade, setFade] = useState("");
   const [chatList, setChatList] = useState([]);
 
+  // 다른 계정으로 로그인시 ChatApp에서 DB를 무한으로 조회하는 버그가 있음.
+  
   useEffect(() => {
     setChatList(chatInfo);
   }, [chatInfo]);
