@@ -5,6 +5,9 @@ import {
 } from "../services/WeatherService";
 import axios from "axios";
 import instance from "../instance/instance";
+import TextEditor from "./TextEditorComponent";
+import { Switch } from "@mui/material";
+import "./DiaryComponent.css";
 
 const DiaryComponent = () => {
   const [latitude, setLatitude] = useState(37.5666791);
@@ -12,8 +15,23 @@ const DiaryComponent = () => {
   const [diaryContent, setDiaryContent] = useState("");
   const [title, setTitle] = useState("");
   const [weatherIcon, setWeatherIcon] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleToggle = (event) => {
+    setIsPublic(event.target.checked);
+    console.log(`Diary is now ${event.target.checked ? "공개" : "비공개"}`);
+  };
 
   const saveDiary = async () => {
+    if (!title.trim()) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+    if (!diaryContent.trim()) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
     try {
       // 날씨 상태 코드 받아오기
       const weatherStatusCode = await getWeatherStatusCode(latitude, longitude);
@@ -45,24 +63,42 @@ const DiaryComponent = () => {
   useEffect(() => {}, []);
 
   return (
-    <div>
-      <h1>일기</h1>
-      <input
-        type="text"
-        placeholder="일기 제목"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <br />
-      <textarea
-        value={diaryContent}
-        onChange={(e) => setDiaryContent(e.target.value)}
-        placeholder="오늘의 일기를 작성하세요"
-        rows="6"
-        cols="40"
-      ></textarea>
-      <br />
-      <button onClick={saveDiary}>저장</button>
+    <div className="diary-container">
+      <header className="diary-header">
+        <h1>일기 작성</h1>
+      </header>
+      <main className="diary-main">
+        <div className="diary-title">
+          <label htmlFor="title-input">제목</label>
+          <input
+            id="title-input"
+            type="text"
+            placeholder="일기 제목을 입력하세요"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="diary-editor">
+          <label htmlFor="editor">본문</label>
+          <TextEditor
+            onEditorChange={(content) => setDiaryContent(content)}
+            className="custom-editor"
+          />
+        </div>
+        <div className="switch-container">
+          <span className="switch-label">{isPublic ? "공개" : "비공개"}</span>
+          <Switch checked={isPublic} onChange={handleToggle} />
+        </div>
+        <div className="diary-footer">
+          <button
+            className="save-button"
+            onClick={saveDiary}
+            disabled={isSaving}
+          >
+            {isSaving ? "저장 중..." : "저장"}
+          </button>
+        </div>
+      </main>
     </div>
   );
 };
