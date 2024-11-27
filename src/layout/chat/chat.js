@@ -10,25 +10,28 @@ import {
 import { SlActionRedo } from "react-icons/sl";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdMenu, MdDelete } from "react-icons/md";
+import { Client } from "@stomp/stompjs";
 import React, { useEffect, useState } from "react";
 
-const Chat = ({ setChatRoomActive, roomId }) => {
-  const [chatList, setChatList] = useState([
-    {
-      position: "left",
-      type: "text",
-      title: "Kursat",
-      text: "Give me a message list example !",
-      date: new Date(),
-    },
-  ]);
+const Chat = ({ setChatRoomActive, chatItemInfo }) => {
   const [newMessage, setNewMessage] = useState("");
-  let inputClear = () => {};
   const inputReferance = React.useRef();
+  const [stompClient, setStompClient] = useState(null);
+  const [chatList, setChatList] = useState([]);
+
+  // chat 기본 object 구성.
+  // {
+  //   position: "left",
+  //   type: "text",
+  //   title: chatItemInfo.friendName,
+  //   text: "Give me a message list example !",
+  //   date: new Date(),
+  // },
+
+  let inputClear = () => {};
 
   const sendMessage = () => {
     if (!newMessage.trim()) return;
-
     setChatList((prevChatList) => [
       ...prevChatList,
       {
@@ -39,14 +42,41 @@ const Chat = ({ setChatRoomActive, roomId }) => {
         date: new Date(),
       },
     ]);
+    // 여기에 받은 메시지를 통신 컴포넌트로 전달해줘야함.
 
     inputClear();
     setNewMessage("");
   };
 
   useEffect(() => {
-    console.log(roomId);
-  }, [])
+    const client = new Client({
+      brokerURL: `${process.env.REACT_APP_CHAT_CONNECT}/chat`,
+      reconnectDelay: 5000,
+      onConnect: () => {
+        client.subscribe(
+          `/topic/public/rooms/${chatItemInfo.roomId}`,
+          (message) => {
+            const data = JSON.parse(message.body);
+            setChatList((prevMessage) => [
+              ...prevMessage,
+              {
+                roomID: data.body.roomId,
+                userID: data.body.userID,
+                friendID: data.body.friendID,
+                message: data.body.text,
+              },
+            ]);
+          }
+        );
+      },
+    });
+    client.activate();
+    setStompClient(client);
+
+    return () => {
+      client.deactivate();
+    };
+  }, []);
 
   return (
     <div className="chat-container">
@@ -66,7 +96,9 @@ const Chat = ({ setChatRoomActive, roomId }) => {
         }
         center={
           <a className="chat-header-center" href="/">
-            <p className="chat-header-center-title">Kursat</p>
+            <p className="chat-header-center-title">
+              {chatItemInfo.friendName}
+            </p>
           </a>
         }
         right={

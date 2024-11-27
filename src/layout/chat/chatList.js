@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./chatCss/chatList.css";
-import { Navbar, Button } from "react-chat-elements";
-import { ChatList } from "react-chat-elements";
+import { Navbar, Button, ChatItem } from "react-chat-elements";
 
-const ChatListRoom = ({ setChatRoomActive, roomId }) => {
+const ChatListRoom = ({ setChatRoomActive, chatInfo, chatConnect }) => {
   const [tabNum, setTabNum] = useState(0);
   const [fade, setFade] = useState("");
-  const [chatList, setChatList] = useState([
-    {
-      id: 1,
-      avatar: "https://avatars.githubusercontent.com/u/80540635?v=4",
-      // alt: "kursat_",
-      title: "Kursat",
-      // subtitle: "Why don't we go to the No Way Home movie this weekend ?",
-      date: new Date(),
-      unread: 3,
-    },
-  ]);
-
-  // 내일 할일.
-  // 클라이언트가 클릭한 ChatList를 구분하여 클릭한 채팅방으로 정상적으로 들어가지는지 테스트후 기능 추가할것.
+  const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
-    console.log(roomId);
-  }, [roomId])
+    setChatList(chatInfo);
+  }, [chatInfo]);
 
   useEffect(() => {
     let a = setTimeout(() => {
@@ -38,14 +24,21 @@ const ChatListRoom = ({ setChatRoomActive, roomId }) => {
   const ChatListItem = () => {
     return (
       <div>
-        <ChatList
-          className="chatList-ChatList"
-          onClick={(e) => {
-            console.log(e);
-            setChatRoomActive(true);
-          }}
-          dataSource={chatList}
-        />
+        {chatList.length > 0 && chatList.map((item) => {
+          return (
+            <ChatItem
+              key={item.roomId}
+              id={item.roomId}
+              avatar={process.env.REACT_APP_CHAT_DEFAULT_PROFILE}
+              alt={item.userName}
+              onClick={() => chatConnect(item)}
+              title={item.friendName}
+              subtitle="Ok. See you !"
+              date={new Date()}
+              unread={0}
+            />
+          );
+        })}
       </div>
     );
   };
@@ -84,7 +77,7 @@ const ChatListRoom = ({ setChatRoomActive, roomId }) => {
         }
       />
       <div className={`start ${fade}`}>
-        {tabNum === 0 ? ChatListItem() : "div2"}
+        {tabNum === 0 ? <ChatListItem /> : "div2"}
       </div>
     </div>
   );
