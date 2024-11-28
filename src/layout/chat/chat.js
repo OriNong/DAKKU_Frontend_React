@@ -53,6 +53,8 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
         text: newMessage,
         userID: writerID,
         friendID: chatItemInfo.friendId,
+        userName: chatItemInfo.userName,
+        friendName: chatItemInfo.friendName,
       };
       stompClient.publish({
         destination: `/app/chat/rooms/${chatItemInfo.roomId}/send`,
