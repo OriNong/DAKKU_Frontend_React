@@ -1,3 +1,4 @@
+/* 공통 스타일 */
 * {
   margin: 0;
   padding: 0;
@@ -8,7 +9,8 @@
   font-family: Arial, sans-serif;
 }
 
-.header {
+/* 헤더 스타일 */
+.UserProfile .header {
   background-color: #ecece4;
   padding: 20px;
   height: 150px;
@@ -28,6 +30,7 @@
   color: #464646;
 }
 
+/* 컨테이너 및 레이아웃 설정 */
 .container {
   display: flex;
   height: calc(100vh - 80px);
@@ -40,8 +43,19 @@
   padding: 20px;
 }
 
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 위쪽 정렬 */
+  align-items: flex-start; /* 왼쪽 정렬 */
+}
+
+/* 사이드바 스타일 */
 .sidebar-content ul {
-  list-style: none; /* 기본스타일 제거 */
+  list-style: none;
   padding: 0;
   margin: 0;
 }
@@ -51,17 +65,17 @@
 }
 
 .sidebar-content li a {
-  display: block; /* 링크를 블록으로 만들어 전체 영역 클릭 가능 */
+  display: block;
   padding: 10px 15px;
   color: #464646;
   text-decoration: none;
   font-size: 22px;
   border-radius: 4px;
-  transition: font-weight 0.3s, color 0.3s; /* 글자 굵기 변화와 색깔 변화 애니메이션 */
+  transition: font-weight 0.3s, color 0.3s;
 }
 
 .sidebar-content li a:hover {
-  color: #e9a30b !important; /* 마우스 오버 시 글자 색상 */
+  color: #e9a30b !important;
 }
 
 .active {
@@ -69,8 +83,72 @@
   color: #e9a30b;
 }
 
-.main-content {
-  flex: 1;
-  padding: 20px;
-  background-color: #fff;
+/* 날씨 위젯 */
+.weather-widget {
+  background-color: #ffffff;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 200px;
+}
+
+/* 날씨 데이터 */
+.weather-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+/* 날씨 카드 */
+.weather-card {
+  flex: 1 1 30%;
+  padding: 0px;
+  text-align: center;
+  width: auto;
+}
+
+/* 날짜 스타일 */
+.weather-date {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+/* 온도 스타일 */
+.weather-temp {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 5px rgba(219, 217, 217, 0.7);
+}
+
+/* 날씨 상태 스타일 */
+.weather-description {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* 날씨 아이콘 스타일 */
+.weather-icon {
+  width: 70px;
+  height: 70px;
+  margin-top: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(119, 119, 119, 0.4);
+  object-fit: cover;
+  filter: grayscale(0%) !important;
+}
+
+/* 로딩 및 에러 메시지 */
+.loading,
+.error {
+  font-size: 1.2rem;
+  color: #d9534f;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loading {
+  color: #5bc0de;
 }
