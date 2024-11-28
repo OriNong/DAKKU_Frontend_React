@@ -7,7 +7,6 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
   const [fade, setFade] = useState("");
   const [chatList, setChatList] = useState([]);
 
-  // 다른 계정으로 로그인시 ChatApp에서 DB를 무한으로 조회하는 버그가 있음.
   
   useEffect(() => {
     setChatList(chatInfo);

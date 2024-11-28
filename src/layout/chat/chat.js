@@ -12,10 +12,14 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdMenu, MdDelete } from "react-icons/md";
 import { Client } from "@stomp/stompjs";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getUserInfo } from "../../hooks/userSlice";
 
 const Chat = ({ setChatRoomActive, chatItemInfo }) => {
+  const userInfo = useSelector(getUserInfo);
   const [newMessage, setNewMessage] = useState("");
   const inputReferance = React.useRef();
+  const writerID = userInfo.id;
   const [stompClient, setStompClient] = useState(null);
   const [chatList, setChatList] = useState([]);
 
@@ -32,23 +36,38 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
 
   const sendMessage = () => {
     if (!newMessage.trim()) return;
-    setChatList((prevChatList) => [
-      ...prevChatList,
-      {
-        position: "right",
-        type: "text",
-        title: "Emre",
-        text: newMessage,
-        date: new Date(),
-      },
-    ]);
-    // 여기에 받은 메시지를 통신 컴포넌트로 전달해줘야함.
 
+    if (stompClient && newMessage) {
+      setChatList((prevChatMessage) => [
+        ...prevChatMessage,
+        {
+          position: "right",
+          type: "text",
+          title: chatItemInfo.userName,
+          text: newMessage,
+          date: new Date(),
+        },
+      ]);
+      const chatMessage = {
+        roomId: chatItemInfo.roomId,
+        text: newMessage,
+        userID: writerID,
+        friendID: chatItemInfo.friendId,
+      };
+      stompClient.publish({
+        destination: `/app/chat/rooms/${chatItemInfo.roomId}/send`,
+        body: JSON.stringify(chatMessage),
+      });
+    }
     inputClear();
     setNewMessage("");
+    console.log(chatList);
   };
 
+  // 방을 만들때 사용자가 친구와 대화하기를 누르고 채팅을 치고나면 그때 방이 자동으로 개설되고 채팅이 저장되게 로직을 구성해야됨.
+
   useEffect(() => {
+    console.log(chatItemInfo.friendId);
     const client = new Client({
       brokerURL: `${process.env.REACT_APP_CHAT_CONNECT}/chat`,
       reconnectDelay: 5000,
@@ -60,10 +79,16 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
             setChatList((prevMessage) => [
               ...prevMessage,
               {
-                roomID: data.body.roomId,
-                userID: data.body.userID,
-                friendID: data.body.friendID,
-                message: data.body.text,
+                position: "left",
+                type: "text",
+                title: data.body.userName,
+                text: data.body.text,
+                date: new Date(),
+
+                // roomID: data.body.roomId,
+                // userID: data.body.userID,
+                // friendID: data.body.friendID,
+                // message: data.body.text,
               },
             ]);
           }
@@ -76,7 +101,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
     return () => {
       client.deactivate();
     };
-  }, []);
+  }, [chatItemInfo.roomId]);
 
   return (
     <div className="chat-container">
