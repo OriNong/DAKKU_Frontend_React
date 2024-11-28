@@ -24,7 +24,6 @@ const ChatApp2 = () => {
         .get("/chat/userRoom")
         .then((res) => {
           setChatListInfo(res.data);
-          console.log(res.data);
         })
         .catch((error) => {
           console.log(error + "해당 유저의 채팅방 목록을 가져올수 없습니다.");

@@ -61,13 +61,11 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
     }
     inputClear();
     setNewMessage("");
-    console.log(chatList);
   };
 
   // 방을 만들때 사용자가 친구와 대화하기를 누르고 채팅을 치고나면 그때 방이 자동으로 개설되고 채팅이 저장되게 로직을 구성해야됨.
 
   useEffect(() => {
-    console.log(chatItemInfo.friendId);
     const client = new Client({
       brokerURL: `${process.env.REACT_APP_CHAT_CONNECT}/chat`,
       reconnectDelay: 5000,
@@ -76,6 +74,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
           `/topic/public/rooms/${chatItemInfo.roomId}`,
           (message) => {
             const data = JSON.parse(message.body);
+            console.log(data);
             setChatList((prevMessage) => [
               ...prevMessage,
               {
@@ -84,11 +83,6 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
                 title: data.body.userName,
                 text: data.body.text,
                 date: new Date(),
-
-                // roomID: data.body.roomId,
-                // userID: data.body.userID,
-                // friendID: data.body.friendID,
-                // message: data.body.text,
               },
             ]);
           }

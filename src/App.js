@@ -18,7 +18,6 @@ function App() {
 
   // userInfo에 값의 변화가 있으면 if문을 비교하여 값이 정상적인지 확인후 setChatAppActive에 true아니면 false를 반환 한다.
   useEffect(() => {
-    console.log(userInfo);
     if (
       userInfo.id > 0 &&
       userInfo.username !== "" &&
