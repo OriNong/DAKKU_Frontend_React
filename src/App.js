@@ -10,6 +10,7 @@ import { AuthProvider } from "./hooks/AuthContext";
 import ChatApp from "./layout/chat/ChatApp";
 import { useSelector } from "react-redux";
 import { getUserInfo } from "./hooks/userSlice";
+import MainPage from "./pages/main/MainPage";
 
 function App() {
   const userInfo = useSelector(getUserInfo);
@@ -39,6 +40,7 @@ function App() {
           <Route path="/user/Join" element={<Join />} />
           <Route path="/user/login" element={<Login />} />
           <Route path="/ProfileImage" element={<ProfileImage />} />
+          <Route path="/MainPage" element={<MainPage />} />
         </Routes>
         <ChatApp active={ChatAppActive} />
       </AuthProvider>
