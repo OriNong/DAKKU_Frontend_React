@@ -15,11 +15,11 @@ const DiaryComponent = () => {
   const [diaryContent, setDiaryContent] = useState("");
   const [title, setTitle] = useState("");
   const [weatherIcon, setWeatherIcon] = useState("");
-  const [isPublic, setIsPublic] = useState(true);
+  const [isSwitchPublic, setIsSwitchPublic] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
   const handleToggle = (event) => {
-    setIsPublic(event.target.checked);
+    setIsSwitchPublic(event.target.checked);
     console.log(`Diary is now ${event.target.checked ? "공개" : "비공개"}`);
   };
 
@@ -43,10 +43,12 @@ const DiaryComponent = () => {
       const diaryData = {
         diaryTitle: title,
         diaryContent: diaryContent,
+        isPublic: isSwitchPublic,
         weatherIcon: icon,
       };
 
       console.log(diaryData);
+      console.log(diaryData.isPublic);
 
       // 일기 데이터와 날씨 아이콘을 서버에 전송
       const response = await instance.post(`/diary/save`, diaryData);
@@ -86,8 +88,8 @@ const DiaryComponent = () => {
           />
         </div>
         <div className="switch-container">
-          <span className="switch-label">{isPublic ? "공개" : "비공개"}</span>
-          <Switch checked={isPublic} onChange={handleToggle} />
+          <span className="switch-label">{isSwitchPublic ? "공개" : "비공개"}</span>
+          <Switch checked={isSwitchPublic} onChange={handleToggle} />
         </div>
         <div className="diary-footer">
           <button
