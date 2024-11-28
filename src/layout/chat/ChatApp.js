@@ -15,20 +15,24 @@ const ChatApp2 = () => {
   const chatConnect = (item) => {
     setChatItemInfo(item);
     setChatRoomActive(true);
-  }
+  };
 
+  // 다른 계정으로 로그인시 ChatApp에서 DB를 무한으로 조회하는 버그가 있음.
   useEffect(() => {
     if (chatListInfo.length === 0) {
       instance
         .get("/chat/userRoom")
         .then((res) => {
           setChatListInfo(res.data);
+          console.log(res.data);
         })
         .catch((error) => {
           console.log(error + "해당 유저의 채팅방 목록을 가져올수 없습니다.");
         });
     }
-  }, [chatListInfo]);
+  }, []);
+  // 채팅방을 새로 만들면 다시 로드될수 있도록 추후 구성해야됨.
+  // ex. 친구창에서 친구와 대화하기를 누를시 자동으로 방이 자동으로 구성되어야함.
 
   return (
     <>
@@ -49,9 +53,16 @@ const ChatApp2 = () => {
           />
         </div>
         {chatRoomActive ? (
-          <Chat setChatRoomActive={setChatRoomActive} chatItemInfo={chatItemInfo} />
+          <Chat
+            setChatRoomActive={setChatRoomActive}
+            chatItemInfo={chatItemInfo}
+          />
         ) : (
-          <ChatListRoom setChatRoomActive={setChatRoomActive} chatInfo={chatListInfo} chatConnect={chatConnect} />
+          <ChatListRoom
+            setChatRoomActive={setChatRoomActive}
+            chatInfo={chatListInfo}
+            chatConnect={chatConnect}
+          />
         )}
       </div>
     </>
