@@ -73,7 +73,12 @@ const FindPw = () => {
 
       {errorMessage && <div className="checkAccount">{errorMessage}</div>}
 
-      <button id="findPW" type="submit" disabled={isLoading}>
+      <button
+        id="findPW"
+        type="button"
+        onClick={handleSubmit}
+        disabled={isLoading}
+      >
         {isLoading ? "임시 비밀번호 발급 중..." : "임시 비밀번호 받기"}
       </button>
 
