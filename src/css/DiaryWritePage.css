@@ -29,6 +29,36 @@
   background-color: #fff;
 }
 
+/* 사이드바 스타일 */
+.sidebar-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-content li {
+  margin: 10px 0;
+}
+
+.sidebar-content li a {
+  display: block;
+  padding: 10px 15px;
+  color: #464646;
+  text-decoration: none;
+  font-size: 22px;
+  border-radius: 4px;
+  transition: font-weight 0.3s, color 0.3s;
+}
+
+.sidebar-content li a:hover {
+  color: #e9a30b !important;
+}
+
+.active {
+  font-weight: bold;
+  color: #e9a30b;
+}
+
 button {
   display: block;
   width: 100%;
