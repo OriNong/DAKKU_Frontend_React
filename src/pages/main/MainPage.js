@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../../css/MainPage.css";
 import MainWeatherIcon from "../../components/MainWeatherIcons";
+import Book from "./book";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
@@ -105,6 +106,14 @@ function MainPage() {
             ) : (
               <p>날씨 데이터가 존재하지 않습니다.</p>
             )}
+          </aside>
+
+          <aside className="main-down">
+            <div className="book">
+              <Book />
+            </div>
+            <div className="diary">다이어dddddddddddddddddddddddddddddd리</div>
+            <div className="friend-list">친구리스트</div>
           </aside>
         </main>
         <aside className="sidebar-right">
