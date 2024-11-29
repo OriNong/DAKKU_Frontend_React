@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../../css/MainPage.css";
+import MainWeatherIcon from "../../components/MainWeatherIcons";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
@@ -91,11 +92,7 @@ function MainPage() {
                         { month: "2-digit", day: "2-digit" }
                       )}
                     </p>
-                    <img
-                      className="weather-icon"
-                      src={`https://openweathermap.org/img/wn/${forecast.weather[0]?.icon}.png`}
-                      alt={forecast.weather[0]?.description}
-                    />
+                    <MainWeatherIcon id={forecast.weather[0]?.id} />
                     <p className="weather-temp">
                       {forecast.main.temp.toFixed(1)}°C
                     </p>
