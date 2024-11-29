@@ -1,6 +1,5 @@
 import Calendar from '../../components/CalendarComponent';
 import '../../css/LoginUserPage.css';
-import DiaryComponent from '../diary/DiaryWritePage';
 
 const LoginUserPage = () => {
     return (
