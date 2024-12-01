@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 import { getUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
 import Swal from "sweetalert2";
-import { type } from "@testing-library/user-event/dist/type";
 
 const Chat = ({ setChatRoomActive, chatItemInfo }) => {
   const userInfo = useSelector(getUserInfo);
@@ -66,29 +65,26 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
         },
       })
       .then((res) => {
-        console.log(res.data.list);
+
         if (res.data?.list) {
           // friendID: 21
           // message: "asdfasdf"
           // roomID: "a5f5038c-108b-41b5-b293-2718693482c2"
           // userID: 22
 
-          const list = res.data?.list?.map((e) => {
-            const obj = {
-              position: "",
-              type: "text",
-              title: "",
-              text: "",
-              date: new Date(),
-            };
+          const messageList = res.data.list.map((msg) => ({
+            position: msg.userID === writerID ? "right" : "left",
+            type: "text",
+            title:
+              msg.userID === writerID
+                ? chatItemInfo.userName
+                : chatItemInfo.friendName,
+            text: msg.message,
+            date: new Date(),
+          }));
+          setChatList(messageList);
 
-            return obj;
-          });
-
-          setChatList();
-
-          console.log(list);
-
+          console.log(messageList);
         } else {
           setChatList([]);
         }

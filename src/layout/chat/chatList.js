@@ -24,8 +24,8 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
 
   const ChatListItem = () => {
     return (
-      <div>
-        {chatList.length > 0 && chatList.map((item) => {
+      <div className='chatList-chatItem-div'>
+        {chatList.length > 0 ? chatList.map((item) => {
           return (
             <ChatItem
               key={item.roomId}
@@ -35,11 +35,11 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
               onClick={() => chatConnect(item)}
               title={item.friendName}
               subtitle="Ok. See you !"
-              date={new Date()}
+              date={new Date(item.createDate)}
               unread={0}
             />
           );
-        })}
+        }) : "채팅방이 없습니다."}
       </div>
     );
   };
