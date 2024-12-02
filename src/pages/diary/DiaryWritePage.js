@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Switch } from "@mui/material";
+import Swal from "sweetalert2";
 import {
   getWeatherStatusCode,
   getWeatherIconFromBackend,
 } from "../../services/WeatherService";
 import instance from "../../instance/instance";
 import TextEditor from "../../components/TextEditorComponent";
-import { Switch } from "@mui/material";
+import { getUserInfo } from "../../hooks/userSlice";
 import "../../css/DiaryWritePage.css";
-import Swal from "sweetalert2";
+
 
 const DiaryComponent = () => {
+  const userInfo = useSelector(getUserInfo);
   const [latitude, setLatitude] = useState(37.5666791);
   const [longitude, setLongitude] = useState(126.9782914);
   const [diaryContent, setDiaryContent] = useState("");
@@ -19,10 +23,12 @@ const DiaryComponent = () => {
   const [isSwitchPublic, setIsSwitchPublic] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
+  // 스위치 토글 클릭 시 값 변경
   const handleToggle = (event) => {
     setIsSwitchPublic(event.target.checked);
     console.log(`Diary is now ${event.target.checked ? "공개" : "비공개"}`);
   };
+  console.log(userInfo.id);
 
   const saveDiary = async () => {
     if (!title.trim()) {
@@ -63,11 +69,19 @@ const DiaryComponent = () => {
       const response = await instance.post(`/diary/save`, diaryData);
 
       if (response.status === 200) {
-        alert("일기가 저장되었습니다!");
+        Swal.fire({
+          icon: "success",
+          title: "일기 저장 성공!",
+          text: "작성한 일기가 저장되었습니다",
+        });
       }
     } catch (error) {
       console.error("일기 저장 중 오류 발생:", error);
-      alert("일기 저장에 실패했습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "Diary Save Error!",
+        text: "오류 : " + error,
+      });
     }
   };
 
@@ -105,7 +119,6 @@ const DiaryComponent = () => {
           </div>
         </aside>
         <main className="main-content">
-          
           <div className="diary-container">
             <header className="diary-header">
               <h1>새로운 일기 작성</h1>
@@ -146,9 +159,7 @@ const DiaryComponent = () => {
             </main>
           </div>
         </main>
-        <aside className="sidebar-right">
-          /*추후 내용 추가*/
-        </aside>
+        <aside className="sidebar-right">/*추후 내용 추가*/</aside>
       </div>
     </div>
   );
