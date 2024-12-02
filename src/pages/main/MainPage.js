@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import "../../css/MainPage.css";
 import MainWeatherIcon from "../../components/MainWeatherIcons";
 import Book from "./book";
+import NotificationIcon from "../../components/NotificationIcon";
+import HomeIcon from "../../components/HomeIcon";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
@@ -52,8 +54,12 @@ function MainPage() {
   return (
     <div className="UserProfile">
       <header className="header">
-        <h1>Diary</h1>
+        <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>Main</h2>
+        <div className="header-icons">
+          <NotificationIcon />
+          <HomeIcon />
+        </div>
       </header>
       <div className="container">
         <aside className="sidebar-left">
