@@ -1,0 +1,30 @@
+.UserList {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+
+.UserList ul {
+  list-style-type: none;
+}
+.UserList li img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.UserList li {
+  color: #464646;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+}
+.UserList h3 {
+  color: #464646;
+  font-weight: bold;
+  font-size: 20px;
+}
+.UserList:hover {
+  cursor: pointer;
+}

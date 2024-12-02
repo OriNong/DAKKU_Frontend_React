@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BookContainer } from "../../components/Style";
+import { BookContainer } from "../../components/MainBookStyle";
 
 const Book = () => {
   // 상태 관리

@@ -7,6 +7,8 @@ import NotificationIcon from "../../components/NotificationIcon";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
+import UserList from "./UserList";
+import DiaryList from "./DiaryList";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
@@ -129,8 +131,12 @@ function MainPage() {
             <div className="book">
               <Book />
             </div>
-            <div className="diary">다이어dddddddddddddddddddddddddddddd리</div>
-            <div className="friend-list">친구리스트</div>
+            <div className="diary">
+              <DiaryList />
+            </div>
+            <div className="friend-list">
+              <UserList />
+            </div>
           </aside>
         </main>
         <aside className="sidebar-right">
