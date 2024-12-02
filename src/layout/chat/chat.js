@@ -17,7 +17,7 @@ import { getUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
 import Swal from "sweetalert2";
 
-const Chat = ({ setChatRoomActive, chatItemInfo }) => {
+const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
   const userInfo = useSelector(getUserInfo);
   const inputReferance = React.useRef();
   const messageListRef = React.createRef();
@@ -26,15 +26,6 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
   const [newMessage, setNewMessage] = useState("");
   const [stompClient, setStompClient] = useState(null);
   const [chatList, setChatList] = useState([]);
-
-  // chat 기본 object 구성.
-  // {
-  //   position: "left",
-  //   type: "text",
-  //   title: chatItemInfo.friendName,
-  //   text: "Give me a message list example !",
-  //   date: new Date(),
-  // },
 
   const sendMessage = () => {
     if (!newMessage.trim()) return;
@@ -58,45 +49,70 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
 
   // 방을 만들때 사용자가 친구와 대화하기를 누르고 채팅을 치고나면 그때 방이 자동으로 개설되고 채팅이 저장되게 로직을 구성해야됨.
   useEffect(() => {
-    instance
-      .get(`/chat/uuid`, {
-        params: {
-          friendID: chatItemInfo.friendId,
-        },
-      })
-      .then((res) => {
-
-        if (res.data?.list) {
-          // friendID: 21
-          // message: "asdfasdf"
-          // roomID: "a5f5038c-108b-41b5-b293-2718693482c2"
-          // userID: 22
-
-          const messageList = res.data.list.map((msg) => ({
-            position: msg.userID === writerID ? "right" : "left",
-            type: "text",
-            title:
-              msg.userID === writerID
-                ? chatItemInfo.userName
-                : chatItemInfo.friendName,
-            text: msg.message,
-            date: new Date(),
-          }));
-          setChatList(messageList);
-
-          console.log(messageList);
-        } else {
-          setChatList([]);
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-          title: "채팅 오류",
-          text: "데이터베이스에서 채팅 기록을 불러올수 없습니다.",
-          icon: "error",
+    if (!chatItemAction.length > 0) {
+      instance
+        .get(`/chat/uuid`, {
+          params: {
+            friendID: chatItemInfo.friendId,
+          },
+        })
+        .then((res) => {
+          if (res.data?.list) {
+            const messageList = res.data.list.map((msg) => ({
+              position: msg.userID === writerID ? "right" : "left",
+              type: "text",
+              title:
+                msg.userID === writerID
+                  ? chatItemInfo.userName
+                  : chatItemInfo.friendName,
+              text: msg.message,
+              date: new Date(msg.inputDate),
+            }));
+            setChatList(messageList);
+          } else {
+            setChatList([]);
+          }
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: "채팅 오류",
+            text: "데이터베이스에서 채팅 기록을 불러올수 없습니다.",
+            icon: "error",
+          });
         });
-        console.log(error);
-      });
+    } else {
+      instance
+        .get(`/chat/uuid`, {
+          params: {
+            friendID: chatItemAction.friendID,
+          },
+        })
+        .then((res) => {
+          if (res.data?.list) {
+            console.log(res);
+            // const messageList = res.data.list.map((msg) => ({
+            //   position: msg.userID === writerID ? "right" : "left",
+            //   type: "text",
+            //   title:
+            //     msg.userID === writerID
+            //       ? chatItemInfo.userName
+            //       : chatItemInfo.friendName,
+            //   text: msg.message,
+            //   date: new Date(msg.inputDate),
+            // }));
+            // setChatList(messageList);
+          } else {
+            // setChatList([]);
+          }
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: "채팅 오류",
+            text: "데이터베이스에서 채팅 기록을 불러올수 없습니다.",
+            icon: "error",
+          });
+        });
+    }
 
     const client = new Client({
       brokerURL: `${process.env.REACT_APP_CHAT_CONNECT}/chat`,
@@ -104,8 +120,6 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
       onConnect: () => {
         client.subscribe(`/topic/public/rooms/${roomId}`, (message) => {
           const data = JSON.parse(message.body);
-          console.log(data);
-          console.log(messageListRef);
           setChatList((prevMessage) => [
             ...prevMessage,
             {

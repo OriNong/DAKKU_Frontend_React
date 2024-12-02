@@ -1,13 +1,36 @@
 import React, { useEffect, useState } from "react";
 import "./chatCss/chatList.css";
-import { Navbar, Button, ChatItem } from "react-chat-elements";
+import instance from "../../instance/instance";
+import { Navbar, Button, ChatItem, Avatar } from "react-chat-elements";
+import { useSelector } from "react-redux";
+import { getUserInfo } from "../../hooks/userSlice";
+import { IoMdChatbubbles } from "react-icons/io";
 
-const ChatListRoom = ({ chatInfo, chatConnect }) => {
+const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
+  const userInfo = useSelector(getUserInfo);
   const [tabNum, setTabNum] = useState(0);
   const [fade, setFade] = useState("");
   const [chatList, setChatList] = useState([]);
+  const [friendList, setFriendList] = useState([
+    {
+      FRIEND_ID: 54,
+      FRIEND_NAME: "user42",
+      ID: 32,
+    },
+  ]);
 
-  
+  useEffect(() => {
+    instance
+      .get("/social/friendSearch", {
+        params: {
+          userID: 34,
+        },
+      })
+      .then((res) => {
+        setFriendList(res.data);
+      });
+  }, []);
+
   useEffect(() => {
     setChatList(chatInfo);
   }, [chatInfo]);
@@ -24,22 +47,68 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
 
   const ChatListItem = () => {
     return (
-      <div className='chatList-chatItem-div'>
-        {chatList.length > 0 ? chatList.map((item) => {
-          return (
-            <ChatItem
-              key={item.roomId}
-              id={item.roomId}
-              avatar={process.env.REACT_APP_CHAT_DEFAULT_PROFILE}
-              alt={item.userName}
-              onClick={() => chatConnect(item)}
-              title={item.friendName}
-              subtitle="Ok. See you !"
-              date={new Date(item.createDate)}
-              unread={0}
-            />
-          );
-        }) : "채팅방이 없습니다."}
+      <div className="chatList-chatItem-div">
+        {chatList.length > 0
+          ? chatList.map((item) => {
+              return (
+                <ChatItem
+                  key={item.roomId}
+                  id={item.roomId}
+                  avatar={process.env.REACT_APP_CHAT_DEFAULT_PROFILE}
+                  alt={item.userName}
+                  onClick={() => chatConnect(item)}
+                  title={item.friendName}
+                  subtitle={
+                    item.lastMessage?.length > 0 ? (
+                      item.lastMessage
+                    ) : (
+                      <div>&nbsp;</div>
+                    )
+                  }
+                  date={new Date(item.createDate)}
+                  unread={0}
+                />
+              );
+            })
+          : "채팅방이 없습니다."}
+      </div>
+    );
+  };
+
+  const FriendList = () => {
+    return (
+      <div className="chatList-FriendList-container">
+        {friendList.length > 0 ? (
+          friendList.map((item) => {
+            return (
+              <div key={item.ID}>
+                <div className="chatList-FriendList-div">
+                  <Avatar
+                    className="chatList-FriendList-avatar"
+                    src={process.env.REACT_APP_CHAT_DEFAULT_PROFILE}
+                    type="circle"
+                    size="large"
+                  />
+                  <div className="chatList-FriendList-NameTag">
+                    <div className="chatList-FriendList-NameTag-div">
+                      {item.FRIEND_NAME}
+                    </div>
+                  </div>
+                  <button
+                    className="chatList-FriendList-ActionButton"
+                    onClick={(e) => console.log(e)}
+                  >
+                    <IoMdChatbubbles />
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="chatList-FriendList-Empty">
+            친구목록이 비어있습니다.
+          </div>
+        )}
       </div>
     );
   };
@@ -67,7 +136,7 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
                   className="chatList-Navbar-center-liTag-button"
                   type="transparent"
                   color="black"
-                  text="목록"
+                  text="친구목록"
                   onClick={() => {
                     setTabNum(1);
                   }}
@@ -78,7 +147,7 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
         }
       />
       <div className={`start ${fade}`}>
-        {tabNum === 0 ? <ChatListItem /> : "div2"}
+        {tabNum === 0 ? <ChatListItem /> : <FriendList />}
       </div>
     </div>
   );
