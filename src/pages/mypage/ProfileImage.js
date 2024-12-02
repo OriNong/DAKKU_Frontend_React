@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext";
 import "../../css/ProfileImage.css";
 import instance from "../../instance/instance";
+import HomeIcon from "../../components/HomeIcon";
+import NotificationIcon from "../../components/NotificationIcon";
 
 const ProfileImage = () => {
   const { user } = useAuth(); // 로그인된 사용자 정보 가져오기
@@ -128,8 +130,12 @@ const ProfileImage = () => {
   return (
     <div className="UserProfile">
       <header className="header">
-        <h1>Diary</h1>
+        <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>MyPage</h2>
+        <div className="header-icons">
+          <NotificationIcon />
+          <HomeIcon />
+        </div>
       </header>
       <div className="container">
         <aside className="sidebar-left">

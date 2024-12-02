@@ -56,11 +56,11 @@ const weatherImages = {
   804: "/img/04d.png", // Overcast clouds
 };
 
-function MainWeatherIcon({ id }) {
+const MainWeatherIcon = ({ id }) => {
   // 날씨 상태 코드에 맞는 이미지 경로 반환
   const imageSrc = weatherImages[id] || "/img/01d.png"; // 기본값: clear sky 이미지
 
   return <img src={imageSrc} alt="Weather icon" className="weather-icon" />;
-}
+};
 
 export default MainWeatherIcon;

@@ -3,11 +3,18 @@ import { Link, useLocation } from "react-router-dom";
 import "../../css/MainPage.css";
 import MainWeatherIcon from "../../components/MainWeatherIcons";
 import Book from "./book";
+import NotificationIcon from "../../components/NotificationIcon";
+import HomeIcon from "../../components/HomeIcon";
+import NotificationModal from "../../components/NotificationModal";
+import useChatAlerts from "../../hooks/useChatAlerts";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // 채팅 알림 훅
+  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -45,6 +52,7 @@ function MainPage() {
 
     fetchWeather();
   }, []);
+
   // 현재 경로가 active 상태인지 확인
   const location = useLocation();
   const isActive = (path) => (location.pathname === path ? "active" : "");
@@ -52,8 +60,17 @@ function MainPage() {
   return (
     <div className="UserProfile">
       <header className="header">
-        <h1>Diary</h1>
+        <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>Main</h2>
+        <div className="header-icons">
+          <NotificationIcon onClick={openModal} />
+          <NotificationModal
+            isOpen={isModalOpen} // 모달 상태 전달
+            closeModal={closeModal} // 모달 닫기 함수 전달
+            chatAlerts={chatAlerts} // 알림 데이터 전달
+          />
+          <HomeIcon />
+        </div>
       </header>
       <div className="container">
         <aside className="sidebar-left">

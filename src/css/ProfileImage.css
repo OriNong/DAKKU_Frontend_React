@@ -14,18 +14,27 @@
   height: 150px;
 }
 
-.UserProfile .header h1 {
-  text-align: left;
-  font-size: 40px;
-  font-weight: bold;
+.UserProfile .header {
+  position: relative;
 }
-
 .UserProfile .header h2 {
   text-align: left;
   font-size: 15px;
   font-weight: bold;
-  margin-top: 40px;
+  margin-top: 10px;
   color: #464646;
+}
+
+.UserProfile .header .header-icons {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+}
+
+.UserProfile .header .header-icons div {
+  margin-right: 20px;
+  margin-bottom: 10px;
 }
 
 .container {
