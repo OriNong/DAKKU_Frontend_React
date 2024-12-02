@@ -11,19 +11,13 @@ const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
   const [tabNum, setTabNum] = useState(0);
   const [fade, setFade] = useState("");
   const [chatList, setChatList] = useState([]);
-  const [friendList, setFriendList] = useState([
-    {
-      FRIEND_ID: 54,
-      FRIEND_NAME: "user42",
-      ID: 32,
-    },
-  ]);
+  const [friendList, setFriendList] = useState([]);
 
   useEffect(() => {
     instance
       .get("/social/friendSearch", {
         params: {
-          userID: 34,
+          userID: 34, // userInfo.id
         },
       })
       .then((res) => {
