@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 import { getUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
+import NotificationIcon from "../../components/NotificationIcon";
+import HomeIcon from "../../components/HomeIcon";
+import NotificationModal from "../../components/NotificationModal";
+import useChatAlerts from "../../hooks/useChatAlerts";
 
 import "../../css/MyDiaryListPage.css";
 
 const MyDiaryListPage = () => {
+  // 채팅 알림 훅
+  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
+
   // 현재 경로가 active 상태인지 확인
   const location = useLocation();
   const isActive = (path) => (location.pathname === path ? "active" : "");
+
+  // 새로운 일기 작성 버튼 클릭 시 일기 작성 페이지로 이동
+  const navigate = useNavigate();
+  const navToDiaryWrite = () => {
+    navigate("/");
+  };
 
   const userInfo = useSelector(getUserInfo);
 
@@ -40,11 +53,9 @@ const MyDiaryListPage = () => {
 
   // 공개/비공개 토글 핸들러
   const handlePublicToggle = (diaryId) => {
-    setDiaryList(prevList => 
-      prevList.map(diary => 
-        diary.diaryId === diaryId 
-          ? { ...diary, public: !diary.public } 
-          : diary
+    setDiaryList((prevList) =>
+      prevList.map((diary) =>
+        diary.diaryId === diaryId ? { ...diary, public: !diary.public } : diary
       )
     );
   };
@@ -60,18 +71,76 @@ const MyDiaryListPage = () => {
     )}-${String(date.getDate()).padStart(2, "0")}`;
   };
 
+  // 선택한 일기 데이터를 상태에 저장
   const handleViewDetails = (diary) => {
-    setSelectedDiary(diary); // 선택한 일기 데이터를 상태에 저장
+    setSelectedDiary(diary);
   };
 
+  // 상세보기 화면 닫기
   const handleCloseDetails = () => {
-    setSelectedDiary(null); // 상세보기 화면 닫기
+    setSelectedDiary(null);
+  };
+
+  // 상세보기에서 일기 삭제 전 확인
+  const handleDeleteConfirmation = (diaryId) => {
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      text: "삭제된 일기는 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "예, 삭제합니다",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDeleteDiary(diaryId);
+      }
+    });
+  };
+
+  const handleDeleteDiary = async (diaryId) => {
+    try {
+      // diaryId를 파라미터로 전달하여 삭제 API 호출
+      const response = await instance.delete(`/diary/delete/${diaryId}`);
+
+      // 삭제 성공 시 알림
+
+      Swal.fire({
+        title: "삭제 완료",
+        text: "일기가 성공적으로 삭제되었습니다.",
+        icon: "success",
+        timer: 1500,
+        timerProgressBar: true,
+        didClose: () => {
+          window.location.reload();
+        },
+      });
+    } catch (error) {
+      // 삭제 실패 시 에러 알림
+      Swal.fire({
+        title: "삭제 오류",
+        text: "일기 삭제 중 오류가 발생했습니다.",
+        icon: "error",
+      });
+      console.error("Delete error:", error);
+    }
   };
 
   return (
-    <div className="app">
+    <div className="MyDiaryList">
       <header className="header">
-        <h1>Diary</h1>
+        <img src="/img/logo.png" alt="logo" className="logo" />
+
+        <div className="header-icons">
+          <NotificationIcon onClick={openModal} />
+          <HomeIcon />
+        </div>
+        <NotificationModal
+          isOpen={isModalOpen} // 모달 상태 전달
+          closeModal={closeModal} // 모달 닫기 함수 전달
+          chatAlerts={chatAlerts} // 알림 데이터 전달
+        />
       </header>
       <div className="container">
         <aside className="sidebar-left">
@@ -98,7 +167,9 @@ const MyDiaryListPage = () => {
         <main className="main-content">
           <div className="diary-header">
             <h2>내 일기장 목록</h2>
-            <button className="new-diary-btn">새 일기 작성하기</button>
+            <button className="new-diary-btn" onClick={navToDiaryWrite}>
+              새 일기 작성하기
+            </button>
           </div>
           <main className="diary-main row">
             <div className={`diary-list ${selectedDiary ? "with-detail" : ""}`}>
@@ -149,15 +220,29 @@ const MyDiaryListPage = () => {
 
             {selectedDiary && (
               <div className="diary-detail">
-                <h3>{selectedDiary.diaryTitle}</h3>
-                <p dangerouslySetInnerHTML={{__html :selectedDiary.diaryContent }}></p>
-                <p>작성일: {selectedDiary.diaryCrtDate}</p>
-                <p>날씨: {selectedDiary.weatherIcon}</p>
+                <div className="diary-detail-header">
+                  <h1>제목 : {selectedDiary.diaryTitle}</h1>
+                  <p>작성일: {selectedDiary.diaryCrtDate}</p>
+                  <p>날씨: {selectedDiary.weatherIcon}</p>
+                </div>
+                <div className="diary-detail-main">
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: selectedDiary.diaryContent,
+                    }}
+                  ></p>
+                </div>
+
                 <div className="detail-actions">
                   <button className="edit-btn" onClick={() => {}}>
                     수정하기
                   </button>
-                  <button className="delete-btn" onClick={() => {}}>
+                  <button
+                    className="delete-btn"
+                    onClick={() => {
+                      handleDeleteConfirmation(selectedDiary.diaryId);
+                    }}
+                  >
                     삭제하기
                   </button>
                   <button

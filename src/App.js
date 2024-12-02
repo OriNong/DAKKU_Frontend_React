@@ -13,6 +13,8 @@ import { getUserInfo } from "./hooks/userSlice";
 import MainPage from "./pages/main/MainPage";
 import Friends from "./pages/user/Friends";
 import UserPage from "./pages/UserPage/UserPage";
+import MyDiaryListPage from "./pages/diary/MyDiaryListPage";
+import DiaryEdit from "./pages/diary/DiaryEditPage";
 
 function App() {
   const userInfo = useSelector(getUserInfo);
@@ -44,6 +46,8 @@ function App() {
           <Route path="/MainPage" element={<MainPage />} />
           <Route path="/user/Friends" element={<Friends />} />
           <Route path="/UserPage" element={<UserPage />} />
+          <Route path="/user/myDiary" element={<MyDiaryListPage />} />
+          <Route path="/user/editDiary" element={<DiaryEdit />} />
         </Routes>
         <ChatApp active={ChatAppActive} />
       </AuthProvider>
