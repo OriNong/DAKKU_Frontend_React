@@ -12,7 +12,7 @@ const useChatAlerts = () => {
   useEffect(() => {
     const fetchChatAlerts = async () => {
       // API 호출을 통해 알림 데이터를 가져오는 부분
-      // 예시로 임시 데이터를 설정합니다.
+      // 예시로 임시 데이터를 설정
       const newAlerts = ["새로운 채팅 알림", "또 다른 알림"];
       setChatAlerts(newAlerts);
     };

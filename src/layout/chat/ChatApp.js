@@ -11,6 +11,12 @@ const ChatApp2 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatListInfo, setChatListInfo] = useState([]);
   const [chatItemInfo, setChatItemInfo] = useState({});
+  const [chatItemAction, setChatItemAction] = useState({});
+
+  const chatListAction = (e) => {
+    setChatItemAction(e);
+    setChatRoomActive(true);
+  };
 
   const chatConnect = (item) => {
     setChatItemInfo(item);
@@ -58,12 +64,14 @@ const ChatApp2 = () => {
           <Chat
             setChatRoomActive={setChatRoomActive}
             chatItemInfo={chatItemInfo}
+            chatItemAction={chatItemAction}
           />
         ) : (
           <ChatListRoom
             setChatRoomActive={setChatRoomActive}
             chatInfo={chatListInfo}
             chatConnect={chatConnect}
+            chatListAction={chatListAction}
           />
         )}
       </div>

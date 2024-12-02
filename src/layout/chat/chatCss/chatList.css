@@ -49,11 +49,12 @@
 }
 
 .chatWrapper .chatList-Navbar-center {
-  width: 350px;
+  width: 500px;
   margin: 0 auto;
 }
 
-.chatWrapper .chatList-Navbar-center .rce-navbar-item, .rce-navbar-item>* {
+.chatWrapper .chatList-Navbar-center .rce-navbar-item,
+.rce-navbar-item > * {
   display: block !important;
 }
 
@@ -99,4 +100,100 @@
 .chatWrapper .chatList-chatItem-div::-webkit-scrollbar-thumb {
   background: #868e96;
   border-radius: 5px;
+}
+
+.chatWrapper .chatList-FriendList-container {
+  height: 525px;
+  overflow-y: scroll;
+}
+
+.chatWrapper .chatList-FriendList-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chatWrapper .chatList-FriendList-container::-webkit-scrollbar-thumb {
+  background: #868e96;
+  border-radius: 5px;
+}
+
+/* 외부 컨테이너 */
+.chatWrapper .chatList-FriendList-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 좌측 아바타/이름과 우측 버튼 사이 간격 */
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #f9f9f9; /* 배경색 */
+  transition: background-color 0.2s ease;
+}
+
+/* 아바타 스타일 */
+.chatWrapper .chatList-FriendList-avatar {
+  margin-right: 10px; /* 이미지와 텍스트 간격 */
+  border: 2px solid #ccc; /* 테두리 */
+  border-radius: 50%; /* 원형 이미지 */
+  width: 50px;
+  height: 50px;
+}
+
+/* 텍스트 컨테이너 */
+.chatWrapper .chatList-FriendList-NameTag {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1; /* 텍스트가 공간을 더 차지하도록 */
+}
+
+/* 이름 태그 */
+.chatWrapper .chatList-FriendList-NameTag-div {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 액션 버튼 */
+.chatWrapper .chatList-FriendList-ActionButton {
+  padding: 6px 12px;
+  width: 60px;
+  font-size: 25px;
+  color: #888;
+  background-color: transparent; /* 버튼 배경색 */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.chatWrapper .chatList-FriendList-ActionButton:hover {
+  color: white;
+  background-color: #888; /* 호버 시 버튼 배경색 */
+}
+
+/* .chatWrapper .chatList-FriendList-container {
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+}
+
+.chatWrapper .chatList-FriendList-div {
+  display: flex;
+}
+
+.chatWrapper .chatList-FriendList-avatar {
+  margin: 10px;
+}
+
+.chatWrapper .chatList-FriendList-NameTag {
+}
+
+.chatWrapper .chatList-FriendList-NameTag-div {
+
+}*/
+
+.chatWrapper .chatList-FriendList-Empty {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+  color: #888;
 }

@@ -13,7 +13,9 @@ const NotificationIcon = () => {
 
   useEffect(() => {
     // 서버와의 SSE 연결
-    const eventSource = new EventSource("/message/subscribe");
+    const eventSource = new EventSource(
+      "http://localhost:8080/api/message/subscribe"
+    );
 
     // 메시지 수신 처리
     eventSource.onmessage = function (event) {
