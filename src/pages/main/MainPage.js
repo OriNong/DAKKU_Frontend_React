@@ -64,13 +64,13 @@ function MainPage() {
         <h2>Main</h2>
         <div className="header-icons">
           <NotificationIcon onClick={openModal} />
-          <NotificationModal
-            isOpen={isModalOpen} // 모달 상태 전달
-            closeModal={closeModal} // 모달 닫기 함수 전달
-            chatAlerts={chatAlerts} // 알림 데이터 전달
-          />
           <HomeIcon />
         </div>
+        <NotificationModal
+          isOpen={isModalOpen} // 모달 상태 전달
+          closeModal={closeModal} // 모달 닫기 함수 전달
+          chatAlerts={chatAlerts} // 알림 데이터 전달
+        />
       </header>
       <div className="container">
         <aside className="sidebar-left">

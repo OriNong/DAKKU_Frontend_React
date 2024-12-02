@@ -5,12 +5,16 @@ import "../../css/ProfileImage.css";
 import instance from "../../instance/instance";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationIcon from "../../components/NotificationIcon";
+import NotificationModal from "../../components/NotificationModal";
+import useChatAlerts from "../../hooks/useChatAlerts";
 
 const ProfileImage = () => {
   const { user } = useAuth(); // 로그인된 사용자 정보 가져오기
   const [profileImage, setProfileImage] = useState("/img/default-profile.png"); // 기본 프로필 이미지
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
   const [newImage, setNewImage] = useState(null); // 새로 업로드할 이미지 파일
+  // 채팅 알림 훅
+  const { chatAlerts, openModal, closeModal } = useChatAlerts();
 
   // 기존 프로필 이미지를 가져오는 함수
   const fetchProfileImage = async () => {
@@ -133,9 +137,14 @@ const ProfileImage = () => {
         <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>MyPage</h2>
         <div className="header-icons">
-          <NotificationIcon />
+          <NotificationIcon onClick={openModal} />
           <HomeIcon />
         </div>
+        <NotificationModal
+          isOpen={isModalOpen} // 모달 상태 전달
+          closeModal={closeModal} // 모달 닫기 함수 전달
+          chatAlerts={chatAlerts} // 알림 데이터 전달
+        />
       </header>
       <div className="container">
         <aside className="sidebar-left">

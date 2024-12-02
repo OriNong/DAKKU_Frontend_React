@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { getUserInfo } from "./hooks/userSlice";
 import MainPage from "./pages/main/MainPage";
 import Friends from "./pages/user/Friends";
+import UserPage from "./pages/UserPage/UserPage";
 
 function App() {
   const userInfo = useSelector(getUserInfo);
@@ -42,6 +43,7 @@ function App() {
           <Route path="/ProfileImage" element={<ProfileImage />} />
           <Route path="/MainPage" element={<MainPage />} />
           <Route path="/user/Friends" element={<Friends />} />
+          <Route path="/UserPage" element={<UserPage />} />
         </Routes>
         <ChatApp active={ChatAppActive} />
       </AuthProvider>
