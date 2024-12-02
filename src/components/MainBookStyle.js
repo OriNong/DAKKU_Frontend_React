@@ -17,8 +17,8 @@ export const BookContainer = styled.div`
   }
 
   .book-image {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     margin-bottom: 10px;
   }

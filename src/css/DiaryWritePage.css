@@ -59,28 +59,13 @@
   color: #e9a30b;
 }
 
-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  background-color: #f0f0db;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #e0e0cb;
-}
-
-
 /* 공통 컨테이너 */
 .diary-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   font-family: Arial, sans-serif;
 }
@@ -125,11 +110,10 @@ button:hover {
   color: #555;
 }
 
-.diary-editor textarea {
+.diary-editor .custom-editor {
   width: 100%;
   min-height: 150px;
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
   resize: vertical;
