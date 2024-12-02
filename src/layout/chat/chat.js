@@ -49,7 +49,8 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
 
   // 방을 만들때 사용자가 친구와 대화하기를 누르고 채팅을 치고나면 그때 방이 자동으로 개설되고 채팅이 저장되게 로직을 구성해야됨.
   useEffect(() => {
-    if (!chatItemAction.length > 0) {
+    console.log(chatItemInfo);
+    if (chatItemAction === null && chatItemInfo !== null) {
       instance
         .get(`/chat/uuid`, {
           params: {
@@ -71,38 +72,6 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
             setChatList(messageList);
           } else {
             setChatList([]);
-          }
-        })
-        .catch((error) => {
-          Swal.fire({
-            title: "채팅 오류",
-            text: "데이터베이스에서 채팅 기록을 불러올수 없습니다.",
-            icon: "error",
-          });
-        });
-    } else {
-      instance
-        .get(`/chat/uuid`, {
-          params: {
-            friendID: chatItemAction.friendID,
-          },
-        })
-        .then((res) => {
-          if (res.data?.list) {
-            console.log(res);
-            // const messageList = res.data.list.map((msg) => ({
-            //   position: msg.userID === writerID ? "right" : "left",
-            //   type: "text",
-            //   title:
-            //     msg.userID === writerID
-            //       ? chatItemInfo.userName
-            //       : chatItemInfo.friendName,
-            //   text: msg.message,
-            //   date: new Date(msg.inputDate),
-            // }));
-            // setChatList(messageList);
-          } else {
-            // setChatList([]);
           }
         })
         .catch((error) => {
@@ -139,7 +108,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
     return () => {
       client.deactivate();
     };
-  }, [roomId]);
+  }, [setChatRoomActive]);
 
   return (
     <div className="chat-container">
@@ -154,7 +123,10 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
               size: 20,
               component: <IoMdArrowRoundBack />,
             }}
-            onClick={() => setChatRoomActive(false)}
+            onClick={() => {
+              
+              setChatRoomActive(false);
+            }}
           />
         }
         center={

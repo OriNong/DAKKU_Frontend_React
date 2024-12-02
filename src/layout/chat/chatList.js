@@ -90,7 +90,7 @@ const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
                   </div>
                   <button
                     className="chatList-FriendList-ActionButton"
-                    onClick={(e) => console.log(e)}
+                    onClick={() => chatListAction(item)}
                   >
                     <IoMdChatbubbles />
                   </button>
