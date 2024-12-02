@@ -1,16 +1,45 @@
-.app {
+.DiaryWrite {
   font-family: Arial, sans-serif;
 }
 
-.header {
+/* 헤더 스타일 */
+.DiaryWrite .header {
   background-color: #ecece4;
   padding: 20px;
-  text-align: left;
-  font-size: 20px;
-  font-weight: bold;
   height: 150px;
+  position: relative;
 }
 
+.logo {
+  width: 180px;
+  height: auto;
+  display: block;
+  margin-left: 0;
+}
+.DiaryWrite .header {
+  position: relative;
+}
+.DiaryWrite .header h2 {
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #464646;
+}
+
+.DiaryWrite .header .header-icons {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+}
+
+.DiaryWrite .header .header-icons div {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+/* 컨테이너 및 레이아웃 설정 */
 .container {
   display: flex;
   height: calc(100vh - 80px);

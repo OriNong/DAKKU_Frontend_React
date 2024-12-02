@@ -8279,11 +8279,7 @@ path-type@^4.0.0:
 
 performance-now@^2.1.0:
   version "2.1.0"
-<<<<<<< HEAD
-  resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
-=======
   resolved "https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz"
->>>>>>> b80425a177bb7e0f9a03134bd4d119a2c746c630
   integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
 
 picocolors@^0.2.1:
