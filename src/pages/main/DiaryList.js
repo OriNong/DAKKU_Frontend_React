@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import "./DiaryList.css";
 
 const DiaryList = () => {
   const [OftenDiary, setOftenDiary] = useState([]);
@@ -18,23 +19,28 @@ const DiaryList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="DiaryList-container">
       <h3>
         다이어리 <br />
         리스트
       </h3>
       <br />
-      <ul>
-        {OftenDiary.map((diary, index) => (
-          <li key={index}>
-            <span>{diary.diaryTitle}</span>
-            {/* diaryTitle */}
-            <span>{diary.diaryContent}</span>
-            {/* diaryContent */}
-            <span>{diary.weatherIcon}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="DiaryList">
+        <ul>
+          {OftenDiary.map((diary, index) => (
+            <li key={index}>
+              <span>{diary.diaryTitle}</span>
+              {/* diaryTitle */}
+              {/* <span>{diary.diaryContent}</span> */}
+              <span
+                dangerouslySetInnerHTML={{ __html: diary.diaryContent }}
+              ></span>
+              {/* diaryContent */}
+              <span>{diary.weatherIcon}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

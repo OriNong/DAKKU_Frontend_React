@@ -179,6 +179,12 @@
   padding-top: 20px; /* 상단 여백 추가 */
 }
 
+@media (max-width: 919px) {
+  .main-down {
+    flex-direction: column;
+  }
+}
+
 /* 각 항목 (book, diary, friend-list)의 스타일 */
 .main-down .book,
 .main-down .diary,
