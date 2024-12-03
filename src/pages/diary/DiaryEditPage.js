@@ -8,6 +8,7 @@ import NotificationIcon from "../../components/NotificationIcon";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
+import SideBarRight from './DiarySideRight';
 
 import "../../css/DiaryEditPage.css";
 
@@ -181,7 +182,7 @@ const DiaryEdit = () => {
             </main>
           </div>
         </main>
-        <aside className="sidebar-right">/*추후 내용 추가*/</aside>
+        <aside className="sidebar-right"><SideBarRight /></aside>
       </div>
     </div>
   );

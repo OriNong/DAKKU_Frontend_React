@@ -3,17 +3,17 @@ import styled from "styled-components";
 export const BookContainer = styled.div`
   text-align: center;
   font-family: Arial, sans-serif;
-  margin-top: 50px;
 
   .book {
     border: 1px solid #ccc;
     padding: 20px;
     width: 100%;
-    max-width: 500px;
+    // max-width: 400px;
     margin: 20px auto;
     background-color: #f4f4f4;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    margin-top: 30px;
   }
 
   .book-image {
