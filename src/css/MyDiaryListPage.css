@@ -103,6 +103,12 @@
   background-color: #f4f4f4;
 }
 
+@media (max-width: 919px) {
+  .main-content {
+    overflow-y: auto;
+  }
+}
+
 .main-content .diary-header {
   display: flex;
   justify-content: space-between;

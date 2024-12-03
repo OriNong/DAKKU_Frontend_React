@@ -43,24 +43,26 @@ const UserList = () => {
   };
 
   return (
-    <div className="UserList">
+    <div className="UserList-container">
       <h3>
         사용자 <br />
         리스트
       </h3>
       <br />
-      <ul>
-        {randomUsers.map((user, index) => (
-          <li key={index} onClick={() => handleProfileClick(user.username)}>
-            {user.saveFileName ? (
-              <img src={user.saveFileName} alt={""} />
-            ) : (
-              <img src="/img/default-profile.png" alt={user.username} />
-            )}
-            <span>{user.username}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="UserList">
+        <ul>
+          {randomUsers.map((user, index) => (
+            <li key={index} onClick={() => handleProfileClick(user.username)}>
+              {user.saveFileName ? (
+                <img src={user.saveFileName} alt={""} />
+              ) : (
+                <img src="/img/default-profile.png" alt={user.username} />
+              )}
+              <span>{user.username}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

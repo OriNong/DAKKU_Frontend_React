@@ -128,13 +128,13 @@ function MainPage() {
           </aside>
 
           <aside className="main-down">
-            <div className="book">
+            <div className="main-book">
               <Book />
             </div>
-            <div className="diary">
+            <div className="main-diary">
               <DiaryList />
             </div>
-            <div className="friend-list">
+            <div className="user-list">
               <UserList />
             </div>
           </aside>
