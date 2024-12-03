@@ -60,6 +60,7 @@
 }
 
 .main-content .profile-info-item input {
+  width: 300px;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -74,11 +75,14 @@
 
 /* 하단 버튼 섹션 */
 .main-content .profile-actions {
+  width: 300px;
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 .main-content .profile-save-button {
+  margin-right: 10px;
   padding: 10px 20px;
   font-size: 14px;
   background-color: #28a745;
@@ -93,6 +97,7 @@
 }
 
 .main-content .profile-delete-button {
+  margin-left: 10px;
   padding: 10px 20px;
   font-size: 14px;
   background-color: #dc3545;

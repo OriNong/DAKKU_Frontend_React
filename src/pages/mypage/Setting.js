@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { getUserInfo } from "../../hooks/userSlice";
 import "../../css/DiarySetting.css";
 import instance from "../../instance/instance";
+import Swal from "sweetalert2";
 
 const Setting = () => {
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
@@ -17,9 +18,9 @@ const Setting = () => {
   const userInfo = useSelector(getUserInfo);
 
   const Settings = () => {
-    const [userEmail, setUserEmail] = useState("user@example.com");
-    const [userId, setUserId] = useState("user123");
-    const [userName, setUserName] = useState("홍길동");
+    const [userEmail, setUserEmail] = useState("");
+    const [userId, setUserId] = useState("");
+    const [userName, setUserName] = useState("");
     const [passwordChk, setPasswordChk] = useState("");
     const [password, setPassword] = useState("");
 
@@ -37,22 +38,33 @@ const Setting = () => {
         });
     }, []);
 
-    const handleProfileImageUpload = () => {
-      // 파일 업로드 로직
-      alert("프로필 이미지 업로드 기능");
-    };
-
     const handleSave = () => {
-      // 회원 정보 저장 로직
-      alert("회원 정보가 저장되었습니다!");
-    };
+      if (!userName.trim()) {
+        Swal.fire({
+          title: "Error",
+          text: "성함을 작성해주세요.",
+          icon: "error",
+        });
+        return;
+      }
 
-    const handleAccountDelete = () => {
-      if (window.confirm("정말로 탈퇴하시겠습니까?")) {
-        // 회원 탈퇴 로직
-        alert("회원 탈퇴가 완료되었습니다.");
+      if (password.trim()) {
+        if (password !== passwordChk) {
+          Swal.fire({
+            title: "Error",
+            text: "비밀번호가 맞지 않습니다.",
+            icon: "error",
+          });
+          return;
+        }
+        
+
       }
     };
+
+    const handleUserDelete = () => {
+
+    }
 
     return (
       <>
@@ -67,7 +79,7 @@ const Setting = () => {
             <input type="text" value={userId} readOnly />
           </div>
           <div className="profile-info-item">
-            <label>이름</label>
+            <label>성함</label>
             <input
               type="text"
               value={userName}
@@ -78,20 +90,21 @@ const Setting = () => {
             <label>비밀번호</label>
             <input
               type="password"
-              placeholder="새 비밀번호 입력"
+              placeholder="변경할 비밀번호를 넣어주세요"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="profile-info-item">
-            <label>비밀번호</label>
+            <label>비밀번호 확인</label>
             <input
               type="password"
-              placeholder="새 비밀번호 입력 확인"
+              placeholder="변경할 비밀번호를 다시한번 입력해주세요."
               value={passwordChk}
               onChange={(e) => setPasswordChk(e.target.value)}
             />
           </div>
+          <button type='button' onClick={handleUserDelete}>회원탈퇴</button>
         </div>
 
         {/* 하단: 회원 탈퇴 */}
@@ -101,9 +114,9 @@ const Setting = () => {
           </button>
           <button
             className="profile-delete-button"
-            onClick={handleAccountDelete}
+            onClick={() => console.log("취소")}
           >
-            회원 탈퇴
+            취소
           </button>
         </div>
       </>

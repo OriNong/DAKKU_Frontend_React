@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo, removeUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
 import Swal from "sweetalert2";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { removeTokenInfo } from "../../hooks/tokenSlice";
 
 const SideBarRight = () => {
@@ -60,25 +60,40 @@ const SideBarRight = () => {
   }, []);
 
   const handleLogout = () => {
-    instance
-      .post(`/user/logout`, {
-        deviceInfo: {
-          deviceId: "2",
-          deviceType: "DEVICE_TYPE_WINDOWS",
-          notificationToken: "111",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.success === true) {
-          dispatch(removeTokenInfo());
-          dispatch(removeUserInfo());
-          setIsLoggedIn(false);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    Swal.fire({
+      title: "로그아웃",
+      text: "로그아웃 하시겠습니까?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "네",
+      cancelButtonText: "아니요",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        instance
+          .post(`/user/logout`, {
+            deviceInfo: {
+              deviceId: "2",
+              deviceType: "DEVICE_TYPE_WINDOWS",
+              notificationToken: "111",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.data.success === true) {
+              dispatch(removeTokenInfo());
+              dispatch(removeUserInfo());
+              setIsLoggedIn(false);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        return;
+      }
+    });
   };
 
   const navigateToProfile = (id) => {

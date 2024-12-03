@@ -3,18 +3,14 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import TextEditor from "../../components/TextEditorComponent";
 import { Switch } from "@mui/material";
 import Swal from "sweetalert2";
+import useChatAlerts from '../../hooks/useChatAlerts';
 import instance from "../../instance/instance";
-<<<<<<< HEAD
 import SideBarRight from './DiarySideRight';
 import { useSelector } from 'react-redux';
 import { getUserInfo } from '../../hooks/userSlice';
-=======
 import NotificationIcon from "../../components/NotificationIcon";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationModal from "../../components/NotificationModal";
-import useChatAlerts from "../../hooks/useChatAlerts";
-import SideBarRight from "./DiarySideRight";
->>>>>>> 76d9ae208f6da84c757d8b6ca273bcfe30a92987
 
 import "../../css/DiaryEditPage.css";
 
@@ -48,14 +44,11 @@ const DiaryEdit = () => {
   const [isSwitchPublic, setIsSwitchPublic] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
-<<<<<<< HEAD
   const userInfo = useSelector(getUserInfo);
-=======
   // 서버에서 가져온 일기로 기본 값 설정
 
   // 채팅 알림 훅
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
->>>>>>> 76d9ae208f6da84c757d8b6ca273bcfe30a92987
 
   // 스위치 토글 클릭 시 값 변경
   const handleToggle = (event) => {
