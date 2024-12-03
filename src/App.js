@@ -51,10 +51,14 @@ function App() {
           <Route path="/ProfileImage" element={<ProfileImage />} />
           <Route path="/MainPage" element={<MainPage />} />
           <Route path="/user/Friends" element={<Friends />} />
-          <Route path="/UserPage" element={<UserPage />} />
           <Route path="/user/myDiary" element={<MyDiaryListPage />} />
+<<<<<<< HEAD
           <Route path="/user/editDiary" element={<DiaryEdit />} />
           <Route path="/setting" element={<Setting />} />
+=======
+          <Route path="/user/editDiary/:selectedDiaryId" element={<DiaryEdit />} />
+          <Route path="/user/:username" element={<UserPage />} />
+>>>>>>> 76d9ae208f6da84c757d8b6ca273bcfe30a92987
         </Routes>
         <ChatApp active={isActive} />
       </AuthProvider>

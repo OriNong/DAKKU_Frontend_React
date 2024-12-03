@@ -1,16 +1,46 @@
-.app {
+.DiaryEdit {
     font-family: Arial, sans-serif;
   }
   
-  .header {
-    background-color: #ecece4;
-    padding: 20px;
-    text-align: left;
-    font-size: 20px;
-    font-weight: bold;
-    height: 150px;
-  }
+  /* 헤더 스타일 */
+.DiaryEdit .header {
+  background-color: #ecece4;
+  padding: 20px;
+  height: 150px;
+  position: relative;
+}
+
+.logo {
+  width: 180px;
+  height: auto;
+  display: block;
+  margin-left: 0;
+}
+.DiaryEdit .header {
+  position: relative;
+}
+.DiaryEdit .header h2 {
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #464646;
+}
+
+.DiaryEdit .header .header-icons {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+}
+
+.DiaryEdit .header .header-icons div {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
   
+  /* 컨테이너 및 레이아웃 설정 */
   .container {
     display: flex;
     height: calc(100vh - 80px);
