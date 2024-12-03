@@ -8,14 +8,18 @@ import NotificationIcon from "../../components/NotificationIcon";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
-import SideBarRight from './DiarySideRight';
+import SideBarRight from "./DiarySideRight";
 
 import "../../css/DiaryEditPage.css";
 
 const DiaryEdit = () => {
   const { selectedDiaryId } = useParams(); // URL에서 일기 ID 추출
   // 선택된 일기를 entryDiary에 저장
-  const [entryDiary, setEntryDiary] = useState();
+  const [entryDiary, setEntryDiary] = useState({
+    diaryContent: "",
+    diaryTitle: "",
+    public: false,
+  });
   // 서버에서 수정할 일기를 가져온다
   useEffect(() => {
     const fetchSelectedDiary = async () => {
@@ -27,29 +31,25 @@ const DiaryEdit = () => {
         console.log(error);
       }
     };
+    fetchSelectedDiary();
     // setTitle(entryDiary.diaryTitle);
     // setDiaryContent(entryDiary.diaryContent);
     // setIsSwitchPublic(entryDiary.public);
   }, []);
-  console.log(entryDiary);
+
   const [diaryContent, setDiaryContent] = useState("");
   const [title, setTitle] = useState("");
   const [isSwitchPublic, setIsSwitchPublic] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
-  
-  
-
   // 서버에서 가져온 일기로 기본 값 설정
-
-  console.log(title);
 
   // 채팅 알림 훅
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
 
   // 스위치 토글 클릭 시 값 변경
   const handleToggle = (event) => {
-    setIsSwitchPublic(event.target.checked);
+    setEntryDiary({ ...entryDiary, public: event.target.checked });
     console.log(`Diary is now ${event.target.checked ? "공개" : "비공개"}`);
   };
 
@@ -153,22 +153,25 @@ const DiaryEdit = () => {
                   id="title-input"
                   type="text"
                   placeholder="일기 제목을 입력하세요"
-                  value={title}
+                  value={entryDiary.diaryTitle}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
               <div className="diary-editor">
                 <label htmlFor="editor">본문</label>
                 <TextEditor
-                  onEditorChange={(content) => setDiaryContent(content)}
+                  value={entryDiary.diaryContent}
+                  onEditorChange={(content) =>
+                    setEntryDiary({ ...entryDiary, diaryContent: content })
+                  }
                   className="custom-editor"
                 />
               </div>
               <div className="switch-container">
                 <span className="switch-label">
-                  {isSwitchPublic ? "공개" : "비공개"}
+                  {entryDiary.public ? "공개" : "비공개"}
                 </span>
-                <Switch checked={isSwitchPublic} onChange={handleToggle} />
+                <Switch checked={entryDiary.public} onChange={handleToggle} />
               </div>
               <div className="diary-footer">
                 <button
@@ -182,7 +185,9 @@ const DiaryEdit = () => {
             </main>
           </div>
         </main>
-        <aside className="sidebar-right"><SideBarRight /></aside>
+        <aside className="sidebar-right">
+          <SideBarRight />
+        </aside>
       </div>
     </div>
   );

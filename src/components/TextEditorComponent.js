@@ -43,7 +43,7 @@ import translations from 'ckeditor5/translations/ko.js';
 import 'ckeditor5/ckeditor5.css';
 
 export default function TextEditor({ 
-  initialContent, 
+  value,
   onEditorChange, 
   className 
 }) {
@@ -176,7 +176,7 @@ export default function TextEditor({
 				}
 			]
 		},
-		//initialData: initialContent, -> Default 텍스트 설정 시 사용
+		initialData: value,
 		language: 'ko',
 		link: {
 			addTargetToExternalLinks: true,
