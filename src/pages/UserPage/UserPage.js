@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../../hooks/AuthContext";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo, getUserInfo } from "../../hooks/userSlice";
 import "../../css/UserPage.css";
 import instance from "../../instance/instance";
 import HomeIcon from "../../components/HomeIcon";
@@ -9,11 +10,14 @@ import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
 
 const UserPage = () => {
-  const location = useLocation();
-  const [userInfo, setUserInfo] = useState(null); // 프로필 유저 정보
+  const { username } = useParams(); // URL에서 username 파라미터를 가져옴
+  const dispatch = useDispatch();
+  const userInfo = useSelector(getUserInfo);
   const [isFriend, setIsFriend] = useState(false); // 친구 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts(); // 채팅 알림 훅
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path) => {
     return location.pathname === path ? "active" : "";
@@ -24,11 +28,13 @@ const UserPage = () => {
     const fetchUserProfile = async () => {
       setLoading(true);
       try {
-        const userId = location.pathname.split("/").pop(); // URL에서 유저 ID 추출
-        const userResponse = await instance.get(`/user/${userId}`); // 프로필 유저 정보 API
-        const friendResponse = await instance.get(`/social/${userId}`); // 친구 관계 API
+        //const userId = location.pathname.split("/").pop(); // URL에서 유저 ID 추출
+        const userResponse = await instance.get(`/user/${username}`); // 프로필 유저 정보 API
+        const friendResponse = await instance.get(`/social/${username}`); // 친구 관계 API
 
-        setUserInfo(userResponse.data);
+        // 프로필 정보 업데이트
+        dispatch(setUserInfo(userResponse.data)); // Redux 상태에 사용자 정보 저장
+
         setIsFriend(friendResponse.data.length > 0); // 친구 관계 여부
       } catch (error) {
         console.error("Failed to fetch user profile", error);
@@ -38,7 +44,7 @@ const UserPage = () => {
     };
 
     fetchUserProfile();
-  }, [location]);
+  }, [username, dispatch]); // username이 변경되면 다시 실행
 
   // 친구 추가 요청 핸들러
   const handleAddFriend = async () => {
@@ -59,7 +65,9 @@ const UserPage = () => {
     <div className="UserProfile">
       <header className="header">
         <img src="/img/logo.png" alt="logo" className="logo" />
-        <h2>{userInfo ? `${userInfo.name}님의 프로필` : "프로필"}</h2>
+        <h2>
+          {loading ? "Loading..." : `${userInfo?.name || username}님의 프로필`}
+        </h2>
         <div className="header-icons">
           <NotificationIcon />
           <HomeIcon />
@@ -106,7 +114,9 @@ const UserPage = () => {
                   />
                 </div>
                 <div className="profile-details">
-                  <h3>{userInfo?.name}</h3>
+                  <h3>
+                    {loading ? "Loading..." : `${userInfo?.name || username}`}
+                  </h3>
                   <p>{userInfo?.bio || "소개글이 없습니다."}</p>
                 </div>
                 <button
