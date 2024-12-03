@@ -20,7 +20,7 @@ const MyDiaryListPage = () => {
   const location = useLocation();
   const isActive = (path) => (location.pathname === path ? "active" : "");
 
-  // 새로운 일기 작성 버튼 클릭 시 일기 작성 페이지로 이동
+  // 일기 작성 페이지로 이동
   const navigate = useNavigate();
   const navToDiaryWrite = () => {
     navigate("/");
@@ -62,13 +62,53 @@ const MyDiaryListPage = () => {
 
   const [selectedDiary, setSelectedDiary] = useState(null); // 상세보기용 상태
 
-  // 날짜 형식 변환 함수
-  const formatDate = (dateString) => {
+  // 일기 목록 날짜 형식 변환 함수
+  // $년 $월 $일
+  const formatListDate = (dateString) => {
+    if (!dateString) return "";
+
     const date = new Date(dateString);
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}-${String(date.getDate()).padStart(2, "0")}`;
+    const daysOfWeek = [
+      "일요일",
+      "월요일",
+      "화요일",
+      "수요일",
+      "목요일",
+      "금요일",
+      "토요일",
+    ];
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dayOfWeek = daysOfWeek[date.getDay()];
+
+    return `${year}년 ${month}월 ${day}일 ${dayOfWeek}`;
+  };
+  // 상세 보기 페이지 날짜 형식 변환 함수
+  // $년 $월 $일 $요일 $시 $분
+  const formatSelectedDate = (dateString) => {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+    const daysOfWeek = [
+      "일요일",
+      "월요일",
+      "화요일",
+      "수요일",
+      "목요일",
+      "금요일",
+      "토요일",
+    ];
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${year}년 ${month}월 ${day}일 ${dayOfWeek} ${hours}시 ${minutes}분`;
   };
 
   // 선택한 일기 데이터를 상태에 저장
@@ -80,6 +120,13 @@ const MyDiaryListPage = () => {
   const handleCloseDetails = () => {
     setSelectedDiary(null);
   };
+
+  // 일기 수정 시
+  const handleEditDiary = (selectedDiaryId) => {
+   // 일기 수정 페이지로 이동
+   navigate(`/user/editDiary/${selectedDiaryId}`)
+  };
+  
 
   // 상세보기에서 일기 삭제 전 확인
   const handleDeleteConfirmation = (diaryId) => {
@@ -98,20 +145,20 @@ const MyDiaryListPage = () => {
       }
     });
   };
-
+  // 서버에 저장된 일기 삭제 수행
   const handleDeleteDiary = async (diaryId) => {
     try {
       // diaryId를 파라미터로 전달하여 삭제 API 호출
       const response = await instance.delete(`/diary/delete/${diaryId}`);
-
       // 삭제 성공 시 알림
-
       Swal.fire({
         title: "삭제 완료",
         text: "일기가 성공적으로 삭제되었습니다.",
         icon: "success",
+        // 알림창 1.5초 뒤 자동으로 닫힘
         timer: 1500,
         timerProgressBar: true,
+        // 알림창 닫혔을 때 페이지 새로 고침
         didClose: () => {
           window.location.reload();
         },
@@ -189,7 +236,7 @@ const MyDiaryListPage = () => {
                     <tr key={diary.diaryId}>
                       <td>{index + 1}</td>
                       <td>{diary.diaryTitle}</td>
-                      <td>{formatDate(diary.diaryCrtDate)}</td>
+                      <td>{formatListDate(diary.diaryCrtDate)}</td>
                       <td>{diary.weatherIcon}</td>
                       <td>
                         <div className="diary-publicity-toggle">
@@ -222,7 +269,9 @@ const MyDiaryListPage = () => {
               <div className="diary-detail">
                 <div className="diary-detail-header">
                   <h1>제목 : {selectedDiary.diaryTitle}</h1>
-                  <p>작성일: {selectedDiary.diaryCrtDate}</p>
+                  <p>
+                    작성일: {formatSelectedDate(selectedDiary.diaryCrtDate)}
+                  </p>
                   <p>날씨: {selectedDiary.weatherIcon}</p>
                 </div>
                 <div className="diary-detail-main">
@@ -234,7 +283,9 @@ const MyDiaryListPage = () => {
                 </div>
 
                 <div className="detail-actions">
-                  <button className="edit-btn" onClick={() => {}}>
+                  <button className="edit-btn" onClick={() => {
+                    handleEditDiary(selectedDiary.diaryId);
+                  }}>
                     수정하기
                   </button>
                   <button

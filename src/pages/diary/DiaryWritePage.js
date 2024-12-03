@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Switch } from "@mui/material";
 import Swal from "sweetalert2";
@@ -35,6 +35,11 @@ const DiaryComponent = () => {
     console.log(`Diary is now ${event.target.checked ? "공개" : "비공개"}`);
   };
   console.log(userInfo.id);
+
+  const navigate = useNavigate();
+  const navToDiaryList = () => {
+    navigate("/user/myDiary");
+  };
 
   const saveDiary = async () => {
     if (!title.trim()) {
@@ -79,6 +84,11 @@ const DiaryComponent = () => {
           icon: "success",
           title: "일기 저장 성공!",
           text: "작성한 일기가 저장되었습니다",
+          timer: 3000,
+          timerProgressBar: true,
+          didClose: () => {
+            navToDiaryList();
+          },
         });
       }
     } catch (error) {
@@ -86,7 +96,12 @@ const DiaryComponent = () => {
       Swal.fire({
         icon: "error",
         title: "Diary Save Error!",
-        text: "오류 : " + error,
+        text: "일기 저장에 실패했습니다",
+        timer: 1500,
+        timerProgressBar: true,
+        didClose: () => {
+          navToDiaryList();
+        },
       });
     }
   };
@@ -101,7 +116,6 @@ const DiaryComponent = () => {
     <div className="DiaryWrite">
       <header className="header">
         <img src="/img/logo.png" alt="logo" className="logo" />
-
         <div className="header-icons">
           <NotificationIcon onClick={openModal} />
           <HomeIcon />

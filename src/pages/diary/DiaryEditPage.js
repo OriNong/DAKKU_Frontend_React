@@ -1,16 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import TextEditor from "../../components/TextEditorComponent";
 import { Switch } from "@mui/material";
 import Swal from "sweetalert2";
 import instance from "../../instance/instance";
+import NotificationIcon from "../../components/NotificationIcon";
+import HomeIcon from "../../components/HomeIcon";
+import NotificationModal from "../../components/NotificationModal";
+import useChatAlerts from "../../hooks/useChatAlerts";
 
+import "../../css/DiaryEditPage.css";
 
 const DiaryEdit = () => {
+  const { selectedDiaryId } = useParams(); // URL에서 일기 ID 추출
+  // 선택된 일기를 entryDiary에 저장
+  const [entryDiary, setEntryDiary] = useState();
+  // 서버에서 수정할 일기를 가져온다
+  useEffect(() => {
+    const fetchSelectedDiary = async () => {
+      try {
+        const response = await instance.get(`/diary/select/${selectedDiaryId}`);
+        console.log(response);
+        setEntryDiary(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    // setTitle(entryDiary.diaryTitle);
+    // setDiaryContent(entryDiary.diaryContent);
+    // setIsSwitchPublic(entryDiary.public);
+  }, []);
+  console.log(entryDiary);
   const [diaryContent, setDiaryContent] = useState("");
   const [title, setTitle] = useState("");
-  const [isSwitchPublic, setIsSwitchPublic] = useState(true);
+  const [isSwitchPublic, setIsSwitchPublic] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+
+  
+  
+
+  // 서버에서 가져온 일기로 기본 값 설정
+
+  console.log(title);
+
+  // 채팅 알림 훅
+  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
 
   // 스위치 토글 클릭 시 값 변경
   const handleToggle = (event) => {
@@ -71,9 +105,18 @@ const DiaryEdit = () => {
   const isActive = (path) => (location.pathname === path ? "active" : "");
 
   return (
-    <div className="app">
+    <div className="DiaryEdit">
       <header className="header">
-        <h1>Diary</h1>
+        <img src="/img/logo.png" alt="logo" className="logo" />
+        <div className="header-icons">
+          <NotificationIcon onClick={openModal} />
+          <HomeIcon />
+        </div>
+        <NotificationModal
+          isOpen={isModalOpen} // 모달 상태 전달
+          closeModal={closeModal} // 모달 닫기 함수 전달
+          chatAlerts={chatAlerts} // 알림 데이터 전달
+        />
       </header>
       <div className="container">
         <aside className="sidebar-left">
