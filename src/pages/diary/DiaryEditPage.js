@@ -4,6 +4,7 @@ import TextEditor from "../../components/TextEditorComponent";
 import { Switch } from "@mui/material";
 import Swal from "sweetalert2";
 import instance from "../../instance/instance";
+import SideBarRight from './DiarySideRight';
 
 
 const DiaryEdit = () => {
@@ -138,7 +139,7 @@ const DiaryEdit = () => {
             </main>
           </div>
         </main>
-        <aside className="sidebar-right">/*추후 내용 추가*/</aside>
+        <aside className="sidebar-right"><SideBarRight /></aside>
       </div>
     </div>
   );

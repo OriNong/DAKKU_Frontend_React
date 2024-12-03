@@ -17,7 +17,7 @@ const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
     instance
       .get("/social/friendSearch", {
         params: {
-          userID: 34, // userInfo.id
+          userID: userInfo.id, // userInfo.id
         },
       })
       .then((res) => {
@@ -42,29 +42,33 @@ const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
   const ChatListItem = () => {
     return (
       <div className="chatList-chatItem-div">
-        {chatList.length > 0
-          ? chatList.map((item) => {
-              return (
-                <ChatItem
-                  key={item.roomId}
-                  id={item.roomId}
-                  avatar={process.env.REACT_APP_CHAT_DEFAULT_PROFILE}
-                  alt={item.userName}
-                  onClick={() => chatConnect(item)}
-                  title={item.friendName}
-                  subtitle={
-                    item.lastMessage?.length > 0 ? (
-                      item.lastMessage
-                    ) : (
-                      <div>&nbsp;</div>
-                    )
-                  }
-                  date={new Date(item.createDate)}
-                  unread={0}
-                />
-              );
-            })
-          : "채팅방이 없습니다."}
+        {chatList.length > 0 ? (
+          chatList.map((item) => {
+            return (
+              <ChatItem
+                key={item.roomId}
+                id={item.roomId}
+                avatar={process.env.REACT_APP_CHAT_DEFAULT_PROFILE}
+                alt={item.userName}
+                onClick={() => chatConnect(item)}
+                title={item.friendName}
+                subtitle={
+                  item.lastMessage?.length > 0 ? (
+                    item.lastMessage
+                  ) : (
+                    <div>&nbsp;</div>
+                  )
+                }
+                date={new Date(item.createDate)}
+                unread={0}
+              />
+            );
+          })
+        ) : (
+          <div className="chatList-FriendList-Empty">
+            대화방이 존재하지 않습니다.
+          </div>
+        )}
       </div>
     );
   };
@@ -90,7 +94,7 @@ const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
                   </div>
                   <button
                     className="chatList-FriendList-ActionButton"
-                    onClick={() => chatListAction(item)}
+                    onClick={(e) => console.log(e)}
                   >
                     <IoMdChatbubbles />
                   </button>

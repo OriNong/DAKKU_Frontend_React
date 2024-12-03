@@ -15,6 +15,7 @@ import useChatAlerts from "../../hooks/useChatAlerts";
 import TextEditor from "../../components/TextEditorComponent";
 import { getUserInfo } from "../../hooks/userSlice";
 import "../../css/DiaryWritePage.css";
+import SideBarRight from './DiarySideRight';
 
 const DiaryComponent = () => {
   // 채팅 알림 훅
@@ -94,6 +95,8 @@ const DiaryComponent = () => {
   // 현재 경로가 active 상태인지 확인
   const location = useLocation();
   const isActive = (path) => (location.pathname === path ? "active" : "");
+
+  // 우측 사이드바 관련 컴포넌트
 
   useEffect(() => {}, []);
 
@@ -175,7 +178,9 @@ const DiaryComponent = () => {
             </main>
           </div>
         </main>
-        <aside className="sidebar-right">/*추후 내용 추가*/</aside>
+        <aside className="sidebar-right">
+          <SideBarRight />
+        </aside>
       </div>
     </div>
   );
