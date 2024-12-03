@@ -20,7 +20,7 @@ const SideBarRight = () => {
   const [friendsList, setFriendsList] = useState([]);
 
   useEffect(() => {
-    if (userInfo.id !== 0) {
+    if (userInfo.id > 0) {
       instance
         .get("/social/meProFiles", {
           params: {

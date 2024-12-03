@@ -7,6 +7,8 @@ import HomeIcon from "../../components/HomeIcon";
 import NotificationIcon from "../../components/NotificationIcon";
 import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
+import { useSelector } from 'react-redux';
+import { getUserInfo } from '../../hooks/userSlice';
 
 const ProfileImage = () => {
   const { user } = useAuth(); // 로그인된 사용자 정보 가져오기
@@ -15,6 +17,8 @@ const ProfileImage = () => {
   const [newImage, setNewImage] = useState(null); // 새로 업로드할 이미지 파일
   // 채팅 알림 훅
   const { chatAlerts, openModal, closeModal } = useChatAlerts();
+
+  const userInfo = useSelector(getUserInfo);
 
   // 기존 프로필 이미지를 가져오는 함수
   const fetchProfileImage = async () => {
@@ -162,9 +166,11 @@ const ProfileImage = () => {
               <li className={isActive("/notice")}>
                 <Link to="/notice">Notice</Link>
               </li>
-              <li className={isActive("/setting")}>
-                <Link to="/setting">Setting</Link>
-              </li>
+              {userInfo.id > 0 && (
+                <li className={isActive("/setting")}>
+                  <Link to="/setting">Setting</Link>
+                </li>
+              )}
             </ul>
           </div>
         </aside>

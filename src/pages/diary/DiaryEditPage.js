@@ -5,6 +5,8 @@ import { Switch } from "@mui/material";
 import Swal from "sweetalert2";
 import instance from "../../instance/instance";
 import SideBarRight from './DiarySideRight';
+import { useSelector } from 'react-redux';
+import { getUserInfo } from '../../hooks/userSlice';
 
 
 const DiaryEdit = () => {
@@ -12,6 +14,8 @@ const DiaryEdit = () => {
   const [title, setTitle] = useState("");
   const [isSwitchPublic, setIsSwitchPublic] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+
+  const userInfo = useSelector(getUserInfo);
 
   // 스위치 토글 클릭 시 값 변경
   const handleToggle = (event) => {
@@ -92,9 +96,11 @@ const DiaryEdit = () => {
               <li className={isActive("/notice")}>
                 <Link to="/notice">Notice</Link>
               </li>
-              <li className={isActive("/setting")}>
-                <Link to="/setting">Setting</Link>
-              </li>
+              {userInfo.id > 0 && (
+                <li className={isActive("/setting")}>
+                  <Link to="/setting">Setting</Link>
+                </li>
+              )}
             </ul>
           </div>
         </aside>

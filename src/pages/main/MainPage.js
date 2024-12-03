@@ -9,11 +9,14 @@ import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
 import UserList from "./UserList";
 import DiaryList from "./DiaryList";
+import { useSelector } from "react-redux";
+import { getUserInfo } from "../../hooks/userSlice";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const userInfo = useSelector(getUserInfo);
 
   // 채팅 알림 훅
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
@@ -90,9 +93,11 @@ function MainPage() {
               <li className={isActive("/notice")}>
                 <Link to="/notice">Notice</Link>
               </li>
-              <li className={isActive("/setting")}>
-                <Link to="/setting">Setting</Link>
-              </li>
+              {userInfo.id > 0 && (
+                <li className={isActive("/setting")}>
+                  <Link to="/setting">Setting</Link>
+                </li>
+              )}
             </ul>
           </div>
         </aside>

@@ -15,10 +15,11 @@ import Friends from "./pages/user/Friends";
 import UserPage from "./pages/UserPage/UserPage";
 import MyDiaryListPage from "./pages/diary/MyDiaryListPage";
 import DiaryEdit from "./pages/diary/DiaryEditPage";
+import Setting from './pages/mypage/Setting';
 
 function App() {
   const userInfo = useSelector(getUserInfo);
-  const [ChatAppActive, setChatAppActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   // userInfo에 값의 변화가 있으면 if문을 비교하여 값이 정상적인지 확인후 setChatAppActive에 true아니면 false를 반환 한다.
   useEffect(() => {
@@ -28,9 +29,9 @@ function App() {
       userInfo.email !== "" &&
       userInfo.roles !== ""
     ) {
-      setChatAppActive(true);
+      setIsActive(true);
     } else {
-      setChatAppActive(false);
+      setIsActive(false);
     }
   }, [userInfo]);
 
@@ -40,16 +41,22 @@ function App() {
         <Routes>
           <Route path="/" element={<DiaryWritePage />} />
           <Route path="/user/FindPw" element={<FindPw />} />
-          <Route path="/user/Join" element={<Join />} />
-          <Route path="/user/login" element={<Login />} />
+          {!isActive && (
+            <>
+              {/* 만약 로그인후 접근하면 안되는 url은 여기에 추가. */}
+              <Route path="/user/Join" element={<Join />} />
+              <Route path="/user/login" element={<Login />} />
+            </>
+          )}
           <Route path="/ProfileImage" element={<ProfileImage />} />
           <Route path="/MainPage" element={<MainPage />} />
           <Route path="/user/Friends" element={<Friends />} />
           <Route path="/UserPage" element={<UserPage />} />
           <Route path="/user/myDiary" element={<MyDiaryListPage />} />
           <Route path="/user/editDiary" element={<DiaryEdit />} />
+          <Route path="/setting" element={<Setting />} />
         </Routes>
-        <ChatApp active={ChatAppActive} />
+        <ChatApp active={isActive} />
       </AuthProvider>
     </>
   );

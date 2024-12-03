@@ -11,7 +11,7 @@ import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
 
 import "../../css/MyDiaryListPage.css";
-import SideBarRight from './DiarySideRight';
+import SideBarRight from "./DiarySideRight";
 
 const MyDiaryListPage = () => {
   // 채팅 알림 훅
@@ -159,9 +159,11 @@ const MyDiaryListPage = () => {
               <li className={isActive("/notice")}>
                 <Link to="/notice">Notice</Link>
               </li>
-              <li className={isActive("/setting")}>
-                <Link to="/setting">Setting</Link>
-              </li>
+              {userInfo.id > 0 && (
+                <li className={isActive("/setting")}>
+                  <Link to="/setting">Setting</Link>
+                </li>
+              )}
             </ul>
           </div>
         </aside>
@@ -257,7 +259,9 @@ const MyDiaryListPage = () => {
             )}
           </main>
         </main>
-        <aside className="sidebar-right"><SideBarRight /></aside>
+        <aside className="sidebar-right">
+          <SideBarRight />
+        </aside>
       </div>
     </div>
   );
