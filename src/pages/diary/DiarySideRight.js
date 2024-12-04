@@ -31,7 +31,10 @@ const SideBarRight = () => {
           console.log(res);
 
           if (res.data.IMG_PATH !== "NO IMG") {
-            setUserProfileImage(res.data.IMG_PATH);
+            setUserProfileImage(
+              `${process.env.REACT_APP_HOST}/file/view/${res.data.IMG_PATH}`
+            );
+            // setUserProfileImage(res.data.IMG_PATH);
           }
           if (res.data?.friendShipList.length > 0) {
             res.data.friendShipList.map((item) => {
