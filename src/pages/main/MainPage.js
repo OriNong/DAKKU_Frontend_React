@@ -12,6 +12,8 @@ import DiaryList from "./DiaryList";
 import { useSelector } from "react-redux";
 import { getUserInfo } from "../../hooks/userSlice";
 
+import SideBarRight from "../diary/DiarySideRight";
+
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -145,6 +147,7 @@ function MainPage() {
           </aside>
         </main>
         <aside className="sidebar-right">
+          <SideBarRight />
           <div className="profile">{/* details */}</div>
         </aside>
       </div>
