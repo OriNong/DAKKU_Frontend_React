@@ -129,8 +129,7 @@ const SideBarRight = () => {
   };
 
   const navigateToProfile = (id) => {
-    console.log(`Navigating to profile with ID: ${id}`);
-    // 페이지 이동 로직 추가
+    // 친구 목록을 클릭시 발생되는 이벤트 무엇을 넣을지 미정.
   };
 
   return (
@@ -151,11 +150,7 @@ const SideBarRight = () => {
       </div>
 
       <div className="sidebar-auth">
-        {isLoggedIn ? (
-          <button className="sidebar-button" onClick={handleLogout}>
-            로그아웃
-          </button>
-        ) : (
+        {!isLoggedIn && (
           <button
             className="sidebar-button"
             onClick={() => {

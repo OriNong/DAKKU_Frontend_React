@@ -146,9 +146,14 @@ const DiaryComponent = () => {
                 <Link to="/notice">Notice</Link>
               </li>
               {userInfo.id > 0 && (
-                <li className={isActive("/setting")}>
-                  <Link to="/setting">Setting</Link>
-                </li>
+                <>
+                  <li className={isActive("/setting")}>
+                    <Link to="/setting">Setting</Link>
+                  </li>
+                  <li className={isActive("/Logout")}>
+                    <Link to="/Logout">Logout</Link>
+                  </li>
+                </>
               )}
             </ul>
           </div>

@@ -127,8 +127,8 @@ const MyDiaryListPage = () => {
     // 일기 수정 페이지로 이동
     navigate(`/user/editDiary`, {
       state: {
-        selectedDiaryId: selectedDiaryId
-      }
+        selectedDiaryId: selectedDiaryId,
+      },
     });
   };
 
@@ -210,9 +210,14 @@ const MyDiaryListPage = () => {
                 <Link to="/notice">Notice</Link>
               </li>
               {userInfo.id > 0 && (
-                <li className={isActive("/setting")}>
-                  <Link to="/setting">Setting</Link>
-                </li>
+                <>
+                  <li className={isActive("/setting")}>
+                    <Link to="/setting">Setting</Link>
+                  </li>
+                  <li className={isActive("/Logout")}>
+                    <Link to="/Logout">Logout</Link>
+                  </li>
+                </>
               )}
             </ul>
           </div>
