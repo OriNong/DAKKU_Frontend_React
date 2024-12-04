@@ -249,11 +249,13 @@
   margin-right: 5px;
 }
 
-.main-content .view-details-btn:hover,
-.main-content .edit-btn:hover,
-.main-content .delete-btn:hover,
-.main-content .close-detail-btn:hover {
+.main-content .view-details-btn:hover {
   background-color: #e0e0e0;
+}
+
+.main-content .view-details-btn.selected {
+  background-color: dimgray; /* 선택 시 파란색 배경 */
+  color: #fff;
 }
 
 .main-content .diary-detail {
@@ -283,4 +285,24 @@
   bottom: 0;
   background-color: #f9f9f9;
   padding: 10px 0;
+}
+
+.main-content .detail-actions button {
+  color: #fff;
+}
+
+.main-content .detail-actions .edit-btn {
+  background-color: #2196f3;
+}
+.main-content .detail-actions .delete-btn {
+  background-color: red;
+}
+.main-content .detail-actions .close-detail-btn {
+  background-color: #333;
+}
+
+.main-content .detail-actions .edit-btn:hover,
+.main-content .detail-actions .delete-btn:hover,
+.main-content .detail-actions .close-detail-btn:hover {
+  color: black;
 }

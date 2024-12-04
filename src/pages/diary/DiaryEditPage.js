@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
-import TextEditor from "../../components/TextEditorComponent";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Link,
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Switch } from "@mui/material";
 import Swal from "sweetalert2";
-import useChatAlerts from '../../hooks/useChatAlerts';
+import TextEditor from "../../components/TextEditorComponent";
+import { getUserInfo } from "../../hooks/userSlice";
+import useChatAlerts from "../../hooks/useChatAlerts";
 import instance from "../../instance/instance";
-import SideBarRight from './DiarySideRight';
-import { useSelector } from 'react-redux';
-import { getUserInfo } from '../../hooks/userSlice';
+import SideBarRight from "./DiarySideRight";
 import NotificationIcon from "../../components/NotificationIcon";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationModal from "../../components/NotificationModal";
@@ -15,7 +21,12 @@ import NotificationModal from "../../components/NotificationModal";
 import "../../css/DiaryEditPage.css";
 
 const DiaryEdit = () => {
-  const { selectedDiaryId } = useParams(); // URL에서 일기 ID 추출
+  // 현재 경로가 active 상태인지 확인
+  const location = useLocation();
+  const isActive = (path) => (location.pathname === path ? "active" : "");
+
+  // 서버에서 가져온 일기로 기본 값 설정
+  // const { selectedDiaryId } = useParams(); // URL에서 일기 ID 추출
   // 선택된 일기를 entryDiary에 저장
   const [entryDiary, setEntryDiary] = useState({
     diaryContent: "",
@@ -24,41 +35,32 @@ const DiaryEdit = () => {
   });
   // 서버에서 수정할 일기를 가져온다
   useEffect(() => {
-    const fetchSelectedDiary = async () => {
-      try {
-        const response = await instance.get(`/diary/select/${selectedDiaryId}`);
-        console.log(response);
-        setEntryDiary(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchSelectedDiary();
-    // setTitle(entryDiary.diaryTitle);
-    // setDiaryContent(entryDiary.diaryContent);
-    // setIsSwitchPublic(entryDiary.public);
-  }, []);
+    console.log(location);
+    instance
+      .get(`/diary/select/${location.state?.selectedDiaryId}`)
+      .then((res) => {
+        setEntryDiary(res.data);
+        setTimeout(() => {
+          setEntryDiary(res.data);
+        }, 100);
+      });
+  }, [location.state?.selectedDiaryId]);
 
-  const [diaryContent, setDiaryContent] = useState("");
-  const [title, setTitle] = useState("");
-  const [isSwitchPublic, setIsSwitchPublic] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-
   const userInfo = useSelector(getUserInfo);
-  // 서버에서 가져온 일기로 기본 값 설정
-
   // 채팅 알림 훅
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
 
   // 스위치 토글 클릭 시 값 변경
   const handleToggle = (event) => {
     setEntryDiary({ ...entryDiary, public: event.target.checked });
+    console.log(entryDiary.public);
     console.log(`Diary is now ${event.target.checked ? "공개" : "비공개"}`);
   };
 
   // 수정된 일기 내용 update
   const updateDiary = async () => {
-    if (!title.trim()) {
+    if (!entryDiary.diaryTitle.trim()) {
       Swal.fire({
         icon: "warning",
         title: "제목이 입력되지 않았습니다",
@@ -66,7 +68,7 @@ const DiaryEdit = () => {
       });
       return;
     }
-    if (!diaryContent.trim()) {
+    if (!entryDiary.diaryContent.trim()) {
       Swal.fire({
         icon: "warning",
         title: "본문이 작성되지 않았습니다",
@@ -77,21 +79,31 @@ const DiaryEdit = () => {
     try {
       // 수정된 일기 내용
       const updatedDiary = {
-        diaryTitle: title,
-        diaryContent: diaryContent,
-        isPublic: isSwitchPublic,
+        diaryTitle: entryDiary.diaryTitle,
+        diaryContent: entryDiary.diaryContent,
+        isPublic: entryDiary.public,
       };
+      console.log(entryDiary.public);
+      console.log(updatedDiary.isPublic);
       // 수정된 일기 데이터 서버에 전송
       const response = await instance.put(
-        `/diary/update/{diaryId}`,
+        `/diary/update/${location.state?.selectedDiaryId}`,
         updatedDiary
       );
-
       if (response.status === 200) {
+        console.log(entryDiary.public);
+        console.log(updatedDiary.isPublic);
         Swal.fire({
           icon: "success",
           title: "일기 수정 성공!",
           text: "작성한 일기가 수정되었습니다",
+          // 알림창 1.5초 뒤 자동으로 닫힘
+          timer: 1500,
+          timerProgressBar: true,
+          // 알림창 닫혔을 때 페이지 새로 고침
+          // didClose: () => {
+          //   navigate("/user/myDiary");
+          // },
         });
       }
     } catch (error) {
@@ -99,14 +111,14 @@ const DiaryEdit = () => {
       Swal.fire({
         icon: "error",
         title: "Diary Update Error!",
-        text: "오류 : " + error,
+        text: "일기 수정에 실패했습니다",
       });
     }
   };
-
-  // 현재 경로가 active 상태인지 확인
-  const location = useLocation();
-  const isActive = (path) => (location.pathname === path ? "active" : "");
+  const navigate = useNavigate();
+  const cancelEdit = () => {
+    navigate("/user/myDiary");
+  };
 
   return (
     <div className="DiaryEdit">
@@ -159,16 +171,18 @@ const DiaryEdit = () => {
                   type="text"
                   placeholder="일기 제목을 입력하세요"
                   value={entryDiary.diaryTitle}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) =>
+                    setEntryDiary({ ...entryDiary, diaryTitle: e.target.value })
+                  }
                 />
               </div>
               <div className="diary-editor">
                 <label htmlFor="editor">본문</label>
                 <TextEditor
-                  value={entryDiary.diaryContent}
                   onEditorChange={(content) =>
                     setEntryDiary({ ...entryDiary, diaryContent: content })
                   }
+                  initialContent={entryDiary.diaryContent}
                   className="custom-editor"
                 />
               </div>
@@ -180,11 +194,14 @@ const DiaryEdit = () => {
               </div>
               <div className="diary-footer">
                 <button
-                  className="save-button"
+                  className="diary-edit-btn"
                   onClick={updateDiary}
                   disabled={isSaving}
                 >
                   {isSaving ? "수정 중..." : "수정"}
+                </button>
+                <button className="diary-edit-cancel-btn" onClick={cancelEdit}>
+                  취소
                 </button>
               </div>
             </main>

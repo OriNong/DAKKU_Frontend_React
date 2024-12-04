@@ -15,7 +15,7 @@ import useChatAlerts from "../../hooks/useChatAlerts";
 import TextEditor from "../../components/TextEditorComponent";
 import { getUserInfo } from "../../hooks/userSlice";
 import "../../css/DiaryWritePage.css";
-import SideBarRight from './DiarySideRight';
+import SideBarRight from "./DiarySideRight";
 
 const DiaryComponent = () => {
   // 채팅 알림 훅
@@ -172,7 +172,10 @@ const DiaryComponent = () => {
               <div className="diary-editor">
                 <label htmlFor="editor">본문</label>
                 <TextEditor
-                  onEditorChange={(content) => setDiaryContent(content)}
+                  onEditorChange={(content) => {
+                    console.log(content);
+                    setDiaryContent(content);
+                  }}
                   className="custom-editor"
                 />
               </div>

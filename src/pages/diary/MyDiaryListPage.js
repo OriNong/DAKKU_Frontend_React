@@ -124,10 +124,13 @@ const MyDiaryListPage = () => {
 
   // 일기 수정 시
   const handleEditDiary = (selectedDiaryId) => {
-   // 일기 수정 페이지로 이동
-   navigate(`/user/editDiary/${selectedDiaryId}`)
+    // 일기 수정 페이지로 이동
+    navigate(`/user/editDiary`, {
+      state: {
+        selectedDiaryId: selectedDiaryId
+      }
+    });
   };
-  
 
   // 상세보기에서 일기 삭제 전 확인
   const handleDeleteConfirmation = (diaryId) => {
@@ -256,7 +259,9 @@ const MyDiaryListPage = () => {
                       </td>
                       <td>
                         <button
-                          className="view-details-btn"
+                          className={`view-details-btn ${
+                            selectedDiary === diary ? "selected" : ""
+                          }`}
                           onClick={() => handleViewDetails(diary)}
                         >
                           상세보기
@@ -286,9 +291,12 @@ const MyDiaryListPage = () => {
                 </div>
 
                 <div className="detail-actions">
-                  <button className="edit-btn" onClick={() => {
-                    handleEditDiary(selectedDiary.diaryId);
-                  }}>
+                  <button
+                    className="edit-btn"
+                    onClick={() => {
+                      handleEditDiary(selectedDiary.diaryId);
+                    }}
+                  >
                     수정하기
                   </button>
                   <button

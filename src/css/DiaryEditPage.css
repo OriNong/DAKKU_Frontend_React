@@ -191,28 +191,49 @@
     transform: translateX(20px);
   }
   
-  /* 저장 버튼 */
+  /* 수정 버튼 */
   .diary-footer {
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
   }
   
-  .save-button {
+  .diary-edit-btn {
     background-color: #4caf50;
     color: white;
     border: none;
     padding: 10px 20px;
+    margin-right: 10px;
+    margin-left: 10px;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
   }
   
-  .save-button:hover {
+  .diary-edit-btn:hover {
     background-color: #45a049;
   }
   
-  .save-button:disabled {
+  .diary-edit-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+  }
+
+  /* 취소 버튼 */
+  .diary-edit-cancel-btn{
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .diary-edit-cancel-btn:hover {
+    background-color: crimson;
   }
   
   /* 공개/비공개 라벨 스타일 */
