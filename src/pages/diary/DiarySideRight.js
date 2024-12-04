@@ -21,6 +21,10 @@ const SideBarRight = () => {
 
   useEffect(() => {
     if (userInfo.id > 0) {
+      setIsLoggedIn(false);
+    }
+
+    if (userInfo.id > 0) {
       instance
         .get("/social/meProFiles", {
           params: {
@@ -46,7 +50,7 @@ const SideBarRight = () => {
             });
             console.log(friendsList);
           }
-          setUserName(res.data.USERNAME);
+          setUserName(res.data.NAME);
           setIsLoggedIn(true);
         })
         .catch((error) => {
@@ -57,9 +61,44 @@ const SideBarRight = () => {
           });
         });
     }
-  }, []);
+  }, [userInfo]);
 
   const handleLogout = () => {
+    // Swal.fire({
+    //   title: "로그아웃",
+    //   text: "로그아웃 하시겠습니까?",
+    //   icon: "info",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "네",
+    //   cancelButtonText: "아니요",
+    // }).then((res) => {
+    //   if (res.isConfirmed) {
+    //     instance
+    //       .post(`/user/logout`, {
+    //         deviceInfo: {
+    //           deviceId: "2",
+    //           deviceType: "DEVICE_TYPE_WINDOWS",
+    //           notificationToken: "111",
+    //         },
+    //       })
+    //       .then((res) => {
+    //         console.log(res);
+    //         if (res.data.success === true) {
+    //           dispatch(removeTokenInfo());
+    //           dispatch(removeUserInfo());
+    //           setIsLoggedIn(false);
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   } else {
+    //     return;
+    //   }
+    // });
+
     Swal.fire({
       title: "로그아웃",
       text: "로그아웃 하시겠습니까?",
@@ -71,25 +110,15 @@ const SideBarRight = () => {
       cancelButtonText: "아니요",
     }).then((res) => {
       if (res.isConfirmed) {
-        instance
-          .post(`/user/logout`, {
-            deviceInfo: {
-              deviceId: "2",
-              deviceType: "DEVICE_TYPE_WINDOWS",
-              notificationToken: "111",
-            },
-          })
-          .then((res) => {
-            console.log(res);
-            if (res.data.success === true) {
-              dispatch(removeTokenInfo());
-              dispatch(removeUserInfo());
-              setIsLoggedIn(false);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        Swal.fire({
+          title: "로그아웃",
+          text: "로그아웃 되었습니다.",
+          icon: "success",
+        }).then(() => {
+          dispatch(removeTokenInfo());
+          dispatch(removeUserInfo());
+          setIsLoggedIn(false);
+        });
       } else {
         return;
       }
