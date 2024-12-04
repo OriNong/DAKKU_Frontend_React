@@ -54,7 +54,10 @@ const UserList = () => {
           {randomUsers.map((user, index) => (
             <li key={index} onClick={() => handleProfileClick(user.username)}>
               {user.saveFileName ? (
-                <img src={user.saveFileName} alt={""} />
+                <img
+                  src={`${process.env.REACT_APP_HOST}/file/view/${user.saveFileName}`}
+                  alt={""}
+                />
               ) : (
                 <img src="/img/default-profile.png" alt={user.username} />
               )}

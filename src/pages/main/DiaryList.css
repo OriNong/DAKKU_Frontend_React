@@ -1,11 +1,13 @@
 .DiaryList-container {
-  background-color: #fff3e0;
+  background-color: #f3eae8;
   width: 100%;
   /* max-width: 400px; */
   height: auto;
   text-align: center;
   font-family: Arial, sans-serif;
   /* margin: 50px 10px 5px 10px; */
+  padding: 0px 10px 1px 10px;
+  border-radius: 7px;
 }
 .DiaryList {
   border: 1px solid #ccc;
@@ -30,4 +32,10 @@
 .main-book,
 .user-list {
   width: 100%;
+}
+.diary-li {
+  border-bottom: 1px solid rgb(121, 119, 119);
+}
+.diary-li:last-child {
+  border-bottom: none;
 }

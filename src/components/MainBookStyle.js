@@ -3,6 +3,9 @@ import styled from "styled-components";
 export const BookContainer = styled.div`
   text-align: center;
   font-family: Arial, sans-serif;
+  background-color: #cce3ed;
+  padding: 0px 10px 1px 10px;
+  border-radius: 7px;
 
   .book {
     border: 1px solid #ccc;
