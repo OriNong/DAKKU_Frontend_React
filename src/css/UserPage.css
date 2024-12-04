@@ -117,8 +117,8 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  width: 100px;
-  display: flex;
+  width: 110px;
+  text-align: center;
 }
 
 .friend-button.complete {

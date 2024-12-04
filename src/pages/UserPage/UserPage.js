@@ -15,6 +15,7 @@ const UserPage = () => {
   const userInfo = useSelector(getUserInfo);
   const [isFriend, setIsFriend] = useState(false); // 친구 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
+  const [profileImage, setProfileImage] = useState("/img/default-profile.png"); // 기본 프로필 이미지
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts(); // 채팅 알림 훅
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,14 +31,31 @@ const UserPage = () => {
       try {
         //const userId = location.pathname.split("/").pop(); // URL에서 유저 ID 추출
         const userResponse = await instance.get(`/user/${username}`); // 프로필 유저 정보 API
-        const friendResponse = await instance.get(`/social/${username}`); // 친구 관계 API
+        // userId가 정상적으로 존재하는지 확인
+        const userId = userResponse?.data?.id;
+        // userId가 없으면 오류 처리
+        if (!userId) {
+          throw new Error("User ID가 존재하지 않습니다.");
+        }
+        const friendResponse = await instance.get(
+          `/social/friendSearch?userID=${userId}`
+        ); // 친구 관계 API
 
         // 프로필 정보 업데이트
-        dispatch(setUserInfo(userResponse.data)); // Redux 상태에 사용자 정보 저장
+        dispatch(setUserInfo(userResponse.data)); // 사용자 정보 저장
 
         setIsFriend(friendResponse.data.length > 0); // 친구 관계 여부
+
+        // 프로필 이미지 설정
+        const imageFile = userResponse.data.saveFileName;
+        setProfileImage(
+          imageFile
+            ? `${process.env.REACT_APP_HOST}/file/view/${imageFile}`
+            : "/img/default-profile.png"
+        );
       } catch (error) {
         console.error("Failed to fetch user profile", error);
+        alert("사용자 정보를 가져오는 데 실패했습니다.");
       } finally {
         setLoading(false);
       }
@@ -108,8 +126,8 @@ const UserPage = () => {
               <div className="profile-info">
                 <div className="profile-image-container">
                   <img
-                    src={userInfo?.profileImage || "/img/default-profile.png"}
-                    alt="Profile"
+                    src={profileImage}
+                    alt={userInfo?.username || "default"}
                     className="profile-image"
                   />
                 </div>
