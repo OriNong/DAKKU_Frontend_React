@@ -16,6 +16,7 @@ import TextEditor from "../../components/TextEditorComponent";
 import { getUserInfo } from "../../hooks/userSlice";
 import "../../css/DiaryWritePage.css";
 import SideBarRight from "./DiarySideRight";
+import Logout from '../user/Logout';
 
 const DiaryComponent = () => {
   // 채팅 알림 훅
@@ -151,7 +152,7 @@ const DiaryComponent = () => {
                     <Link to="/setting">Setting</Link>
                   </li>
                   <li className={isActive("/Logout")}>
-                    <Link to="/Logout">Logout</Link>
+                    <Link to="/Logout" onClick={Logout} >Logout</Link>
                   </li>
                 </>
               )}

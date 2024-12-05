@@ -16,7 +16,6 @@ import UserPage from "./pages/UserPage/UserPage";
 import MyDiaryListPage from "./pages/diary/MyDiaryListPage";
 import DiaryEdit from "./pages/diary/DiaryEditPage";
 import SettingPage from "./pages/diary/DiarySettingPage";
-import Logout from "./pages/user/Logout";
 
 function App() {
   const userInfo = useSelector(getUserInfo);
@@ -42,15 +41,11 @@ function App() {
         <Routes>
           <Route path="/" element={<DiaryWritePage />} />
           <Route path="/user/FindPw" element={<FindPw />} />
-          {!isActive ? (
+          {!isActive && (
             <>
               {/* 만약 로그인후 접근하면 안되는 url은 여기에 추가. */}
               <Route path="/user/Join" element={<Join />} />
               <Route path="/user/login" element={<Login />} />
-            </>
-          ) : (
-            <>
-              <Route path="/Logout" element={<Logout />} />
             </>
           )}
           <Route path="/ProfileImage" element={<ProfileImage />} />
