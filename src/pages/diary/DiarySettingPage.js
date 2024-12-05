@@ -1,18 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationIcon from "../../components/NotificationIcon";
 import NotificationModal from "../../components/NotificationModal";
 import Setting from "../mypage/Setting";
 import useChatAlerts from "../../hooks/useChatAlerts";
-import { useSelector } from "react-redux";
-import { getUserInfo } from "../../hooks/userSlice";
+import SideBarLeft from './DiarySideLeft';
 
 const SettingPage = () => {
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
-
-  const location = useLocation();
-  const isActive = (path) => (location.pathname === path ? "active" : "");
-  const userInfo = useSelector(getUserInfo);
 
   return (
     <div className="UserProfile">
@@ -31,32 +25,7 @@ const SettingPage = () => {
       </header>
       <div className="container">
         <aside className="sidebar-left">
-          <div className="sidebar-content">
-            <ul>
-              <li className={isActive("/MainPage")}>
-                <Link to="/MainPage">Main</Link>
-              </li>
-              <li className={isActive("/chat")}>
-                <Link to="/chat">Chat</Link>
-              </li>
-              <li className={isActive("/ProfileImage")}>
-                <Link to="/ProfileImage">MyPage</Link>
-              </li>
-              <li className={isActive("/notice")}>
-                <Link to="/notice">Notice</Link>
-              </li>
-              {userInfo.id > 0 && (
-                <>
-                  <li className={isActive("/setting")}>
-                    <Link to="/setting">Setting</Link>
-                  </li>
-                  <li className={isActive("/Logout")}>
-                    <Link to="/Logout">Logout</Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
+          <SideBarLeft />
         </aside>
         <main className="main-content">
           <Setting />

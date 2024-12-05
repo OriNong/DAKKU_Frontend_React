@@ -1,21 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getUserInfo, removeUserInfo } from "../../hooks/userSlice";
-import Swal from 'sweetalert2';
-import { removeTokenInfo } from '../../hooks/tokenSlice';
+import Swal from "sweetalert2";
+import { removeTokenInfo } from "../../hooks/tokenSlice";
 import "../../css/DiarySideLeft.css";
 
 const SideBarLeft = () => {
   const userInfo = useSelector(getUserInfo);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // 현재 경로가 active 상태인지 확인
   const location = useLocation();
   const isActive = (path) => (location.pathname === path ? "active" : "");
 
   const Logout = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     Swal.fire({
       title: "로그아웃",
       text: "로그아웃 하시겠습니까?",
@@ -63,9 +62,7 @@ const SideBarLeft = () => {
               <Link to="/setting">Setting</Link>
             </li>
             <li className={isActive("/Logout")}>
-              <Link to="/Logout" onClick={Logout}>
-                Logout
-              </Link>
+              <Link onClick={() => Logout()}>Logout</Link>
             </li>
           </>
         )}

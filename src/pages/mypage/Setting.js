@@ -72,13 +72,6 @@ const Setting = () => {
       }
     }
 
-    console.log({
-      userName: userName,
-      password: password.trim() ? password : "", // 비밀번호 유무에 따라 값 전송
-      passwordChk: password.trim() ? passwordChk : "",
-      userId: userInfo.id,
-    });
-
     // 공통 API 호출
     instance
       .post("/social/userInfoApply", {
@@ -123,8 +116,7 @@ const Setting = () => {
       });
   };
 
-  const handleUserDelete = (e) => {
-    e.preventDefault();
+  const handleUserDelete = () => {
     Swal.fire({
       title: "회원 탈퇴",
       text: "정말 회원탈퇴를 하실건가요?",
@@ -164,7 +156,7 @@ const Setting = () => {
   };
 
   return (
-    <form onSubmit={handleSave}>
+    <div>
       {/* 중단: 회원 정보 수정 */}
       <div className="profile-info-section">
         <div className="profile-info-item">
@@ -215,7 +207,7 @@ const Setting = () => {
 
       {/* 하단: 회원 탈퇴 */}
       <div className="profile-actions">
-        <button className="profile-save-button" type="submit">
+        <button className="profile-save-button" onClick={handleSave}>
           저장
         </button>
         <button
@@ -226,7 +218,7 @@ const Setting = () => {
           취소
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
