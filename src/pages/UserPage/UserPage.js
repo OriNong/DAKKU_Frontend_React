@@ -19,59 +19,67 @@ const UserPage = () => {
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts(); // 채팅 알림 훅
   const location = useLocation();
   const navigate = useNavigate();
+  const [userId, setUserId] = useState(null);
 
   const isActive = (path) => {
     return location.pathname === path ? "active" : "";
   };
 
-  // 유저 프로필 및 친구 상태 가져오기
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      setLoading(true);
+    const userId = location.pathname.split("/").pop(); // URL에서 유저 ID 추출
+
+    const fetchData = async () => {
       try {
-        //const userId = location.pathname.split("/").pop(); // URL에서 유저 ID 추출
-        const userResponse = await instance.get(`/user/${username}`); // 프로필 유저 정보 API
+        setLoading(true);
+        const res = await instance.get(`/user/${username}`);
+        console.log("User data:", res.data); // 서버에서 받은 데이터 구조를 확인
+
+        // 프로필 이미지 URL 확인 후 설정
+        const profileImgUrl = res.data?.profileImage
+          ? `${process.env.REACT_APP_HOST}/file/view/${res.data.profileImage}`
+          : "/img/default-profile.png";
+        console.log("Profile image URL:", profileImgUrl);
+
+        setProfileImage(profileImgUrl); // 이미지 URL 설정
+
+        setUserId(res.data?.USERID);
+
         // userId가 정상적으로 존재하는지 확인
-        const userId = userResponse?.data?.id;
-        // userId가 없으면 오류 처리
+        const userId = res?.data?.USERID;
         if (!userId) {
           throw new Error("User ID가 존재하지 않습니다.");
         }
-        const friendResponse = await instance.get(
+
+        // 친구 상태 확인
+        const friendRes = await instance.get(
           `/social/friendSearch?userID=${userId}`
-        ); // 친구 관계 API
-
-        // 프로필 정보 업데이트
-        dispatch(setUserInfo(userResponse.data)); // 사용자 정보 저장
-
-        setIsFriend(friendResponse.data.length > 0); // 친구 관계 여부
-
-        // 프로필 이미지 설정
-        const imageFile = userResponse.data.saveFileName;
-        setProfileImage(
-          imageFile
-            ? `${process.env.REACT_APP_HOST}/file/view/${imageFile}`
-            : "/img/default-profile.png"
         );
+        console.log(friendRes);
+
+        // 친구 상태 확인
+        setIsFriend(
+          friendRes.data.some((friend) => friend.username === username)
+        ); // username으로 친구 상태 확인
       } catch (error) {
-        console.error("Failed to fetch user profile", error);
-        alert("사용자 정보를 가져오는 데 실패했습니다.");
+        console.error("Failed to fetch data", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserProfile();
-  }, [username, dispatch]); // username이 변경되면 다시 실행
+    fetchData();
+  }, [username, userInfo.id, dispatch]);
 
   // 친구 추가 요청 핸들러
   const handleAddFriend = async () => {
     try {
       const response = await instance.post(
-        `/social/user/friendRequest/${userInfo.id}`
+        `/social/user/friendRequest/${userId}`,
+        {}
       );
       if (response.status === 200) {
         alert("친구 요청이 전송되었습니다.");
+        setIsFriend(true); // 친구 요청 성공 후 상태 업데이트
       }
     } catch (error) {
       console.error("Failed to send friend request", error);
@@ -83,9 +91,7 @@ const UserPage = () => {
     <div className="UserProfile">
       <header className="header">
         <img src="/img/logo.png" alt="logo" className="logo" />
-        <h2>
-          {loading ? "Loading..." : `${userInfo?.name || username}님의 프로필`}
-        </h2>
+        <h2>{loading ? "Loading..." : `${username}님의 프로필`}</h2>
         <div className="header-icons">
           <NotificationIcon />
           <HomeIcon />
@@ -127,14 +133,12 @@ const UserPage = () => {
                 <div className="profile-image-container">
                   <img
                     src={profileImage}
-                    alt={userInfo?.username || "default"}
+                    alt={username || "default"}
                     className="profile-image"
                   />
                 </div>
                 <div className="profile-details">
-                  <h3>
-                    {loading ? "Loading..." : `${userInfo?.name || username}`}
-                  </h3>
+                  <h3>{loading ? "Loading..." : `${username}`}</h3>
                   <p>{userInfo?.bio || "소개글이 없습니다."}</p>
                 </div>
                 <button

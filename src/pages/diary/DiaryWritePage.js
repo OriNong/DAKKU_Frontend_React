@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Switch } from "@mui/material";
 import Swal from "sweetalert2";
@@ -16,6 +16,7 @@ import TextEditor from "../../components/TextEditorComponent";
 import { getUserInfo } from "../../hooks/userSlice";
 import "../../css/DiaryWritePage.css";
 import SideBarRight from "./DiarySideRight";
+import SideBarLeft from "./DiarySideLeft";
 
 const DiaryComponent = () => {
   // 채팅 알림 훅
@@ -107,14 +108,6 @@ const DiaryComponent = () => {
     }
   };
 
-  // 현재 경로가 active 상태인지 확인
-  const location = useLocation();
-  const isActive = (path) => (location.pathname === path ? "active" : "");
-
-  // 우측 사이드바 관련 컴포넌트
-
-  useEffect(() => {}, []);
-
   return (
     <div className="DiaryWrite">
       <header className="header">
@@ -131,32 +124,7 @@ const DiaryComponent = () => {
       </header>
       <div className="container">
         <aside className="sidebar-left">
-          <div className="sidebar-content">
-            <ul>
-              <li className={isActive("/MainPage")}>
-                <Link to="/MainPage">Main</Link>
-              </li>
-              <li className={isActive("/chat")}>
-                <Link to="/chat">Chat</Link>
-              </li>
-              <li className={isActive("/ProfileImage")}>
-                <Link to="/ProfileImage">MyPage</Link>
-              </li>
-              <li className={isActive("/notice")}>
-                <Link to="/notice">Notice</Link>
-              </li>
-              {userInfo.id > 0 && (
-                <>
-                  <li className={isActive("/setting")}>
-                    <Link to="/setting">Setting</Link>
-                  </li>
-                  <li className={isActive("/Logout")}>
-                    <Link to="/Logout">Logout</Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
+          <SideBarLeft />
         </aside>
         <main className="main-content">
           <div className="diary-container">
