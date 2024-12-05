@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
@@ -11,6 +11,7 @@ import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
 
 import "../../css/MyDiaryListPage.css";
+import SideBarLeft from "./DiarySideLeft";
 import SideBarRight from "./DiarySideRight";
 
 const MyDiaryListPage = () => {
@@ -60,7 +61,6 @@ const MyDiaryListPage = () => {
     //     diary.diaryId === diaryId ? { ...diary, public: !diary.public } : diary
     //   )
     // );
-    
   };
 
   const [selectedDiary, setSelectedDiary] = useState(null); // 상세보기용 상태
@@ -127,7 +127,7 @@ const MyDiaryListPage = () => {
   // 일기 수정 시
   const handleEditDiary = (selectedDiaryId) => {
     // 일기 수정 페이지로 이동
-    navigate(`/user/editDiary`, {
+    navigate(`/editDiary`, {
       state: {
         selectedDiaryId: selectedDiaryId,
       },
@@ -197,32 +197,7 @@ const MyDiaryListPage = () => {
       </header>
       <div className="container">
         <aside className="sidebar-left">
-          <div className="sidebar-left-content">
-            <ul>
-              <li className={isActive("/MainPage")}>
-                <Link to="/MainPage">Main</Link>
-              </li>
-              <li className={isActive("/chat")}>
-                <Link to="/chat">Chat</Link>
-              </li>
-              <li className={isActive("/ProfileImage")}>
-                <Link to="/ProfileImage">MyPage</Link>
-              </li>
-              <li className={isActive("/notice")}>
-                <Link to="/notice">Notice</Link>
-              </li>
-              {userInfo.id > 0 && (
-                <>
-                  <li className={isActive("/setting")}>
-                    <Link to="/setting">Setting</Link>
-                  </li>
-                  <li className={isActive("/Logout")}>
-                    <Link to="/Logout">Logout</Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
+          <SideBarLeft />
         </aside>
         <main className="main-content">
           <div className="diary-header">

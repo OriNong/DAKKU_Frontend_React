@@ -45,7 +45,7 @@ const SideBarLeft = () => {
     <div className="sidebar-content">
       <ul>
         <li className={isActive("/MainPage")}>
-          <Link to="/MainPage">Main</Link>
+          <Link to="/">Main</Link>
         </li>
         <li className={isActive("/chat")}>
           <Link to="/chat">Chat</Link>

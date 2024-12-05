@@ -39,7 +39,7 @@ function App() {
     <>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<DiaryWritePage />} />
+        <Route path="/" element={<MainPage />} />
           <Route path="/user/FindPw" element={<FindPw />} />
           {!isActive && (
             <>
@@ -52,11 +52,12 @@ function App() {
           <Route path="/MainPage" element={<MainPage />} />
           <Route path="/user/Friends" element={<Friends />} />
           <Route path="/user/myDiary" element={<MyDiaryListPage />} />
-          <Route path="/setting" element={<SettingPage />} />
+          <Route path="/user/writeDiary" element={<DiaryWritePage />} />
           <Route
-            path="/user/editDiary/:selectedDiaryId"
+            path="/editDiary/:selectedDiaryId"
             element={<DiaryEdit />}
           />
+          <Route path="/setting" element={<SettingPage />} />
           <Route path="/user/:username" element={<UserPage />} />
         </Routes>
         <ChatApp active={isActive} />
