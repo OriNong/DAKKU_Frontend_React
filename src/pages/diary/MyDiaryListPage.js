@@ -11,8 +11,8 @@ import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
 
 import "../../css/MyDiaryListPage.css";
-import SideBarLeft from "./DiarySideLeft";
-import SideBarRight from "./DiarySideRight";
+import SideBarLeft from "../../components/SideBarLeft";
+import SideBarRight from "../../components/SideBarRight";
 
 const MyDiaryListPage = () => {
   // 채팅 알림 훅

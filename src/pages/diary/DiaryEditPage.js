@@ -13,7 +13,7 @@ import TextEditor from "../../components/TextEditorComponent";
 import { getUserInfo } from "../../hooks/userSlice";
 import useChatAlerts from "../../hooks/useChatAlerts";
 import instance from "../../instance/instance";
-import SideBarRight from "./DiarySideRight";
+import SideBarRight from "../../components/SideBarRight";
 import NotificationIcon from "../../components/NotificationIcon";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationModal from "../../components/NotificationModal";

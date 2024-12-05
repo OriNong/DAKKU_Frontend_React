@@ -15,8 +15,8 @@ import useChatAlerts from "../../hooks/useChatAlerts";
 import TextEditor from "../../components/TextEditorComponent";
 import { getUserInfo } from "../../hooks/userSlice";
 import "../../css/DiaryWritePage.css";
-import SideBarRight from "./DiarySideRight";
-import SideBarLeft from "./DiarySideLeft";
+import SideBarRight from "../../components/SideBarRight";
+import SideBarLeft from "../../components/SideBarLeft";
 
 const DiaryComponent = () => {
   // 채팅 알림 훅

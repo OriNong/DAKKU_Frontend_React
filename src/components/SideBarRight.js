@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "../../css/DiarySideRight.css";
+import "../../src/css/DiarySideRight.css";
 import { useSelector } from "react-redux";
-import { getUserInfo } from "../../hooks/userSlice";
-import instance from "../../instance/instance";
+import { getUserInfo } from "../hooks/userSlice";
+import instance from "../instance/instance";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 

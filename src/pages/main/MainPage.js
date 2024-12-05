@@ -12,7 +12,7 @@ import DiaryList from "./DiaryList";
 import { useSelector } from "react-redux";
 import { getUserInfo } from "../../hooks/userSlice";
 
-import SideBarRight from "../diary/DiarySideRight";
+import SideBarRight from "../../components/SideBarRight";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
