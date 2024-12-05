@@ -24,7 +24,7 @@ const MyDiaryListPage = () => {
   // 일기 작성 페이지로 이동
   const navigate = useNavigate();
   const navToDiaryWrite = () => {
-    navigate("/");
+    navigate("/user/writeDiary");
   };
 
   const userInfo = useSelector(getUserInfo);
@@ -52,13 +52,15 @@ const MyDiaryListPage = () => {
   }, []);
   console.log(diaryList);
 
+  const [uptDiary, setUptDiary] = useState([]);
   // 공개/비공개 토글 핸들러
   const handlePublicToggle = (diaryId) => {
-    setDiaryList((prevList) =>
-      prevList.map((diary) =>
-        diary.diaryId === diaryId ? { ...diary, public: !diary.public } : diary
-      )
-    );
+    // setDiaryList((prevList) =>
+    //   prevList.map((diary) =>
+    //     diary.diaryId === diaryId ? { ...diary, public: !diary.public } : diary
+    //   )
+    // );
+    
   };
 
   const [selectedDiary, setSelectedDiary] = useState(null); // 상세보기용 상태
@@ -86,7 +88,7 @@ const MyDiaryListPage = () => {
 
     return `${year}년 ${month}월 ${day}일 ${dayOfWeek}`;
   };
-  // 상세 보기 페이지 날짜 형식 변환 함수
+  // 상세 보기 시 날짜 형식 변환 함수
   // $년 $월 $일 $요일 $시 $분
   const formatSelectedDate = (dateString) => {
     if (!dateString) return "";
@@ -254,12 +256,12 @@ const MyDiaryListPage = () => {
                           <label className="switch">
                             <input
                               type="checkbox"
-                              checked={diary.public}
+                              checked={diary.isPublic}
                               onChange={() => handlePublicToggle(diary.diaryId)}
                             />
                             <span className="slider"></span>
                           </label>
-                          <span>{diary.public ? "공개" : "비공개"}</span>
+                          <span>{diary.isPublic ? "공개" : "비공개"}</span>
                         </div>
                       </td>
                       <td>

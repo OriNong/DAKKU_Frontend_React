@@ -53,10 +53,17 @@ const DiaryEdit = () => {
 
   // 스위치 토글 클릭 시 값 변경
   const handleToggle = (event) => {
-    setEntryDiary({ ...entryDiary, public: event.target.checked });
-    console.log(entryDiary.public);
+    setEntryDiary({ ...entryDiary, isPublic: event.target.checked });
     console.log(`Diary is now ${event.target.checked ? "공개" : "비공개"}`);
   };
+  const [isLoading, setIsLoading] = useState(false);
+  const handleUpdatePublic = async (diaryId) => {
+    setIsLoading(true);
+
+    // try {
+    //   instance.put(`/diary/update`)
+    // }
+  }
 
   // 수정된 일기 내용 update
   const updateDiary = async () => {
@@ -81,18 +88,14 @@ const DiaryEdit = () => {
       const updatedDiary = {
         diaryTitle: entryDiary.diaryTitle,
         diaryContent: entryDiary.diaryContent,
-        isPublic: entryDiary.public,
+        isPublic: entryDiary.isPublic,
       };
-      console.log(entryDiary.public);
-      console.log(updatedDiary.isPublic);
       // 수정된 일기 데이터 서버에 전송
       const response = await instance.put(
         `/diary/update/${location.state?.selectedDiaryId}`,
         updatedDiary
       );
       if (response.status === 200) {
-        console.log(entryDiary.public);
-        console.log(updatedDiary.isPublic);
         Swal.fire({
           icon: "success",
           title: "일기 수정 성공!",
@@ -101,9 +104,9 @@ const DiaryEdit = () => {
           timer: 1500,
           timerProgressBar: true,
           // 알림창 닫혔을 때 페이지 새로 고침
-          // didClose: () => {
-          //   navigate("/user/myDiary");
-          // },
+          didClose: () => {
+            navigate("/user/myDiary");
+          },
         });
       }
     } catch (error) {
@@ -112,6 +115,9 @@ const DiaryEdit = () => {
         icon: "error",
         title: "Diary Update Error!",
         text: "일기 수정에 실패했습니다",
+        didClose: () => {
+          navigate("/user/myDiary");
+        }
       });
     }
   };
@@ -193,9 +199,9 @@ const DiaryEdit = () => {
               </div>
               <div className="switch-container">
                 <span className="switch-label">
-                  {entryDiary.public ? "공개" : "비공개"}
+                  {entryDiary.isPublic ? "공개" : "비공개"}
                 </span>
-                <Switch checked={entryDiary.public} onChange={handleToggle} />
+                <Switch checked={entryDiary.isPublic} onChange={handleToggle} />
               </div>
               <div className="diary-footer">
                 <button
