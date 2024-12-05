@@ -32,11 +32,11 @@ const UserPage = () => {
       try {
         setLoading(true);
         const res = await instance.get(`/user/${username}`);
-        console.log("User data:", res.data); // 서버에서 받은 데이터 구조를 확인
+        console.log(res.data); // 서버에서 받은 데이터 구조를 확인
 
         // 프로필 이미지 URL 확인 후 설정
-        const profileImgUrl = res.data?.profileImage
-          ? `${process.env.REACT_APP_HOST}/file/view/${res.data.profileImage}`
+        const profileImgUrl = res.data?.SAVEFILENAME
+          ? `${process.env.REACT_APP_HOST}/file/view/${res.data.SAVEFILENAME}`
           : "/img/default-profile.png";
         console.log("Profile image URL:", profileImgUrl);
 
@@ -139,7 +139,6 @@ const UserPage = () => {
                 </div>
                 <div className="profile-details">
                   <h3>{loading ? "Loading..." : `${username}`}</h3>
-                  <p>{userInfo?.bio || "소개글이 없습니다."}</p>
                 </div>
                 <button
                   onClick={handleAddFriend}
