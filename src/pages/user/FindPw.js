@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./FindPw.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const FindPw = () => {
@@ -9,6 +9,7 @@ const FindPw = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,7 +49,8 @@ const FindPw = () => {
                 text: "임시 비밀번호로 로그인 후 비밀번호를 변경해주세요.",
                 confirmButtonText: "확인",
               }).then(() => {
-                window.location.href = "/user/login";
+                navigate("/user/login");
+                // window.location.href = "/user/login";
               });
             });
           } else {

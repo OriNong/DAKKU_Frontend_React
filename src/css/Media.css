@@ -1,0 +1,36 @@
+/* 화면 크기가 919px 이하일 때 weather-container를 세로로 정렬 */
+@media (max-width: 919px) {
+  .weather-container {
+    /* flex-direction: column; 세로로 정렬 */
+    /* align-items: center; 중앙 정렬 */
+    gap: 10px; /* 각 카드 간의 간격을 줄여서 세로 배치 시에도 여백을 조정 */
+  }
+
+  .weather-card {
+    flex: 1 1 auto; /* 카드를 세로로 나열할 때 각 카드의 너비를 자동으로 조정 */
+  }
+}
+/* 화면 크기가 919px 이하일 때 도서, 다이어리 리스트, 유저 리스트 세로로 정렬 */
+@media (max-width: 919px) {
+  .main-down {
+    flex-direction: column;
+  }
+}
+/* 화면 크기가 919px 이하일 때 오른쪽 사이드 바 숨김 */
+@media (max-width: 919px) {
+  .container .sidebar-right {
+    display: none;
+  }
+}
+/* 화면 크기가 919px 이하일 때 왼쪽 사이드바 크기 줄어들기 */
+@media (max-width: 919px) {
+  .container .sidebar-left {
+    width: 150px;
+  }
+}
+/* 챗 */
+@media (max-width: 919px) {
+  .chatWrapper {
+    width: 150px;
+  }
+}

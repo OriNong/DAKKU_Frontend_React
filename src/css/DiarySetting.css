@@ -15,12 +15,21 @@
   display: flex;
   align-items: center;
 }
-
 .main-content form {
   display: flex;
   align-items: center;
   width: 500px;
   flex-direction: column;
+}
+
+@media (max-width: 919px) {
+  .main-content {
+    display: block;
+  }
+  .weather-widget {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
 }
 
 /* 전체 섹션 */

@@ -4,8 +4,8 @@ import HomeIcon from "../../components/HomeIcon";
 import NotificationIcon from "../../components/NotificationIcon";
 import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
-import SideBarLeft from "../diary/DiarySideLeft";
-import SideBarRight from "../diary/DiarySideRight";
+import SideBarRight from '../../components/SideBarRight';
+import SideBarLeft from "../../components/SideBarLeft"
 import ProFileSetting from './proFileSetting';
 
 const ProfileImage = () => {

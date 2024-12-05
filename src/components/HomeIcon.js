@@ -5,7 +5,7 @@ import "../css/HomeIcon.css";
 const HomeIcon = () => {
   return (
     <div className="home-icon-container">
-      <Link to="/MainPage">
+      <Link to="/">
         <img src="/img/homeicon.png" alt="homeicon" className="home-icon" />
       </Link>
     </div>

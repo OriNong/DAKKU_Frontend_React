@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getUserInfo, removeUserInfo } from "../../hooks/userSlice";
+import { getUserInfo, removeUserInfo } from "../hooks/userSlice";
 import Swal from "sweetalert2";
-import { removeTokenInfo } from "../../hooks/tokenSlice";
-import "../../css/DiarySideLeft.css";
+import { removeTokenInfo } from "../hooks/tokenSlice";
+import "../../src/css/DiarySideLeft.css";
 
 const SideBarLeft = () => {
   const userInfo = useSelector(getUserInfo);
@@ -45,7 +45,7 @@ const SideBarLeft = () => {
     <div className="sidebar-content">
       <ul>
         <li className={isActive("/MainPage")}>
-          <Link to="/MainPage">Main</Link>
+          <Link to="/">Main</Link>
         </li>
         <li className={isActive("/chat")}>
           <Link to="/chat">Chat</Link>

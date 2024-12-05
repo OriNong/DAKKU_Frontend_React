@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
@@ -11,7 +11,8 @@ import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
 
 import "../../css/MyDiaryListPage.css";
-import SideBarRight from "./DiarySideRight";
+import SideBarLeft from "../../components/SideBarLeft";
+import SideBarRight from "../../components/SideBarRight";
 
 const MyDiaryListPage = () => {
   // 채팅 알림 훅
@@ -24,7 +25,7 @@ const MyDiaryListPage = () => {
   // 일기 작성 페이지로 이동
   const navigate = useNavigate();
   const navToDiaryWrite = () => {
-    navigate("/");
+    navigate("/user/writeDiary");
   };
 
   const userInfo = useSelector(getUserInfo);
@@ -52,13 +53,14 @@ const MyDiaryListPage = () => {
   }, []);
   console.log(diaryList);
 
+  const [uptDiary, setUptDiary] = useState([]);
   // 공개/비공개 토글 핸들러
   const handlePublicToggle = (diaryId) => {
-    setDiaryList((prevList) =>
-      prevList.map((diary) =>
-        diary.diaryId === diaryId ? { ...diary, public: !diary.public } : diary
-      )
-    );
+    // setDiaryList((prevList) =>
+    //   prevList.map((diary) =>
+    //     diary.diaryId === diaryId ? { ...diary, public: !diary.public } : diary
+    //   )
+    // );
   };
 
   const [selectedDiary, setSelectedDiary] = useState(null); // 상세보기용 상태
@@ -86,7 +88,7 @@ const MyDiaryListPage = () => {
 
     return `${year}년 ${month}월 ${day}일 ${dayOfWeek}`;
   };
-  // 상세 보기 페이지 날짜 형식 변환 함수
+  // 상세 보기 시 날짜 형식 변환 함수
   // $년 $월 $일 $요일 $시 $분
   const formatSelectedDate = (dateString) => {
     if (!dateString) return "";
@@ -125,7 +127,7 @@ const MyDiaryListPage = () => {
   // 일기 수정 시
   const handleEditDiary = (selectedDiaryId) => {
     // 일기 수정 페이지로 이동
-    navigate(`/user/editDiary`, {
+    navigate(`/editDiary`, {
       state: {
         selectedDiaryId: selectedDiaryId,
       },
@@ -195,32 +197,7 @@ const MyDiaryListPage = () => {
       </header>
       <div className="container">
         <aside className="sidebar-left">
-          <div className="sidebar-left-content">
-            <ul>
-              <li className={isActive("/MainPage")}>
-                <Link to="/MainPage">Main</Link>
-              </li>
-              <li className={isActive("/chat")}>
-                <Link to="/chat">Chat</Link>
-              </li>
-              <li className={isActive("/ProfileImage")}>
-                <Link to="/ProfileImage">MyPage</Link>
-              </li>
-              <li className={isActive("/notice")}>
-                <Link to="/notice">Notice</Link>
-              </li>
-              {userInfo.id > 0 && (
-                <>
-                  <li className={isActive("/setting")}>
-                    <Link to="/setting">Setting</Link>
-                  </li>
-                  <li className={isActive("/Logout")}>
-                    <Link to="/Logout">Logout</Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
+          <SideBarLeft />
         </aside>
         <main className="main-content">
           <div className="diary-header">
@@ -254,12 +231,12 @@ const MyDiaryListPage = () => {
                           <label className="switch">
                             <input
                               type="checkbox"
-                              checked={diary.public}
+                              checked={diary.isPublic}
                               onChange={() => handlePublicToggle(diary.diaryId)}
                             />
                             <span className="slider"></span>
                           </label>
-                          <span>{diary.public ? "공개" : "비공개"}</span>
+                          <span>{diary.isPublic ? "공개" : "비공개"}</span>
                         </div>
                       </td>
                       <td>

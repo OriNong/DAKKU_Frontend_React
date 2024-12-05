@@ -3,7 +3,7 @@ import NotificationIcon from "../../components/NotificationIcon";
 import NotificationModal from "../../components/NotificationModal";
 import Setting from "../mypage/Setting";
 import useChatAlerts from "../../hooks/useChatAlerts";
-import SideBarLeft from './DiarySideLeft';
+import SideBarLeft from '../../components/SideBarLeft';
 
 const SettingPage = () => {
   const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
