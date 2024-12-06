@@ -11,6 +11,7 @@ import instance from "../../instance/instance";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { removeTokenInfo } from "../../hooks/tokenSlice";
+import ProFileSetting from './proFileSetting';
 
 const Setting = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -157,6 +158,10 @@ const Setting = () => {
 
   return (
     <div>
+      <div className='diary-entries'>
+        <ProFileSetting />
+      </div>
+
       {/* 중단: 회원 정보 수정 */}
       <div className="profile-info-section">
         <div className="profile-info-item">

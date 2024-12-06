@@ -50,7 +50,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
   // 방을 만들때 사용자가 친구와 대화하기를 누르고 채팅을 치고나면 그때 방이 자동으로 개설되고 채팅이 저장되게 로직을 구성해야됨.
   useEffect(() => {
     console.log(chatItemInfo);
-    if (chatItemAction === null && chatItemInfo !== null) {
+    if (chatItemInfo !== null) {
       instance
         .get(`/chat/uuid`, {
           params: {
