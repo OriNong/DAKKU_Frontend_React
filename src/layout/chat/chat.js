@@ -17,7 +17,7 @@ import { getUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
 import Swal from "sweetalert2";
 
-const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
+const Chat = ({ setChatRoomActive, chatItemInfo }) => {
   const userInfo = useSelector(getUserInfo);
   const inputReferance = React.useRef();
   const messageListRef = React.createRef();
@@ -50,7 +50,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
   // 방을 만들때 사용자가 친구와 대화하기를 누르고 채팅을 치고나면 그때 방이 자동으로 개설되고 채팅이 저장되게 로직을 구성해야됨.
   useEffect(() => {
     console.log(chatItemInfo);
-    if (chatItemInfo !== null) {
+    if (chatItemInfo.roomId !== undefined) {
       instance
         .get(`/chat/uuid`, {
           params: {
@@ -108,6 +108,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
     return () => {
       client.deactivate();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setChatRoomActive]);
 
   return (
@@ -124,7 +125,6 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatItemAction }) => {
               component: <IoMdArrowRoundBack />,
             }}
             onClick={() => {
-              
               setChatRoomActive(false);
             }}
           />

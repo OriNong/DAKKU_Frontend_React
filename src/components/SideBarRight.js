@@ -41,8 +41,8 @@ const SideBarRight = () => {
               setFriendsList((prev) => [
                 ...prev,
                 {
-                  id: count + 1,
-                  name: item.FRIEND_NAME,
+                  friendId: item.friendId,
+                  name: item.friendName,
                   profileImage: `${process.env.REACT_APP_CHAT_small_PROFILE}`,
                 },
               ]);
@@ -64,6 +64,7 @@ const SideBarRight = () => {
 
   const navigateToProfile = (id) => {
     // 친구 목록에서 친구를 클릭시 발생하는 이벤트 컴포넌트.
+    console.log(id);
   };
 
   return (
@@ -103,9 +104,9 @@ const SideBarRight = () => {
           friendsList?.length > 0 ? (
             friendsList.map((friend) => (
               <div
-                key={friend.id}
+                key={friend.friendId}
                 className="sidebar-friend-item"
-                onClick={(e) => navigateToProfile(e)}
+                onClick={(e) => navigateToProfile(friend)}
               >
                 <img
                   src={friend.profileImage}

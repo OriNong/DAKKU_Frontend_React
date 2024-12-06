@@ -2,32 +2,25 @@ import React, { useEffect, useState } from "react";
 import "./chatCss/chatList.css";
 import instance from "../../instance/instance";
 import { Navbar, Button, ChatItem, Avatar } from "react-chat-elements";
-import { useSelector } from "react-redux";
-import { getUserInfo } from "../../hooks/userSlice";
 import { IoMdChatbubbles } from "react-icons/io";
 
-const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
-  const userInfo = useSelector(getUserInfo);
+const ChatListRoom = ({ chatInfo, chatConnect }) => {
   const [tabNum, setTabNum] = useState(0);
   const [fade, setFade] = useState("");
   const [chatList, setChatList] = useState([]);
   const [friendList, setFriendList] = useState([]);
 
   useEffect(() => {
-    instance
-      .get("/social/friendSearch", {
-        params: {
-          userID: userInfo.id, // userInfo.id
-        },
-      })
-      .then((res) => {
-        setFriendList(res.data);
-      });
-  }, []);
+    instance.get("/chat/friendList").then((res) => {
+      setFriendList(res.data);
+      
+    });
+  }, [tabNum]);
 
   useEffect(() => {
     setChatList(chatInfo);
-  }, [chatInfo]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     let a = setTimeout(() => {
@@ -50,7 +43,9 @@ const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
                 id={item.roomId}
                 avatar={process.env.REACT_APP_CHAT_DEFAULT_PROFILE}
                 alt={item.userName}
-                onClick={() => chatConnect(item)}
+                onClick={() => {
+                  chatConnect(item);
+                }}
                 title={item.friendName}
                 subtitle={
                   item.lastMessage?.length > 0 ? (
@@ -79,7 +74,7 @@ const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
         {friendList.length > 0 ? (
           friendList.map((item) => {
             return (
-              <div key={item.ID}>
+              <div key={item.friendId}>
                 <div className="chatList-FriendList-div">
                   <Avatar
                     className="chatList-FriendList-avatar"
@@ -89,12 +84,14 @@ const ChatListRoom = ({ chatInfo, chatConnect, chatListAction }) => {
                   />
                   <div className="chatList-FriendList-NameTag">
                     <div className="chatList-FriendList-NameTag-div">
-                      {item.FRIEND_NAME}
+                      {item.friendName}
                     </div>
                   </div>
                   <button
                     className="chatList-FriendList-ActionButton"
-                    onClick={(e) => console.log(e)}
+                    onClick={() => {
+                      chatConnect(item);
+                    }}
                   >
                     <IoMdChatbubbles />
                   </button>
