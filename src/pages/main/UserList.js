@@ -11,7 +11,7 @@ const UserList = () => {
   // 사용자 프로필 데이터를 가여오기
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/user/profiles")
+      .get(`${process.env.REACT_APP_HOST}/user/profiles`)
       .then((response) => {
         console.log(response.data);
         setUserProfiles(response.data);

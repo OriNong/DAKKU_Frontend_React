@@ -46,3 +46,24 @@
     width: 330px;
   }
 }
+
+@media (max-width: 499px) {
+  .UserProfile .header {
+    height: 80px !important;
+    position: relative;
+  }
+  .UserProfile .header .logo {
+    width: 165px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .UserProfile .header h2 {
+    display: none;
+  }
+  .Nav-sidebar-toggle {
+    visibility: visible !important; /* 버튼을 나타내기 */
+  }
+}
