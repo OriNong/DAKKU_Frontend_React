@@ -314,22 +314,22 @@ const MyDiaryListPage = () => {
 
             {selectedDiary && (
               <div className="diary-detail">
-                <div className="diary-detail-header">
+                <header className="diary-detail-header">
                   <h1>제목 : {selectedDiary.diaryTitle}</h1>
                   <p>
                     작성일: {formatSelectedDate(selectedDiary.diaryCrtDate)}
                   </p>
                   <p>날씨: {selectedDiary.weatherIcon}</p>
-                </div>
-                <div className="diary-detail-main">
+                </header>
+                <main className="diary-detail-main">
                   <p
                     dangerouslySetInnerHTML={{
                       __html: selectedDiary.diaryContent,
                     }}
                   ></p>
-                </div>
+                </main>
 
-                <div className="detail-actions">
+                <footer className="detail-actions">
                   <button
                     className="edit-btn"
                     onClick={() => {
@@ -353,7 +353,7 @@ const MyDiaryListPage = () => {
                   >
                     닫기
                   </button>
-                </div>
+                </footer>
               </div>
             )}
           </main>

@@ -63,35 +63,7 @@
   flex: 1;
 }
 
-/* 좌측 사이드바 스타일 */
-.sidebar-left-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
 
-.sidebar-left-content li {
-  margin: 10px 0;
-}
-
-.sidebar-left-content li a {
-  display: block;
-  padding: 10px 15px;
-  color: #464646;
-  text-decoration: none;
-  font-size: 22px;
-  border-radius: 4px;
-  transition: font-weight 0.3s, color 0.3s;
-}
-
-.sidebar-left-content li a:hover {
-  color: #e9a30b !important;
-}
-
-.active {
-  font-weight: bold;
-  color: #e9a30b;
-}
 
 /* 일기 목록 스타일 */
 
@@ -150,13 +122,13 @@
 
 .main-content .diary-main.row {
   flex-direction: row;
+  height: 680px;
 }
 
 .main-content .diary-list {
   width: 100%;
   margin: 10px;
   transition: width 0.3s ease;
-  overflow-y: auto;
 }
 
 .main-content .diary-list.with-detail {
@@ -275,6 +247,11 @@
   padding: 10px;
   border: 1px solid black;
   margin-bottom: 20px;
+  position:  sticky;
+}
+
+.main-content .diary-detail .diary-detail-main {
+  overflow-y: scroll;
 }
 
 .main-content .detail-actions {

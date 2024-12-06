@@ -50,8 +50,8 @@ const SideBarLeft = () => {
         <li className={isActive("/chat")}>
           <Link to="/chat">Chat</Link>
         </li>
-        <li className={isActive("/ProfileImage")}>
-          <Link to="/ProfileImage">MyPage</Link>
+        <li className={isActive("/MyPage")}>
+          <Link to="/MyPage">MyPage</Link>
         </li>
         <li className={isActive("/notice")}>
           <Link to="/notice">Notice</Link>

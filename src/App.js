@@ -16,6 +16,7 @@ import UserPage from "./pages/UserPage/UserPage";
 import MyDiaryListPage from "./pages/diary/MyDiaryListPage";
 import DiaryEdit from "./pages/diary/DiaryEditPage";
 import SettingPage from "./pages/diary/DiarySettingPage";
+import MyPage from "./pages/mypage/MyPage";
 
 function App() {
   const userInfo = useSelector(getUserInfo);
@@ -56,6 +57,7 @@ function App() {
           <Route path="/diary/editDiary" element={<DiaryEdit />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/user/:username" element={<UserPage />} />
+          <Route path="/MyPage" element={<MyPage />} />
         </Routes>
         <ChatApp active={isActive} />
       </AuthProvider>
