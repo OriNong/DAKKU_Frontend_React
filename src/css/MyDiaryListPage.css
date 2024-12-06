@@ -106,6 +106,7 @@
 @media (max-width: 919px) {
   .main-content {
     overflow-y: auto;
+    height: auto;
   }
 }
 
