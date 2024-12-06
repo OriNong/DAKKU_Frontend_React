@@ -16,6 +16,12 @@
     flex-direction: column;
   }
 }
+@memia (max-height: 719px) {
+  .main-content {
+    padding-bottom: 800px;
+  }
+}
+
 /* 화면 크기가 919px 이하일 때 오른쪽 사이드 바 숨김 */
 @media (max-width: 919px) {
   .container .sidebar-right {
@@ -31,6 +37,6 @@
 /* 챗 */
 @media (max-width: 919px) {
   .chatWrapper {
-    width: 150px;
+    width: 330px;
   }
 }
