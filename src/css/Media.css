@@ -34,6 +34,12 @@
     width: 150px;
   }
 }
+/* 화면 크기가 499px 이하일 때 왼쪽 사이드 바 숨김 */
+@media (max-width: 499px) {
+  .container .sidebar-left {
+    display: none;
+  }
+}
 /* 챗 */
 @media (max-width: 919px) {
   .chatWrapper {

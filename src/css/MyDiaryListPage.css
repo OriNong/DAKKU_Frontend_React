@@ -48,7 +48,7 @@
 /* 컨테이너 및 레이아웃 설정 */
 .container {
   display: flex;
-  height: 800px;
+  /* height: 800px; */
 }
 
 .sidebar-left,
