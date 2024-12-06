@@ -41,7 +41,7 @@
   }
 }
 /* 챗 */
-@media (max-width: 919px) {
+@media (max-width: 599px) {
   .chatWrapper {
     width: 330px;
   }

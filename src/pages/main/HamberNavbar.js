@@ -57,30 +57,6 @@ const HanmberNavbar = () => {
         className={`Nav-sidebar ${isSidebarOpen ? "open" : ""}`}
       >
         <SideBarLeft />
-
-        {/* <ul>
-          <li>
-            <Link to="/MainPage">Main</Link>
-          </li>
-          <li>
-            <Link to="/chat">Chat</Link>
-          </li>
-          <li>
-            <Link to="/chat">MyPage</Link>
-          </li>
-          <li>
-            <Link to="/notice">Notice</Link>
-          </li>
-          <li>
-            <Link to="/chat">MyDiary</Link>
-          </li>
-          <li>
-            <Link to="/setting">Setting</Link>
-          </li>
-          <li>
-            <Link to="/chat">Logout</Link>
-          </li>
-        </ul> */}
       </div>
     </div>
   );
