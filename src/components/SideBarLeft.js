@@ -58,6 +58,9 @@ const SideBarLeft = () => {
         </li>
         {userInfo.id > 0 && (
           <>
+            <li className={isActive("/MyDiaryListPage")}>
+              <Link to="/diary/myDiary">MyDiary</Link>
+            </li>
             <li className={isActive("/setting")}>
               <Link to="/setting">Setting</Link>
             </li>

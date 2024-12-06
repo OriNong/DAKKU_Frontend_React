@@ -39,7 +39,7 @@ function App() {
     <>
       <AuthProvider>
         <Routes>
-        <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/user/FindPw" element={<FindPw />} />
           {!isActive && (
             <>
@@ -51,10 +51,10 @@ function App() {
           <Route path="/ProfileImage" element={<ProfileImage />} />
           <Route path="/MainPage" element={<MainPage />} />
           <Route path="/user/Friends" element={<Friends />} />
-          <Route path="/user/myDiary" element={<MyDiaryListPage />} />
-          <Route path="/user/writeDiary" element={<DiaryWritePage />} />
+          <Route path="/diary/myDiary" element={<MyDiaryListPage />} />
+          <Route path="/diary/writeDiary" element={<DiaryWritePage />} />
           <Route
-            path="/editDiary/:selectedDiaryId"
+            path="/diary/editDiary"
             element={<DiaryEdit />}
           />
           <Route path="/setting" element={<SettingPage />} />

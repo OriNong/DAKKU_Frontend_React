@@ -40,7 +40,7 @@ const DiaryComponent = () => {
 
   const navigate = useNavigate();
   const navToDiaryList = () => {
-    navigate("/user/myDiary");
+    navigate("/diary/myDiary");
   };
 
   const saveDiary = async () => {

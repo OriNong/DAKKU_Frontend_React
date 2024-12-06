@@ -13,6 +13,7 @@ import useChatAlerts from "../../hooks/useChatAlerts";
 import "../../css/MyDiaryListPage.css";
 import SideBarLeft from "../../components/SideBarLeft";
 import SideBarRight from "../../components/SideBarRight";
+import DiaryList from "../main/DiaryList";
 
 const MyDiaryListPage = () => {
   // 채팅 알림 훅
@@ -25,7 +26,7 @@ const MyDiaryListPage = () => {
   // 일기 작성 페이지로 이동
   const navigate = useNavigate();
   const navToDiaryWrite = () => {
-    navigate("/user/writeDiary");
+    navigate("/diary/writeDiary");
   };
 
   const userInfo = useSelector(getUserInfo);
@@ -53,14 +54,65 @@ const MyDiaryListPage = () => {
   }, []);
   console.log(diaryList);
 
-  const [uptDiary, setUptDiary] = useState([]);
   // 공개/비공개 토글 핸들러
-  const handlePublicToggle = (diaryId) => {
-    // setDiaryList((prevList) =>
-    //   prevList.map((diary) =>
-    //     diary.diaryId === diaryId ? { ...diary, public: !diary.public } : diary
-    //   )
-    // );
+  const handlePublicToggle = async (diaryId, currentIsPublic) => {
+    try {
+      // 즉시 UI 상태 업데이트
+      const updatedDiaryList = diaryList.map((diary) =>
+        diary.diaryId === diaryId
+          ? { ...diary, isPublic: !currentIsPublic }
+          : diary
+      );
+      setDiaryList(updatedDiaryList);
+
+      // 백엔드 컨트롤러에 맞춰 요청 방식 수정
+      const response = await instance.put(
+        `/diary/updatePublic/${diaryId}`,
+        null,
+        {
+          params: {
+            isPublic: !currentIsPublic,
+          },
+        }
+      );
+
+      // 성공 알림
+      Swal.fire({
+        icon: "success",
+        title: "공개 설정 변경",
+        text: `일기가 ${
+          !currentIsPublic ? "공개" : "비공개"
+        }로 변경되었습니다.`,
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    } catch (error) {
+      // 롤백 및 에러 처리
+      const rollbackDiaryList = diaryList.map((diary) =>
+        diary.diaryId === diaryId
+          ? { ...diary, isPublic: currentIsPublic }
+          : diary
+      );
+      setDiaryList(rollbackDiaryList);
+
+      // 에러 상세 로깅
+      console.error("Diary publicity update error:", error.response);
+
+      // 에러 알림
+      Swal.fire({
+        icon: "error",
+        title: "설정 변경 실패",
+        text: error.response?.data?.message || "공개 범위 수정 중 오류 발생",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+    }
   };
 
   const [selectedDiary, setSelectedDiary] = useState(null); // 상세보기용 상태
@@ -127,7 +179,8 @@ const MyDiaryListPage = () => {
   // 일기 수정 시
   const handleEditDiary = (selectedDiaryId) => {
     // 일기 수정 페이지로 이동
-    navigate(`/editDiary`, {
+    console.log(selectedDiaryId);
+    navigate(`/diary/editDiary`, {
       state: {
         selectedDiaryId: selectedDiaryId,
       },
@@ -179,6 +232,7 @@ const MyDiaryListPage = () => {
       console.error("Delete error:", error);
     }
   };
+  console.log(DiaryList[0]);
 
   return (
     <div className="MyDiaryList">
@@ -232,7 +286,12 @@ const MyDiaryListPage = () => {
                             <input
                               type="checkbox"
                               checked={diary.isPublic}
-                              onChange={() => handlePublicToggle(diary.diaryId)}
+                              onChange={() => {
+                                handlePublicToggle(
+                                  diary.diaryId,
+                                  diary.isPublic
+                                );
+                              }}
                             />
                             <span className="slider"></span>
                           </label>
@@ -277,6 +336,7 @@ const MyDiaryListPage = () => {
                     className="edit-btn"
                     onClick={() => {
                       handleEditDiary(selectedDiary.diaryId);
+                      console.log(selectedDiary.diaryId);
                     }}
                   >
                     수정하기

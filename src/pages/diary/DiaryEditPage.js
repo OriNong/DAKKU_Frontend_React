@@ -24,7 +24,7 @@ import SideBarLeft from "../../components/SideBarLeft";
 const DiaryEdit = () => {
   // 현재 경로가 active 상태인지 확인
   const location = useLocation();
-  //const isActive = (path) => (location.pathname === path ? "active" : "");
+  const isActive = (path) => (location.pathname === path ? "active" : "");
 
   // 서버에서 가져온 일기로 기본 값 설정
   // const { selectedDiaryId } = useParams(); // URL에서 일기 ID 추출
@@ -46,6 +46,12 @@ const DiaryEdit = () => {
         }, 100);
       });
   }, [location.state?.selectedDiaryId]);
+  console.log(entryDiary);
+
+  if (entryDiary.diaryTitle === null){
+    console.log("새로고침");
+    window.location.reload();
+  }
 
   const [isSaving, setIsSaving] = useState(false);
   const userInfo = useSelector(getUserInfo);
@@ -106,7 +112,7 @@ const DiaryEdit = () => {
           timerProgressBar: true,
           // 알림창 닫혔을 때 페이지 새로 고침
           didClose: () => {
-            navigate("/user/myDiary");
+            navigate("/diary/myDiary");
           },
         });
       }
@@ -117,14 +123,16 @@ const DiaryEdit = () => {
         title: "Diary Update Error!",
         text: "일기 수정에 실패했습니다",
         didClose: () => {
-          navigate("/user/myDiary");
+          navigate("/diary/myDiary");
         }
       });
     }
   };
+
+  // 취소 버튼 클릭 시 일기 목록으로 이동
   const navigate = useNavigate();
   const cancelEdit = () => {
-    navigate("/user/myDiary");
+    navigate("/diary/myDiary");
   };
 
   return (
