@@ -13,7 +13,6 @@ import useChatAlerts from "../../hooks/useChatAlerts";
 import "../../css/MyDiaryListPage.css";
 import SideBarLeft from "../../components/SideBarLeft";
 import SideBarRight from "../../components/SideBarRight";
-import DiaryList from "../main/DiaryList";
 
 const MyDiaryListPage = () => {
   // 채팅 알림 훅
@@ -232,7 +231,6 @@ const MyDiaryListPage = () => {
       console.error("Delete error:", error);
     }
   };
-  console.log(DiaryList[0]);
 
   return (
     <div className="MyDiaryList">
