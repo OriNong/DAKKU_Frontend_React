@@ -19,11 +19,12 @@ import HomeIcon from "../../components/HomeIcon";
 import NotificationModal from "../../components/NotificationModal";
 
 import "../../css/DiaryEditPage.css";
+import SideBarLeft from "../../components/SideBarLeft";
 
 const DiaryEdit = () => {
   // 현재 경로가 active 상태인지 확인
   const location = useLocation();
-  const isActive = (path) => (location.pathname === path ? "active" : "");
+  //const isActive = (path) => (location.pathname === path ? "active" : "");
 
   // 서버에서 가져온 일기로 기본 값 설정
   // const { selectedDiaryId } = useParams(); // URL에서 일기 ID 추출
@@ -142,32 +143,7 @@ const DiaryEdit = () => {
       </header>
       <div className="container">
         <aside className="sidebar-left">
-          <div className="sidebar-content">
-            <ul>
-              <li className={isActive("/MainPage")}>
-                <Link to="/MainPage">Main</Link>
-              </li>
-              <li className={isActive("/chat")}>
-                <Link to="/chat">Chat</Link>
-              </li>
-              <li className={isActive("/ProfileImage")}>
-                <Link to="/ProfileImage">MyPage</Link>
-              </li>
-              <li className={isActive("/notice")}>
-                <Link to="/notice">Notice</Link>
-              </li>
-              {userInfo.id > 0 && (
-                <>
-                  <li className={isActive("/setting")}>
-                    <Link to="/setting">Setting</Link>
-                  </li>
-                  <li className={isActive("/Logout")}>
-                    <Link to="/Logout">Logout</Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
+          <SideBarLeft />
         </aside>
         <main className="main-content">
           <div className="diary-container">
