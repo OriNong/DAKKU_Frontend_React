@@ -9,7 +9,7 @@ const DiaryList = () => {
   // 공개 다이어리 가져오기
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/diary/public")
+      .get(`${process.env.REACT_APP_HOST}/diary/public`)
       .then((response) => {
         console.log(response.data);
         setOftenDiary(response.data);

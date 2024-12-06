@@ -17,6 +17,7 @@ import SideBarRight from "../../components/SideBarRight";
 
 import "../../css/MainPage.css";
 import "../../css/Media.css";
+import HanmberNavbar from "./HamberNavbar";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
@@ -71,6 +72,7 @@ function MainPage() {
   return (
     <div className="UserProfile">
       <header className="header">
+        <HanmberNavbar />
         <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>Main</h2>
         <div className="header-icons">
