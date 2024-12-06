@@ -51,7 +51,7 @@
 /* 컨테이너 및 레이아웃 설정 */
 .container {
   display: flex;
-  height: calc(100vh - 80px);
+  /* height: calc(100vh - 80px); */
 }
 
 .sidebar-left,

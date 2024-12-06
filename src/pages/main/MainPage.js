@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "../../css/MainPage.css";
+
 import MainWeatherIcon from "../../components/MainWeatherIcons";
 import Book from "./book";
 import NotificationIcon from "../../components/NotificationIcon";
@@ -12,7 +12,11 @@ import DiaryList from "./DiaryList";
 import { useSelector } from "react-redux";
 import { getUserInfo } from "../../hooks/userSlice";
 
+import SideBarLeft from "../../components/SideBarLeft";
 import SideBarRight from "../../components/SideBarRight";
+
+import "../../css/MainPage.css";
+import "../../css/Media.css";
 
 function MainPage() {
   const [weatherData, setWeatherData] = useState(null);
@@ -81,27 +85,7 @@ function MainPage() {
       </header>
       <div className="container">
         <aside className="sidebar-left">
-          <div className="sidebar-content">
-            <ul>
-              <li className={isActive("/MainPage")}>
-                <Link to="/MainPage">Main</Link>
-              </li>
-              <li className={isActive("/chat")}>
-                <Link to="/chat">Chat</Link>
-              </li>
-              <li className={isActive("/ProfileImage")}>
-                <Link to="/ProfileImage">MyPage</Link>
-              </li>
-              <li className={isActive("/notice")}>
-                <Link to="/notice">Notice</Link>
-              </li>
-              {userInfo.id > 0 && (
-                <li className={isActive("/setting")}>
-                  <Link to="/setting">Setting</Link>
-                </li>
-              )}
-            </ul>
-          </div>
+          <SideBarLeft />
         </aside>
         <main className="main-content">
           <aside className="weather-widget">

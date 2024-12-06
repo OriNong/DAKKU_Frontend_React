@@ -11,7 +11,7 @@ import instance from "../../instance/instance";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { removeTokenInfo } from "../../hooks/tokenSlice";
-import ProFileSetting from './proFileSetting';
+import ProFileSetting from "./proFileSetting";
 
 const Setting = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -158,7 +158,7 @@ const Setting = () => {
 
   return (
     <div>
-      <div className='diary-entries'>
+      <div className="diary-entries">
         <ProFileSetting />
       </div>
 

@@ -53,10 +53,7 @@ function App() {
           <Route path="/user/Friends" element={<Friends />} />
           <Route path="/diary/myDiary" element={<MyDiaryListPage />} />
           <Route path="/diary/writeDiary" element={<DiaryWritePage />} />
-          <Route
-            path="/diary/editDiary"
-            element={<DiaryEdit />}
-          />
+          <Route path="/diary/editDiary" element={<DiaryEdit />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/user/:username" element={<UserPage />} />
         </Routes>
