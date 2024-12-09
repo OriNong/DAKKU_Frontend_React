@@ -4,17 +4,14 @@ import { useSelector } from "react-redux";
 import { getUserInfo } from "../hooks/userSlice";
 import instance from "../instance/instance";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
 const SideBarRight = () => {
   const userInfo = useSelector(getUserInfo);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
-  const navigate = useNavigate();
   const [userProfileImage, setUserProfileImage] = useState(
     `${process.env.REACT_APP_CHAT_DEFAULT_PROFILE}`
   );
-  let count = 0;
   const [friendsList, setFriendsList] = useState([]);
 
   useEffect(() => {
@@ -28,8 +25,6 @@ const SideBarRight = () => {
           },
         })
         .then((res) => {
-          console.log(res);
-
           if (res.data.IMG_PATH !== "NO IMG") {
             setUserProfileImage(
               `${process.env.REACT_APP_HOST}/file/view/${res.data.IMG_PATH}`
@@ -41,13 +36,12 @@ const SideBarRight = () => {
               setFriendsList((prev) => [
                 ...prev,
                 {
-                  id: count + 1,
-                  name: item.FRIEND_NAME,
+                  friendId: item.friendId,
+                  name: item.friendName,
                   profileImage: `${process.env.REACT_APP_CHAT_small_PROFILE}`,
                 },
               ]);
             });
-            console.log(friendsList);
           }
           setUserName(res.data.NAME);
           setIsLoggedIn(true);
@@ -64,6 +58,7 @@ const SideBarRight = () => {
 
   const navigateToProfile = (id) => {
     // 친구 목록에서 친구를 클릭시 발생하는 이벤트 컴포넌트.
+    console.log(id);
   };
 
   return (
@@ -83,7 +78,7 @@ const SideBarRight = () => {
         )}
       </div>
 
-      <div className="sidebar-auth">
+      {/* <div className="sidebar-auth">
         {isLoggedIn ? (
           <></>
         ) : (
@@ -96,16 +91,16 @@ const SideBarRight = () => {
             로그인
           </button>
         )}
-      </div>
+      </div> */}
 
       <div className="sidebar-friends">
         {isLoggedIn ? (
           friendsList?.length > 0 ? (
             friendsList.map((friend) => (
               <div
-                key={friend.id}
+                key={friend.friendId}
                 className="sidebar-friend-item"
-                onClick={(e) => navigateToProfile(e)}
+                onClick={(e) => navigateToProfile(friend)}
               >
                 <img
                   src={friend.profileImage}

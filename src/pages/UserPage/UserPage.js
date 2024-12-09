@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo, getUserInfo } from "../../hooks/userSlice";
 import "../../css/UserPage.css";
+import "../../css/UserPageMedia.css";
 import instance from "../../instance/instance";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationIcon from "../../components/NotificationIcon";
 import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
+import SideBarLeft from "../../components/SideBarLeft";
+import SideBarRight from "../../components/SideBarRight";
+import Swal from "sweetalert2";
+import HanmberNavbar from "../../pages/main/HamberNavbar";
 
 const UserPage = () => {
   const { username } = useParams(); // URL에서 username 파라미터를 가져옴
@@ -70,7 +75,7 @@ const UserPage = () => {
     fetchData();
   }, [username, userInfo.id, dispatch]);
 
-  // 친구 추가 요청 핸들러
+  // 친구 추가 요청
   const handleAddFriend = async () => {
     try {
       const response = await instance.post(
@@ -78,18 +83,34 @@ const UserPage = () => {
         {}
       );
       if (response.status === 200) {
-        alert("친구 요청이 전송되었습니다.");
-        setIsFriend(true); // 친구 요청 성공 후 상태 업데이트
+        Swal.fire({
+          icon: "success",
+          title: "친구 요청 성공!",
+          text: "친구 요청이 전송되었습니다.",
+          timer: 3000,
+          timerProgressBar: true,
+          didClose: () => {
+            setIsFriend(true);
+          },
+        });
       }
     } catch (error) {
       console.error("Failed to send friend request", error);
-      alert("친구 요청 실패");
+      Swal.fire({
+        icon: "error",
+        title: "친구 요청 실패",
+        text: "친구 요청에 실패했습니다.",
+        timer: 1500,
+        timerProgressBar: true,
+        didClose: () => {},
+      });
     }
   };
 
   return (
     <div className="UserProfile">
       <header className="header">
+        <HanmberNavbar />
         <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>{loading ? "Loading..." : `${username}님의 프로필`}</h2>
         <div className="header-icons">
@@ -104,25 +125,7 @@ const UserPage = () => {
       </header>
       <div className="container">
         <aside className="sidebar-left">
-          <div className="sidebar-content">
-            <ul>
-              <li className={isActive("/MainPage")}>
-                <Link to="/MainPage">Main</Link>
-              </li>
-              <li className={isActive("/chat")}>
-                <Link to="/chat">Chat</Link>
-              </li>
-              <li className={isActive("/ProfileImage")}>
-                <Link to="/ProfileImage">MyPage</Link>
-              </li>
-              <li className={isActive("/notice")}>
-                <Link to="/notice">Notice</Link>
-              </li>
-              <li className={isActive("/setting")}>
-                <Link to="/setting">Setting</Link>
-              </li>
-            </ul>
-          </div>
+          <SideBarLeft />
         </aside>
         <main className="main-content">
           <div className="profile-container">
@@ -152,7 +155,9 @@ const UserPage = () => {
           </div>
           <div className="diary">다이어리</div>
         </main>
-        <aside className="sidebar-right"></aside>
+        <aside className="sidebar-right">
+          <SideBarRight />
+        </aside>
       </div>
     </div>
   );
