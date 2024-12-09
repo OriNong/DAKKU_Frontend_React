@@ -109,9 +109,6 @@ const Chat = ({
           },
         })
         .then((res) => {
-          console.log(chatItemInfo);
-          console.log(res.data);
-
           setRoomId(res.data.roomId);
           if (res.data?.list) {
             const messageList = res.data.list.map((msg) => ({
@@ -147,7 +144,6 @@ const Chat = ({
       brokerURL: `${process.env.REACT_APP_CHAT_CONNECT}/chat`,
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log(roomId);
         client.subscribe(`/topic/public/rooms/${roomId}`, (message) => {
           const data = JSON.parse(message.body);
           setChatList((prevMessage) => [
@@ -184,7 +180,6 @@ const Chat = ({
         userName: chatItemInfo.userName,
         friendName: chatItemInfo.friendName,
       };
-      console.log(chatMessage);
       stompClient.publish({
         destination: `/app/chat/rooms/${roomId}/send`,
         body: JSON.stringify(chatMessage),
@@ -265,7 +260,6 @@ const Chat = ({
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              console.log(e.target.value);
               sendMessage(e.target.value);
             }
           }}

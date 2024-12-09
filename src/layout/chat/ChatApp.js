@@ -21,7 +21,6 @@ const ChatApp2 = () => {
     instance
       .get("/chat/userRoom")
       .then((res) => {
-        console.log(res.data);
         setChatListInfo(res.data);
       })
       .catch((error) => {
