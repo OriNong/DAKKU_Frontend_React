@@ -18,19 +18,17 @@ const ChatApp2 = () => {
   };
 
   useEffect(() => {
-    if (chatListInfo.length === 0) {
-      instance
-        .get("/chat/userRoom")
-        .then((res) => {
-          console.log(res.data);
-          setChatListInfo(res.data);
-        })
-        .catch((error) => {
-          console.log(error + "해당 유저의 채팅방 목록을 가져올수 없습니다.");
-        });
-    }
+    instance
+      .get("/chat/userRoom")
+      .then((res) => {
+        console.log(res.data);
+        setChatListInfo(res.data);
+      })
+      .catch((error) => {
+        console.log(error + "해당 유저의 채팅방 목록을 가져올수 없습니다.");
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [chatRoomActive]);
 
   return (
     <>
@@ -58,7 +56,10 @@ const ChatApp2 = () => {
             setChatListInfo={setChatListInfo}
           />
         ) : (
-          <ChatListRoom chatInfo={chatListInfo} chatConnect={chatConnect} />
+          <ChatListRoom
+            chatInfo={chatListInfo}
+            chatConnect={chatConnect}
+          />
         )}
       </div>
     </>
