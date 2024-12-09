@@ -1,0 +1,89 @@
+.user-diary-container {
+  width: 100%;
+  height: 294px;
+  overflow-y: scroll;
+  border: 1px solid #e0e0e0;
+}
+
+.user-diary-container .diary-list {
+  width: 100%;
+}
+
+.user-diary-container .diary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.user-diary-container .diary-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-diary-container .diary-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-diary-container .diary-date {
+  color: #666;
+  font-size: 14px;
+}
+
+.user-diary-container .diary-weather {
+  font-size: 20px;
+}
+
+.user-diary-container .detail-button {
+  width: 300px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user-diary-container .diary-detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.user-diary-container .diary-detail-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  max-height: 80%;
+  overflow-y: scroll;
+}
+
+.user-diary-container .diary-detail-date {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.user-diary-container .diary-detail-text {
+  margin-bottom: 15px;
+}
+
+.user-diary-container .close-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}

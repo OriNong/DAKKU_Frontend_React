@@ -13,6 +13,7 @@ import SideBarLeft from "../../components/SideBarLeft";
 import SideBarRight from "../../components/SideBarRight";
 import Swal from "sweetalert2";
 import HanmberNavbar from "../../pages/main/HamberNavbar";
+import UserDiaryListPage from "../diary/UserDiaryListPage";
 
 const UserPage = () => {
   const { username } = useParams(); // URL에서 username 파라미터를 가져옴
@@ -29,7 +30,6 @@ const UserPage = () => {
   const isActive = (path) => {
     return location.pathname === path ? "active" : "";
   };
-
   useEffect(() => {
     const userId = location.pathname.split("/").pop(); // URL에서 유저 ID 추출
 
@@ -38,7 +38,7 @@ const UserPage = () => {
         setLoading(true);
         const res = await instance.get(`/user/${username}`);
         console.log(res.data); // 서버에서 받은 데이터 구조를 확인
-
+        setUserId(res.data.USERID);
         // 프로필 이미지 URL 확인 후 설정
         const profileImgUrl = res.data?.SAVEFILENAME
           ? `${process.env.REACT_APP_HOST}/file/view/${res.data.SAVEFILENAME}`
@@ -153,7 +153,9 @@ const UserPage = () => {
               </div>
             )}
           </div>
-          <div className="diary">다이어리</div>
+          <div className="diary">
+            <UserDiaryListPage userId={userId}/>
+          </div>
         </main>
         <aside className="sidebar-right">
           <SideBarRight />
