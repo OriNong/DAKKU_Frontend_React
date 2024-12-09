@@ -39,11 +39,11 @@
 }
 
 /* 중단: 로그인/로그아웃 버튼 */
-.sidebar-right .sidebar-auth {
+/* .sidebar-right .sidebar-auth {
   display: flex;
   margin: 10px 0;
   justify-content: center;
-}
+} */
 
 .sidebar-right .sidebar-button {
   width: 80%;

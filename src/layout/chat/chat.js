@@ -17,7 +17,12 @@ import { getUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
 import Swal from "sweetalert2";
 
-const Chat = ({ setChatRoomActive, chatItemInfo, chatMessageAction }) => {
+const Chat = ({
+  setChatRoomActive,
+  chatItemInfo,
+  chatListInfo,
+  setChatListInfo,
+}) => {
   const userInfo = useSelector(getUserInfo);
   const inputReferance = useRef();
   const messageListRef = createRef();
@@ -43,14 +48,21 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatMessageAction }) => {
         destination: `/app/chat/rooms/${roomId}/send`,
         body: JSON.stringify(chatMessage),
       });
+      setNewMessage("");
+      setChatListInfo(
+        chatListInfo.map((el) => {
+          console.log(el);
+          if (el.roomId === chatItemInfo.roomId) {
+            el.lastMessage = newMessage;
+          }
+          return el;
+        })
+      );
     }
-    chatMessageAction(Math.random());
-    setNewMessage("");
   };
 
   // 방을 만들때 사용자가 친구와 대화하기를 누르고 채팅을 치고나면 그때 방이 자동으로 개설되고 채팅이 저장되게 로직을 구성해야됨.
   useEffect(() => {
-    console.log(chatItemInfo);
     if (chatItemInfo.roomId !== undefined) {
       instance
         .get(`/chat/uuid`, {
@@ -78,7 +90,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatMessageAction }) => {
         .catch((error) => {
           Swal.fire({
             title: "채팅 오류",
-            text: "데이터베이스에서 채팅 기록을 불러올수 없습니다.",
+            text: error,
             icon: "error",
           });
         });
@@ -109,7 +121,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo, chatMessageAction }) => {
     return () => {
       client.deactivate();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setChatRoomActive]);
 
   return (

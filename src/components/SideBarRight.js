@@ -25,8 +25,6 @@ const SideBarRight = () => {
           },
         })
         .then((res) => {
-          console.log(res);
-
           if (res.data.IMG_PATH !== "NO IMG") {
             setUserProfileImage(
               `${process.env.REACT_APP_HOST}/file/view/${res.data.IMG_PATH}`
@@ -44,7 +42,6 @@ const SideBarRight = () => {
                 },
               ]);
             });
-            console.log(friendsList);
           }
           setUserName(res.data.NAME);
           setIsLoggedIn(true);
