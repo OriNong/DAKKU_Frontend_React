@@ -56,7 +56,7 @@ const SideBarLeft = () => {
         <li className={isActive("/notice")}>
           <Link to="/notice">Notice</Link>
         </li>
-        {userInfo.id > 0 && (
+        {userInfo.id > 0 ? (
           <>
             <li className={isActive("/MyDiaryListPage")}>
               <Link to="/diary/myDiary">MyDiary</Link>
@@ -66,6 +66,12 @@ const SideBarLeft = () => {
             </li>
             <li className={isActive("/Logout")}>
               <Link onClick={() => Logout()}>Logout</Link>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className={isActive("/login")}>
+              <Link to="/user/login">Login</Link>
             </li>
           </>
         )}

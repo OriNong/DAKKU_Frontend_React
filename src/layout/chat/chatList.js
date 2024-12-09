@@ -20,7 +20,7 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
   useEffect(() => {
     setChatList(chatInfo);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [chatInfo]);
 
   useEffect(() => {
     let a = setTimeout(() => {

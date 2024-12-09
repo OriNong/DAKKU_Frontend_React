@@ -4,17 +4,14 @@ import { useSelector } from "react-redux";
 import { getUserInfo } from "../hooks/userSlice";
 import instance from "../instance/instance";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
 const SideBarRight = () => {
   const userInfo = useSelector(getUserInfo);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
-  const navigate = useNavigate();
   const [userProfileImage, setUserProfileImage] = useState(
     `${process.env.REACT_APP_CHAT_DEFAULT_PROFILE}`
   );
-  let count = 0;
   const [friendsList, setFriendsList] = useState([]);
 
   useEffect(() => {
@@ -84,7 +81,7 @@ const SideBarRight = () => {
         )}
       </div>
 
-      <div className="sidebar-auth">
+      {/* <div className="sidebar-auth">
         {isLoggedIn ? (
           <></>
         ) : (
@@ -97,7 +94,7 @@ const SideBarRight = () => {
             로그인
           </button>
         )}
-      </div>
+      </div> */}
 
       <div className="sidebar-friends">
         {isLoggedIn ? (

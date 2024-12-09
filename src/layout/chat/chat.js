@@ -11,16 +11,16 @@ import { SlActionRedo } from "react-icons/sl";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdMenu, MdDelete } from "react-icons/md";
 import { Client } from "@stomp/stompjs";
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { getUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
 import Swal from "sweetalert2";
 
-const Chat = ({ setChatRoomActive, chatItemInfo }) => {
+const Chat = ({ setChatRoomActive, chatItemInfo, chatMessageAction }) => {
   const userInfo = useSelector(getUserInfo);
-  const inputReferance = React.useRef();
-  const messageListRef = React.createRef();
+  const inputReferance = useRef();
+  const messageListRef = createRef();
   const roomId = chatItemInfo.roomId;
   const writerID = userInfo.id;
   const [newMessage, setNewMessage] = useState("");
@@ -44,6 +44,7 @@ const Chat = ({ setChatRoomActive, chatItemInfo }) => {
         body: JSON.stringify(chatMessage),
       });
     }
+    chatMessageAction(Math.random());
     setNewMessage("");
   };
 
