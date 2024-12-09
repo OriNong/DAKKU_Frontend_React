@@ -17,6 +17,8 @@ import { getUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
 import Swal from "sweetalert2";
 
+let tempRoomId = "";
+
 const Chat = ({
   setChatRoomActive,
   chatItemInfo,
@@ -26,42 +28,12 @@ const Chat = ({
   const userInfo = useSelector(getUserInfo);
   const inputReferance = useRef();
   const messageListRef = createRef();
-  const roomId = chatItemInfo.roomId;
   const writerID = userInfo.id;
   const [newMessage, setNewMessage] = useState("");
   const [stompClient, setStompClient] = useState(null);
   const [chatList, setChatList] = useState([]);
+  const [roomId, setRoomId] = useState(chatItemInfo.roomId);
 
-  const sendMessage = () => {
-    if (!newMessage.trim()) return;
-
-    if (stompClient && newMessage) {
-      const chatMessage = {
-        roomId: roomId,
-        text: newMessage,
-        userID: writerID,
-        friendID: chatItemInfo.friendId,
-        userName: chatItemInfo.userName,
-        friendName: chatItemInfo.friendName,
-      };
-      stompClient.publish({
-        destination: `/app/chat/rooms/${roomId}/send`,
-        body: JSON.stringify(chatMessage),
-      });
-      setNewMessage("");
-      setChatListInfo(
-        chatListInfo.map((el) => {
-          console.log(el);
-          if (el.roomId === chatItemInfo.roomId) {
-            el.lastMessage = newMessage;
-          }
-          return el;
-        })
-      );
-    }
-  };
-
-  // 방을 만들때 사용자가 친구와 대화하기를 누르고 채팅을 치고나면 그때 방이 자동으로 개설되고 채팅이 저장되게 로직을 구성해야됨.
   useEffect(() => {
     if (chatItemInfo.roomId !== undefined) {
       instance
@@ -71,6 +43,13 @@ const Chat = ({
           },
         })
         .then((res) => {
+          console.log(chatItemInfo);
+          console.log(res.data);
+          tempRoomId = res.data.roomId;
+          console.log(tempRoomId);
+
+
+          setRoomId(res.data.roomId);
           if (res.data?.list) {
             const messageList = res.data.list.map((msg) => ({
               position: msg.userID === writerID ? "right" : "left",
@@ -100,8 +79,10 @@ const Chat = ({
       brokerURL: `${process.env.REACT_APP_CHAT_CONNECT}/chat`,
       reconnectDelay: 5000,
       onConnect: () => {
+        console.log(tempRoomId);
         client.subscribe(`/topic/public/rooms/${roomId}`, (message) => {
           const data = JSON.parse(message.body);
+          console.log(data);
           setChatList((prevMessage) => [
             ...prevMessage,
             {
@@ -123,6 +104,35 @@ const Chat = ({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setChatRoomActive]);
+
+  const sendMessage = () => {
+    if (!newMessage.trim()) return;
+
+    if (stompClient && newMessage) {
+      const chatMessage = {
+        roomId: roomId,
+        text: newMessage,
+        userID: writerID,
+        friendID: chatItemInfo.friendId,
+        userName: chatItemInfo.userName,
+        friendName: chatItemInfo.friendName,
+      };
+      console.log(chatMessage);
+      stompClient.publish({
+        destination: `/app/chat/rooms/${roomId}/send`,
+        body: JSON.stringify(chatMessage),
+      });
+      setNewMessage("");
+      setChatListInfo(
+        chatListInfo.map((el) => {
+          if (el.roomId === chatItemInfo.roomId) {
+            el.lastMessage = newMessage;
+          }
+          return el;
+        })
+      );
+    }
+  };
 
   return (
     <div className="chat-container">
@@ -188,6 +198,7 @@ const Chat = ({
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+              console.log(e.target.value);
               sendMessage(e.target.value);
             }
           }}

@@ -13,7 +13,6 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
   useEffect(() => {
     instance.get("/chat/friendList").then((res) => {
       setFriendList(res.data);
-      
     });
   }, [tabNum]);
 
