@@ -3,6 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo, getUserInfo } from "../../hooks/userSlice";
 import "../../css/UserPage.css";
+import "../../css/UserPageMedia.css";
 import instance from "../../instance/instance";
 import HomeIcon from "../../components/HomeIcon";
 import NotificationIcon from "../../components/NotificationIcon";
@@ -11,6 +12,7 @@ import useChatAlerts from "../../hooks/useChatAlerts";
 import SideBarLeft from "../../components/SideBarLeft";
 import SideBarRight from "../../components/SideBarRight";
 import Swal from "sweetalert2";
+import HanmberNavbar from "../../pages/main/HamberNavbar";
 
 const UserPage = () => {
   const { username } = useParams(); // URL에서 username 파라미터를 가져옴
@@ -108,6 +110,7 @@ const UserPage = () => {
   return (
     <div className="UserProfile">
       <header className="header">
+        <HanmberNavbar />
         <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>{loading ? "Loading..." : `${username}님의 프로필`}</h2>
         <div className="header-icons">

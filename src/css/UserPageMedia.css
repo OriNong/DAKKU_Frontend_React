@@ -1,0 +1,57 @@
+/* 화면 크기가 919px 이하일 때 해당 페이지 유저 정보, 다이어리 리스트 세로로 정렬 */
+@media (max-width: 919px) {
+  .main-content {
+    flex-direction: column;
+  }
+}
+@memia (max-height: 719px) {
+  .main-content {
+    padding-bottom: 800px;
+  }
+}
+
+/* 화면 크기가 919px 이하일 때 오른쪽 사이드 바 숨김 */
+@media (max-width: 919px) {
+  .container .sidebar-right {
+    display: none;
+  }
+}
+/* 화면 크기가 919px 이하일 때 왼쪽 사이드바 크기 줄어들기 */
+@media (max-width: 919px) {
+  .container .sidebar-left {
+    width: 150px;
+  }
+}
+/* 화면 크기가 499px 이하일 때 왼쪽 사이드 바 숨김 */
+@media (max-width: 499px) {
+  .container .sidebar-left {
+    display: none;
+  }
+}
+/* 챗 */
+@media (max-width: 599px) {
+  .chatWrapper {
+    width: 330px;
+  }
+}
+
+@media (max-width: 499px) {
+  .UserProfile .header {
+    height: 80px !important;
+    position: relative;
+  }
+  .UserProfile .header .logo {
+    width: 165px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .UserProfile .header h2 {
+    display: none;
+  }
+  .Nav-sidebar-toggle {
+    visibility: visible !important; /* 버튼을 나타내기 */
+  }
+}
