@@ -8,6 +8,17 @@
   transition: 0.3s all;
 }
 
+@media (max-width: 499px) {
+  .rce-navbar,
+  .rce-navbar-item,
+  .rce-navbar-item > * {
+    display: block !important;
+  }
+  .chatWrapper .chatList-Navbar-center-ulTag {
+    display: flex;
+  }
+}
+
 .chatWrapper.active {
   visibility: visible;
   bottom: 0px;
