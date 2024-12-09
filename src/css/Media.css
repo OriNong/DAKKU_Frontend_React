@@ -41,12 +41,75 @@
   }
 }
 /* 챗 */
-@media (max-width: 599px) {
+@media (max-width: 499px) {
   .chatWrapper {
-    width: 330px;
+    width: 330px; /* 화면이 919px 이하일 경우 채팅창의 가로 크기를 330px로 설정 */
+    right: 20px; /* 오른쪽 여백도 조정 */
+  }
+
+  /* 채팅창 내부의 요소들도 함께 크기를 조정 */
+  .chatWrapper .chat-open-button-div {
+    width: 100px; /* 버튼 영역 크기도 100px로 설정 */
+  }
+
+  .chatWrapper .chatList-container {
+    width: 100%; /* 채팅 리스트 컨테이너 크기를 100%로 설정 */
+  }
+
+  /* 내비게이션 영역 */
+  .chatWrapper .chatList-Navbar-center {
+    width: 100%; /* 내비게이션바의 가로 크기를 100%로 설정 */
+  }
+
+  .chatWrapper .chatList-Navbar-center-ulTag {
+    display: flex;
+  }
+
+  .chatWrapper .chatList-Navbar-center-liTag {
+    width: 50%; /* 각 li 태그를 50%씩 차지하도록 설정 */
+  }
+
+  .chatWrapper .chatList-Navbar-center-liTag-button {
+    padding: 10px; /* 버튼 크기 */
+    font-size: 15px; /* 폰트 크기 줄이기 */
+  }
+
+  .chatWrapper .chatList-chatItem-div,
+  .chatWrapper .chatList-FriendList-container {
+    height: 450px; /* 친구 목록 및 채팅 아이템의 높이 줄이기 */
+  }
+
+  /* 친구 목록 */
+  .chatWrapper .chatList-FriendList-div {
+    padding: 8px; /* 친구 목록 항목의 패딩 줄이기 */
+  }
+
+  .chatWrapper .chatList-FriendList-avatar {
+    width: 40px;
+    height: 40px; /* 아바타 이미지 크기 줄이기 */
+  }
+
+  .chatWrapper .chatList-FriendList-NameTag-div {
+    font-size: 14px; /* 이름 폰트 크기 줄이기 */
+  }
+
+  .chatWrapper .chatList-FriendList-ActionButton {
+    font-size: 20px; /* 액션 버튼의 폰트 크기 줄이기 */
   }
 }
 
+@media (max-width: 499px) {
+  .rce-navbar,
+  .rce-navbar-item,
+  .rce-navbar-item > * {
+    display: block;
+  }
+  .chatWrapper .chatList-Navbar-center-ulTag {
+    display: flex !important;
+  }
+}
+
+/* 상단 헤드 축소 및 로그 이동 및 메뉴 버튼 활성화 */
 @media (max-width: 499px) {
   .UserProfile .header {
     height: 80px !important;
