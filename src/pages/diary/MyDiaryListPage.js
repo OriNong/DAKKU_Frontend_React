@@ -6,16 +6,12 @@ import Swal from "sweetalert2";
 import { getUserInfo } from "../../hooks/userSlice";
 import instance from "../../instance/instance";
 import HomeIcon from "../../components/HomeIcon";
-import useChatAlerts from "../../hooks/useChatAlerts";
 
 import "../../css/MyDiaryListPage.css";
 import SideBarLeft from "../../components/SideBarLeft";
 import SideBarRight from "../../components/SideBarRight";
 
 const MyDiaryListPage = () => {
-  // 채팅 알림 훅
-  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
-
   // 현재 경로가 active 상태인지 확인
   const location = useLocation();
   const isActive = (path) => (location.pathname === path ? "active" : "");

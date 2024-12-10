@@ -9,7 +9,6 @@ import {
 } from "../../services/WeatherService";
 import instance from "../../instance/instance";
 import HomeIcon from "../../components/HomeIcon";
-import useChatAlerts from "../../hooks/useChatAlerts";
 import TextEditor from "../../components/TextEditorComponent";
 import { getUserInfo } from "../../hooks/userSlice";
 import "../../css/DiaryWritePage.css";
@@ -17,9 +16,6 @@ import SideBarRight from "../../components/SideBarRight";
 import SideBarLeft from "../../components/SideBarLeft";
 
 const DiaryComponent = () => {
-  // 채팅 알림 훅
-  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
-
   const userInfo = useSelector(getUserInfo);
   const [latitude, setLatitude] = useState(37.5666791);
   const [longitude, setLongitude] = useState(126.9782914);

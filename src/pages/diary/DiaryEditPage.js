@@ -11,7 +11,6 @@ import { Switch } from "@mui/material";
 import Swal from "sweetalert2";
 import TextEditor from "../../components/TextEditorComponent";
 import { getUserInfo } from "../../hooks/userSlice";
-import useChatAlerts from "../../hooks/useChatAlerts";
 import instance from "../../instance/instance";
 import SideBarRight from "../../components/SideBarRight";
 import HomeIcon from "../../components/HomeIcon";
@@ -53,8 +52,6 @@ const DiaryEdit = () => {
 
   const [isSaving, setIsSaving] = useState(false);
   const userInfo = useSelector(getUserInfo);
-  // 채팅 알림 훅
-  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
 
   // 스위치 토글 클릭 시 값 변경
   const handleToggle = (event) => {

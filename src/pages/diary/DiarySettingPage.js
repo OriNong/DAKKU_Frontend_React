@@ -1,11 +1,8 @@
 import HomeIcon from "../../components/HomeIcon";
 import Setting from "../mypage/Setting";
-import useChatAlerts from "../../hooks/useChatAlerts";
 import SideBarLeft from "../../components/SideBarLeft";
 
 const SettingPage = () => {
-  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
-
   return (
     <div className="UserProfile">
       <header className="header">

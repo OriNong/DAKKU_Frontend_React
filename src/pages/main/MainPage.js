@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import MainWeatherIcon from "../../components/MainWeatherIcons";
 import Book from "./book";
 import HomeIcon from "../../components/HomeIcon";
-import useChatAlerts from "../../hooks/useChatAlerts";
 import UserList from "./UserList";
 import DiaryList from "./DiaryList";
 import { useSelector } from "react-redux";
@@ -22,9 +21,6 @@ function MainPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const userInfo = useSelector(getUserInfo);
-
-  // 채팅 알림 훅
-  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
 
   useEffect(() => {
     const fetchWeather = async () => {

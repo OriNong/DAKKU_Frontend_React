@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 
 import { getUserInfo } from "../../hooks/userSlice";
 import HomeIcon from "../../components/HomeIcon";
-import useChatAlerts from "../../hooks/useChatAlerts";
 import SideBarLeft from "../../components/SideBarLeft";
 import SideBarRight from "../../components/SideBarRight";
 
@@ -14,7 +13,6 @@ import { Prev } from "react-bootstrap/esm/PageItem";
 
 const MyPage = () => {
   const userInfo = useSelector(getUserInfo);
-  const { chatAlerts, isModalOpen, openModal, closeModal } = useChatAlerts();
 
   const [friendList, setFriendList] = useState([]);
   const [waitingFriendRequest, setWaitingFriendRequest] = useState([]);
