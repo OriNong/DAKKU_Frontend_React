@@ -9,7 +9,8 @@
 .login-wrapper {
   font-size: 14px;
   font-family: "Roboto", sans-serif;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: auto;
   padding: 30px;
   box-sizing: border-box;
