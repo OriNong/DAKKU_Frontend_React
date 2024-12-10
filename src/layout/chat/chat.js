@@ -41,10 +41,6 @@ const Chat = ({
   //         },
   //       })
   //       .then((res) => {
-  //         console.log(chatItemInfo);
-  //         console.log(res.data);
-
-  //         setRoomId(res.data.roomId);
   //         if (res.data?.list) {
   //           const messageList = res.data.list.map((msg) => ({
   //             position: msg.userID === writerID ? "right" : "left",
@@ -74,10 +70,8 @@ const Chat = ({
   //     brokerURL: `${process.env.REACT_APP_CHAT_CONNECT}/chat`,
   //     reconnectDelay: 5000,
   //     onConnect: () => {
-  //       console.log(roomId);
   //       client.subscribe(`/topic/public/rooms/${roomId}`, (message) => {
   //         const data = JSON.parse(message.body);
-  //         console.log(data);
   //         setChatList((prevMessage) => [
   //           ...prevMessage,
   //           {
@@ -134,7 +128,7 @@ const Chat = ({
           });
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatItemInfo.roomId, chatItemInfo.friendId, writerID]);
 
   useEffect(() => {

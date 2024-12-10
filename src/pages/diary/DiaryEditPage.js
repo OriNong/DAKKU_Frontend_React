@@ -14,9 +14,7 @@ import { getUserInfo } from "../../hooks/userSlice";
 import useChatAlerts from "../../hooks/useChatAlerts";
 import instance from "../../instance/instance";
 import SideBarRight from "../../components/SideBarRight";
-import NotificationIcon from "../../components/NotificationIcon";
 import HomeIcon from "../../components/HomeIcon";
-import NotificationModal from "../../components/NotificationModal";
 
 import "../../css/DiaryEditPage.css";
 import SideBarLeft from "../../components/SideBarLeft";
@@ -48,7 +46,7 @@ const DiaryEdit = () => {
   }, [location.state?.selectedDiaryId]);
   console.log(entryDiary);
 
-  if (entryDiary.diaryTitle === null){
+  if (entryDiary.diaryTitle === null) {
     console.log("새로고침");
     window.location.reload();
   }
@@ -70,7 +68,7 @@ const DiaryEdit = () => {
     // try {
     //   instance.put(`/diary/update`)
     // }
-  }
+  };
 
   // 수정된 일기 내용 update
   const updateDiary = async () => {
@@ -124,7 +122,7 @@ const DiaryEdit = () => {
         text: "일기 수정에 실패했습니다",
         didClose: () => {
           navigate("/diary/myDiary");
-        }
+        },
       });
     }
   };
@@ -140,14 +138,8 @@ const DiaryEdit = () => {
       <header className="header">
         <img src="/img/logo.png" alt="logo" className="logo" />
         <div className="header-icons">
-          <NotificationIcon onClick={openModal} />
           <HomeIcon />
         </div>
-        <NotificationModal
-          isOpen={isModalOpen} // 모달 상태 전달
-          closeModal={closeModal} // 모달 닫기 함수 전달
-          chatAlerts={chatAlerts} // 알림 데이터 전달
-        />
       </header>
       <div className="container">
         <aside className="sidebar-left">
