@@ -6,8 +6,6 @@ import "../../css/UserPage.css";
 import "../../css/UserPageMedia.css";
 import instance from "../../instance/instance";
 import HomeIcon from "../../components/HomeIcon";
-import NotificationIcon from "../../components/NotificationIcon";
-import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
 import SideBarLeft from "../../components/SideBarLeft";
 import SideBarRight from "../../components/SideBarRight";
@@ -114,14 +112,8 @@ const UserPage = () => {
         <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>{loading ? "Loading..." : `${username}님의 프로필`}</h2>
         <div className="header-icons">
-          <NotificationIcon />
           <HomeIcon />
         </div>
-        <NotificationModal
-          isOpen={isModalOpen} // 모달 상태
-          closeModal={closeModal} // 모달 닫기 함수
-          chatAlerts={chatAlerts} // 알림 데이터
-        />
       </header>
       <div className="container">
         <aside className="sidebar-left">
@@ -154,7 +146,7 @@ const UserPage = () => {
             )}
           </div>
           <div className="diary">
-            <UserDiaryListPage userId={userId}/>
+            <UserDiaryListPage userId={userId} />
           </div>
         </main>
         <aside className="sidebar-right">

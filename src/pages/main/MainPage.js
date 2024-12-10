@@ -3,9 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import MainWeatherIcon from "../../components/MainWeatherIcons";
 import Book from "./book";
-import NotificationIcon from "../../components/NotificationIcon";
 import HomeIcon from "../../components/HomeIcon";
-import NotificationModal from "../../components/NotificationModal";
 import useChatAlerts from "../../hooks/useChatAlerts";
 import UserList from "./UserList";
 import DiaryList from "./DiaryList";
@@ -76,14 +74,8 @@ function MainPage() {
         <img src="/img/logo.png" alt="logo" className="logo" />
         <h2>Main</h2>
         <div className="header-icons">
-          <NotificationIcon onClick={openModal} />
           <HomeIcon />
         </div>
-        <NotificationModal
-          isOpen={isModalOpen} // 모달 상태 전달
-          closeModal={closeModal} // 모달 닫기 함수 전달
-          chatAlerts={chatAlerts} // 알림 데이터 전달
-        />
       </header>
       <div className="container">
         <aside className="sidebar-left">
