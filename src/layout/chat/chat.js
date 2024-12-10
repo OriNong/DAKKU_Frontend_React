@@ -32,74 +32,6 @@ const Chat = ({
   const [chatList, setChatList] = useState([]);
   const [roomId, setRoomId] = useState(chatItemInfo.roomId);
 
-  // useEffect(() => {
-  //   if (chatItemInfo.roomId !== undefined) {
-  //     instance
-  //       .get(`/chat/uuid`, {
-  //         params: {
-  //           friendID: chatItemInfo.friendId,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         console.log(chatItemInfo);
-  //         console.log(res.data);
-
-  //         setRoomId(res.data.roomId);
-  //         if (res.data?.list) {
-  //           const messageList = res.data.list.map((msg) => ({
-  //             position: msg.userID === writerID ? "right" : "left",
-  //             type: "text",
-  //             title:
-  //               msg.userID === writerID
-  //                 ? chatItemInfo.userName
-  //                 : chatItemInfo.friendName,
-  //             text: msg.message,
-  //             date: new Date(msg.inputDate),
-  //           }));
-  //           setChatList(messageList);
-  //         } else {
-  //           setChatList([]);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         Swal.fire({
-  //           title: "채팅 오류",
-  //           text: error,
-  //           icon: "error",
-  //         });
-  //       });
-  //   }
-
-  //   const client = new Client({
-  //     brokerURL: `${process.env.REACT_APP_CHAT_CONNECT}/chat`,
-  //     reconnectDelay: 5000,
-  //     onConnect: () => {
-  //       console.log(roomId);
-  //       client.subscribe(`/topic/public/rooms/${roomId}`, (message) => {
-  //         const data = JSON.parse(message.body);
-  //         console.log(data);
-  //         setChatList((prevMessage) => [
-  //           ...prevMessage,
-  //           {
-  //             position: userInfo.id === data.body.userID ? "right" : "left",
-  //             type: "text",
-  //             title: data.body.userName,
-  //             text: data.body.text,
-  //             date: new Date(),
-  //           },
-  //         ]);
-  //       });
-  //     },
-  //   });
-  //   client.activate();
-  //   setStompClient(client);
-
-  //   return () => {
-  //     client.deactivate();
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [setChatRoomActive]);
-
   useEffect(() => {
     if (chatItemInfo.roomId !== undefined) {
       instance
@@ -134,7 +66,7 @@ const Chat = ({
           });
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatItemInfo.roomId, chatItemInfo.friendId, writerID]);
 
   useEffect(() => {
