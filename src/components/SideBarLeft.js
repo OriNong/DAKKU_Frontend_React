@@ -4,6 +4,7 @@ import { getUserInfo, removeUserInfo } from "../hooks/userSlice";
 import Swal from "sweetalert2";
 import { removeTokenInfo } from "../hooks/tokenSlice";
 import "../../src/css/DiarySideLeft.css";
+import { removeAlarmInfo } from '../hooks/alarmSlice';
 
 const SideBarLeft = () => {
   const userInfo = useSelector(getUserInfo);
@@ -33,6 +34,7 @@ const SideBarLeft = () => {
         }).then(() => {
           dispatch(removeTokenInfo());
           dispatch(removeUserInfo());
+          dispatch(removeAlarmInfo());
           navigate("/");
         });
       } else {

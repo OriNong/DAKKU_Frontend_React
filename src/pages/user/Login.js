@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setTokenInfo } from "../../hooks/tokenSlice";
 import { setUserInfo } from "../../hooks/userSlice";
 import "./Login.css";
+import { setStorageUserInfo } from '../../helper/storage';
 
 const Login = () => {
   // 페이지 이동 함수
@@ -66,6 +67,7 @@ const Login = () => {
             console.log(res);
             //state를 바꿔서 페이지 이동하기, 위에 useNavigate 사용하기
             if (res) {
+              setStorageUserInfo(res.data);
               dispatch(setUserInfo(res.data));
               navigate("/"); // 메인 페이지로 이동
             }

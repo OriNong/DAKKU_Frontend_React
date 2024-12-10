@@ -12,3 +12,14 @@ export const getStorageToken = () => {
   //string으로 저장된 문자열이 json으로 변환되어 리턴
   return JSON.parse(localStorage.getItem("token"));
 };
+
+// 사용자 정보 저장
+export const setStorageUserInfo = (user) => {
+  localStorage.setItem("user", JSON.stringify(user));
+}
+export const removeStorageUserInfo = () => {
+  localStorage.removeItem("user");
+};
+export const getStorageUserInfo = () => {
+  return JSON.parse(localStorage.getItem("user"));
+};

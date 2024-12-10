@@ -4,11 +4,14 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { thunk } from "redux-thunk";
 import userSlice from "./userSlice";
+import alarmSlice from "./alarmSlice"
 
 const reducers = combineReducers({
   token: tokenSlice,
   user: userSlice,
+  alarm: alarmSlice
 });
+
 
 const persistConfig = {
   key: "root",
