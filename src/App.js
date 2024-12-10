@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import DiaryWritePage from "./pages/diary/DiaryWritePage";
 import FindPw from "./pages/user/FindPw";
@@ -17,10 +17,12 @@ import MyDiaryListPage from "./pages/diary/MyDiaryListPage";
 import DiaryEdit from "./pages/diary/DiaryEditPage";
 import SettingPage from "./pages/diary/DiarySettingPage";
 import MyPage from "./pages/mypage/MyPage";
+import setUpEvent from './layout/other/SseAlarm';
 
 function App() {
   const userInfo = useSelector(getUserInfo);
   const [isActive, setIsActive] = useState(false);
+  const eventSourceRef = useRef(null);
 
   // userInfo에 값의 변화가 있으면 if문을 비교하여 값이 정상적인지 확인후 setChatAppActive에 true아니면 false를 반환 한다.
   useEffect(() => {
@@ -30,6 +32,7 @@ function App() {
       userInfo.email !== "" &&
       userInfo.roles !== ""
     ) {
+      setUpEvent(eventSourceRef);
       setIsActive(true);
     } else {
       setIsActive(false);
