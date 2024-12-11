@@ -3,11 +3,8 @@ import "./chatCss/chatList.css";
 import instance from "../../instance/instance";
 import { Navbar, Button, ChatItem, Avatar } from "react-chat-elements";
 import { IoMdChatbubbles } from "react-icons/io";
-import { useSelector } from 'react-redux';
-import { getAlarmInfo } from '../../hooks/alarmSlice';
 
 const ChatListRoom = ({ chatInfo, chatConnect }) => {
-  const alarmInfo = useSelector(getAlarmInfo);
   const [tabNum, setTabNum] = useState(0);
   const [fade, setFade] = useState("");
   const [chatList, setChatList] = useState([]);
@@ -57,7 +54,6 @@ const ChatListRoom = ({ chatInfo, chatConnect }) => {
                   )
                 }
                 date={new Date(item.createDate)}
-                unread={0}
               />
             );
           })
