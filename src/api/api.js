@@ -3,7 +3,7 @@ import { getStorageToken } from "../helper/storage";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_HOST,
-  timeout: 1000,
+  timeout: 5000,
 });
 
 export default instance;
