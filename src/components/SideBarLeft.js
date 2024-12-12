@@ -4,7 +4,7 @@ import { getUserInfo, removeUserInfo } from "../hooks/userSlice";
 import Swal from "sweetalert2";
 import { removeTokenInfo } from "../hooks/tokenSlice";
 import "../../src/css/DiarySideLeft.css";
-import { removeAlarmInfo } from '../hooks/alarmSlice';
+import { removeAlarmInfo } from "../hooks/alarmSlice";
 
 const SideBarLeft = () => {
   const userInfo = useSelector(getUserInfo);
@@ -49,17 +49,11 @@ const SideBarLeft = () => {
         <li className={isActive("/MainPage")}>
           <Link to="/">Main</Link>
         </li>
-        <li className={isActive("/chat")}>
-          <Link to="/chat">Chat</Link>
-        </li>
-        <li className={isActive("/MyPage")}>
-          <Link to="/MyPage">MyPage</Link>
-        </li>
-        <li className={isActive("/notice")}>
-          <Link to="/notice">Notice</Link>
-        </li>
         {userInfo.id > 0 ? (
           <>
+            <li className={isActive("/MyPage")}>
+              <Link to="/MyPage">MyPage</Link>
+            </li>
             <li className={isActive("/MyDiaryListPage")}>
               <Link to="/diary/myDiary">MyDiary</Link>
             </li>
