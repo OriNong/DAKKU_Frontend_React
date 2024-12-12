@@ -22,8 +22,8 @@ export const BookContainer = styled.div`
   .book-image {
     width: 100%;
     height: auto;
-    max-width: 550px;
-    max-height: 450px;
+    // max-width: 550px;
+    // max-height: 450px;
     object-fit: cover;
     margin-bottom: 10px;
   }
